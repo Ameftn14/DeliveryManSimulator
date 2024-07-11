@@ -5,8 +5,11 @@ public class SingleOrder : MonoBehaviour
 {
 
     public MapManagerBehaviour mapManager ;
+    //public RingProgress ringProgress; 
     public PairOrder parentPairOrder;
+    public SingleOrder brotherSingleOrder;
     public int OrderID;
+    public PairOrder.State state;
     private int pid;
     private Vector2 position;
     // private float price;
@@ -17,6 +20,7 @@ public class SingleOrder : MonoBehaviour
     public void Start()
     {
         mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
+        state = PairOrder.State.NotAccept;
     }
 
     public void Update()
