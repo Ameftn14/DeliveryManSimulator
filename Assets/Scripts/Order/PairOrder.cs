@@ -21,8 +21,6 @@ public class PairOrder : MonoBehaviour
     private float LifeTime = 5f;//TODO:以下所有liftime都没有提供做修改的接口，待优化
     private float timer = 5f;
 
-    private int Orderstate;
-
     public enum State
     {
         NotAccept,//未接单
