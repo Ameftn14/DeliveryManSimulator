@@ -6,7 +6,8 @@ using System.Linq;
 using Unity.Properties;
 
 
-public class SearchRoad : MonoBehaviour {
+public class SearchRoad : MonoBehaviour
+{
 
     private MapManagerBehaviour mapManager;
     private Property property;
@@ -26,31 +27,53 @@ public class SearchRoad : MonoBehaviour {
     public bool orderFinished = false;
 
 
-    void Awake() {
+    void Awake()
+    {
         Debug.Log("egg awaked");
     }
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
         Debug.Log("egg started");
         mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
         property = GameObject.Find("Deliveryman").GetComponent<Property>();
 
+        GameObject COM = GameObject.Find("COM");
+        if (COM != null)
+        {
+            // 获取游戏对象的位置
+            Vector3 COMPosition = COM.transform.position;
+            Debug.Log("The position of COM is: " + COMPosition);
+            transform.position = COM.transform.position;
+        }
+        else
+        {
+            Debug.Log("COM not found!");
+        }
+
         // 检查是否找到了正确的GameObject
-        if (mapManager == null) {
+        if (mapManager == null)
+        {
             Debug.LogError("MapManager not found!");
-        } else {
+        }
+        else
+        {
             Debug.Log("mapManager found");
         }
         // 检查是否找到了正确的GameObject
-        if (property == null) {
+        if (property == null)
+        {
             Debug.LogError("property not found!");
-        } else {
+        }
+        else
+        {
             Debug.Log("property found");
         }
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         moveSpeed = property.speed;
         Dictionary<int, Dictionary<int, float>> graph = mapManager.GetEdges();
         Dictionary<int, Vector3> vertices = mapManager.GetVertices();
@@ -61,8 +84,9 @@ public class SearchRoad : MonoBehaviour {
 
 
         // 检测按键输入
-        if (Input.GetKeyDown(KeyCode.S) && !isMoving) {
-            Debug.Log("S pressed, new start");
+        if (targetwaypoint != -1 && !isMoving)
+        {
+            Debug.Log("New start, redesign the path");
 
 
             Debug.Assert(wayPoints.ContainsKey(targetwaypoint));
@@ -71,7 +95,8 @@ public class SearchRoad : MonoBehaviour {
             currentPathIndex = 0;
             orderFinished = false;
 
-            if (wayPoints.ContainsKey(targetwaypoint)) {
+            if (wayPoints.ContainsKey(targetwaypoint))
+            {
 
                 // 目标地点所在边的起点与终点
                 int targetStartVid = wayPoints[targetwaypoint].startVid;
@@ -81,12 +106,15 @@ public class SearchRoad : MonoBehaviour {
 
                 //起始地点所在边的起点和终点
                 int beginStartVid, beginEndVid;
-                if (firstBegin) {
+                if (firstBegin)
+                {
                     //0为每日骑手的出发点
                     beginStartVid = 0;
                     beginEndVid = 0;
                     firstBegin = !firstBegin;
-                } else {
+                }
+                else
+                {
                     beginStartVid = beginPosition;
                     beginEndVid = targetPosition;
                 }
@@ -104,13 +132,16 @@ public class SearchRoad : MonoBehaviour {
 
                 float[] myArray = new float[4] { pathssLength, pathseLength, pathesLength, patheeLength };
                 int flag = 0;
-                for (int i = 1; i < 4; i++) {
-                    if (myArray[i] < myArray[flag]) {
+                for (int i = 1; i < 4; i++)
+                {
+                    if (myArray[i] < myArray[flag])
+                    {
                         flag = i;
                     }
                 }
 
-                switch (flag) {
+                switch (flag)
+                {
                     case 0:
                         shortestPath = pathss;
                         break;
@@ -133,24 +164,25 @@ public class SearchRoad : MonoBehaviour {
                 targetPosition = shortestPath[0];
 
             // 开始移动
-            if (!isMoving) {
+            if (!isMoving)
+            {
                 isMoving = true;
             }
-        } else if (Input.GetKeyDown(KeyCode.C) && isMoving) {
-            Debug.Log("C pressed");
-            // 停止移动
-            isMoving = false;
         }
 
 
-        if (isMoving) {
+        if (isMoving)
+        {
             Vector3 targetPos;
 
             // 如果还有路径点未到达
-            if (currentPathIndex < shortestPath.Count) {
+            if (currentPathIndex < shortestPath.Count)
+            {
                 targetPosition = shortestPath[currentPathIndex];
                 targetPos = vertices[targetPosition];
-            } else {
+            }
+            else
+            {
                 // 已经到达路径的最后一个点，现在目标是wayPoint
                 targetPos = wayPoints[targetwaypoint].transform.position;
             }
@@ -159,36 +191,46 @@ public class SearchRoad : MonoBehaviour {
             gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, targetPos, moveSpeed * Time.deltaTime);
 
             // 检查是否到达目标位置
-            if ((gameObject.transform.position - targetPos).sqrMagnitude <= 0.1f) {
-                if (currentPathIndex < shortestPath.Count) {
+            if ((gameObject.transform.position - targetPos).sqrMagnitude <= 0.1f)
+            {
+                if (currentPathIndex < shortestPath.Count)
+                {
                     // 到达当前路径点后更新路径索引和目标位置
                     beginPosition = shortestPath[currentPathIndex];
                     currentPathIndex++;
-                } else {
+                }
+                else
+                {
                     // 到达路径末尾和wayPoint后停止移动
                     Debug.Log("Reach the final wayPoint");
+                    property.increaseFinishedCount();
                     orderFinished = true;
                     isMoving = false;
-                    targetPosition = int.MaxValue;
+                    targetPosition = -1;
                 }
             }
         }
     }
 
 
-    public class SimplePriorityQueue<T, TPrior> where TPrior : IComparable<TPrior> {
+    public class SimplePriorityQueue<T, TPrior> where TPrior : IComparable<TPrior>
+    {
         private List<T> items = new List<T>();
         private List<TPrior> priorities = new List<TPrior>();
 
-        public void Enqueue(T item, TPrior priority) {
+        public void Enqueue(T item, TPrior priority)
+        {
             items.Add(item);
             priorities.Add(priority);
         }
 
-        public T Dequeue() {
+        public T Dequeue()
+        {
             int index = 0;
-            for (int i = 1; i < priorities.Count; i++) {
-                if (priorities[i].CompareTo(priorities[index]) < 0) {
+            for (int i = 1; i < priorities.Count; i++)
+            {
+                if (priorities[i].CompareTo(priorities[index]) < 0)
+                {
                     index = i;
                 }
             }
@@ -200,26 +242,31 @@ public class SearchRoad : MonoBehaviour {
             return result;
         }
 
-        public bool IsEmpty() {
+        public bool IsEmpty()
+        {
             return items.Count == 0;
         }
     }
 
-    public class DijkstraAlgorithm {
+    public class DijkstraAlgorithm
+    {
         Dictionary<int, Dictionary<int, float>> graph;
         Dictionary<int, float> distances;
         Dictionary<int, int> predecessors;
         Dictionary<int, bool> visited;
 
-        public DijkstraAlgorithm(Dictionary<int, Dictionary<int, float>> graph) {
+        public DijkstraAlgorithm(Dictionary<int, Dictionary<int, float>> graph)
+        {
             this.graph = graph;
             distances = new Dictionary<int, float>();
             predecessors = new Dictionary<int, int>();
             visited = new Dictionary<int, bool>();
         }
 
-        public (List<int>, float) ShortestPath(int start, int end) {
-            foreach (var vertex in graph.Keys) {
+        public (List<int>, float) ShortestPath(int start, int end)
+        {
+            foreach (var vertex in graph.Keys)
+            {
                 distances[vertex] = float.MaxValue;
                 visited[vertex] = false;
                 predecessors[vertex] = -1;
@@ -230,20 +277,23 @@ public class SearchRoad : MonoBehaviour {
             SimplePriorityQueue<int, float> pq = new SimplePriorityQueue<int, float>();
             pq.Enqueue(start, 0);
 
-            while (!pq.IsEmpty()) {
+            while (!pq.IsEmpty())
+            {
                 int current = pq.Dequeue();
 
                 if (visited[current])
                     continue;
                 visited[current] = true;
 
-                foreach (var neighbor in graph[current]) {
+                foreach (var neighbor in graph[current])
+                {
                     int neighborVertex = neighbor.Key;
                     float edgeWeight = neighbor.Value;
 
                     float newDistance = distances[current] + edgeWeight;
 
-                    if (newDistance < distances[neighborVertex]) {
+                    if (newDistance < distances[neighborVertex])
+                    {
                         distances[neighborVertex] = newDistance;
                         predecessors[neighborVertex] = current;
                         pq.Enqueue(neighborVertex, newDistance);
@@ -253,7 +303,8 @@ public class SearchRoad : MonoBehaviour {
 
             List<int> path = new List<int>();
             int now = end;
-            while (now != -1) {
+            while (now != -1)
+            {
                 path.Insert(0, now);
                 now = predecessors[now];
             }

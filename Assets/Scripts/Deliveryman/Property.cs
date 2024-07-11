@@ -9,6 +9,8 @@ public class Property : MonoBehaviour {
     public int capacity = 2;
 
     public int money = 100;
+
+    public int finishedcount = 0;
     // Start is called before the first frame update
     void Start() {
 
@@ -25,18 +27,22 @@ public class Property : MonoBehaviour {
         }
     }
 
-    void increaseSpeed() {
+    public void increaseSpeed() {
         Debug.Log("Speed up!");
         speed = speed * (float)1.5;
         money -= 100;
     }
 
-    void increaseCapacity() {
+    public void increaseCapacity() {
         Debug.Log("Capacity + 1!");
         capacity += 1;
         money -= 200;
     }
-    void increaseMoney(int earning) {
+
+    public void increaseFinishedCount(){
+        finishedcount ++;
+    }
+    public void increaseMoney(int earning) {
         money += earning;
     }
 }
