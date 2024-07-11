@@ -6,7 +6,7 @@ public class MenuView : MonoBehaviour {
         Debug.Assert(listModel != null);
     }
     public void appendItem(ItemModel item) {
-        listModel.addItemAt(item);
+        listModel.appendItem(item);
     }
     public void insertAt(ItemModel item, int index) {
         listModel.addItemAt(item, index);
