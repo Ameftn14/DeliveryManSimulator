@@ -6,12 +6,15 @@ using System;
 public class SingleOrder : MonoBehaviour
 {
     public ColorDictionary colorDictionary;
-    public MapManagerBehaviour mapManager ;
+    public VirtualClockUI virtualClockUI;
+    public MapManagerBehaviour mapManager;
+    public TimeSpan acceptTime;
     public RingProgress ringProgress;
     //public RingProgress ringProgress; 
     public PairOrder parentPairOrder;
     public SingleOrder brotherSingleOrder;
     public int OrderID;
+    public TimeSpan Deadline;
     public PairOrder.State state;
     private int pid;
     private Vector2 position;
@@ -24,6 +27,7 @@ public class SingleOrder : MonoBehaviour
     {
         ringProgress = transform.Find("Ring").GetComponent<RingProgress>();
         mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
+        virtualClockUI = GameObject.Find("Time").GetComponent<VirtualClockUI>();
         parentPairOrder = transform.parent.GetComponent<PairOrder>();
         colorDictionary = new ColorDictionary();
         
@@ -52,6 +56,7 @@ public class SingleOrder : MonoBehaviour
                 Debug.LogError("SpriteRenderer is not assigned!");
             }
         }
+        ringProgress.ddl = Deadline;
     
     }
 
@@ -63,7 +68,8 @@ public class SingleOrder : MonoBehaviour
         }
         if(state > PairOrder.State.NotAccept)
         {
-            ringProgress.isAccept = 1;            
+            ringProgress.isAccept = 1;
+            ringProgress.acceptTime = acceptTime;       
         }        
     }
 
@@ -75,9 +81,11 @@ public class SingleOrder : MonoBehaviour
             Debug.Log("Order " + OrderID + " is accepted");
             parentPairOrder.OrderAccept();
 
-            //ringProgress.isAccept = 1;
             RingProgress ringProgress = transform.Find("Ring").GetComponent<RingProgress>();
             ringProgress.isAccept = 1;
+            acceptTime = virtualClockUI.GetTime();
+            ringProgress.acceptTime = acceptTime;
+            brotherSingleOrder.acceptTime = acceptTime;
         }
     }
     // pid operation

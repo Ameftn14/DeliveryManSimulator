@@ -15,8 +15,8 @@ public class PairOrder : MonoBehaviour
     private int price;
     private float distance;
 
-    private TimeSpan Deadline;
-    //private Timespan AcceptTime;
+    public TimeSpan Deadline;
+    //public Timespan AcceptTime;
     //private Timespan PickUpTime;
     private float LifeTime = 5f;//TODO:以下所有liftime都没有提供做修改的接口，待优化
     private float timer = 5f;
@@ -46,6 +46,8 @@ public class PairOrder : MonoBehaviour
         // }
         // OrderToPre = Resources.Load<GameObject>("Prefabs/OrderTo");
         state = State.NotAccept;
+        
+        Deadline = virtualClock.GetTime().Add(new TimeSpan(2, 0, 0));
         //随机获取两个pid
         from_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
         to_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
@@ -70,7 +72,7 @@ public class PairOrder : MonoBehaviour
         fromScript.SetOrderID(OrderID);
         fromScript.LifeTime = LifeTime;
         fromScript.parentPairOrder = this;
-        fromScript.brotherSingleOrder = toScript;
+        fromScript.Deadline = Deadline;
 
         Transform childto = transform.Find("OrderTo");
         //位置
@@ -81,7 +83,10 @@ public class PairOrder : MonoBehaviour
         toScript.SetOrderID(OrderID);
         toScript.LifeTime = LifeTime;
         toScript.parentPairOrder = this;
+        toScript.Deadline = Deadline;
+ 
         toScript.brotherSingleOrder = fromScript;
+        fromScript.brotherSingleOrder = toScript;
 
         distance = Vector2.Distance(fromScript.GetPosition(), toScript.GetPosition());
         //随机生成价格
@@ -89,7 +94,6 @@ public class PairOrder : MonoBehaviour
 
         //截止时间是当前时间+1h
         //TODO:这个逻辑待优化
-        Deadline = virtualClock.GetTime().Add(new TimeSpan(2, 0, 0));
         timer = LifeTime;
         state = State.NotAccept;
     }
