@@ -1,9 +1,11 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System;
 
 public class SingleOrder : MonoBehaviour
 {
-
+    public ColorDictionary colorDictionary;
     public MapManagerBehaviour mapManager ;
     //public RingProgress ringProgress; 
     public PairOrder parentPairOrder;
@@ -20,7 +22,33 @@ public class SingleOrder : MonoBehaviour
     public void Start()
     {
         mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
+        colorDictionary = new ColorDictionary();
+        if(mapManager == null)
+        {
+            Debug.LogError("MapManager is not assigned!");
+            return;
+        }
+        Debug.Log("mapManager found");
         state = PairOrder.State.NotAccept;
+
+        //改颜色
+        foreach (Transform child in transform)
+        {
+            // 获取子对象的 SpriteRenderer 组件
+            SpriteRenderer spriteRenderer = child.GetComponent<SpriteRenderer>();
+            
+            // 如果子对象有 SpriteRenderer 组件，则设置其颜色
+            if (spriteRenderer != null)
+            {
+                Color TargetColor = colorDictionary.GetColor(OrderID);
+                spriteRenderer.color = TargetColor;
+            }
+            else
+            {
+                Debug.LogError("SpriteRenderer is not assigned!");
+            }
+        }
+    
     }
 
     public void Update()
@@ -35,6 +63,12 @@ public class SingleOrder : MonoBehaviour
     public void SetPid(int pid)
     {
         this.pid = pid;
+        Debug.Log("pid is set to " + pid);
+        if(mapManager == null)
+        {
+            mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
+        }
+        Debug.Log("mapManager.GetWayPoints().Count is " + mapManager.GetWayPoints().Count);
         position = mapManager.GetWayPoints()[pid].transform.position;
     }
 
