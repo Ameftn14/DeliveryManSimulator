@@ -14,7 +14,8 @@ public class MenuViewTest : MonoBehaviour {
         this.index = Convert.ToInt32(index);
     }
     public void add() {
-        ItemModel item = ItemModel.spawnNewItem("Prefabs/UI/Customer Menu Item");
+        OrderInfo info = new OrderInfo(new TimeSpan(01, 02, 03), new Color(0, 0, 0, 255), LocationType.Customer);
+        ItemModel item = OrderItemBehaviour.spawnNewCustomerOrderItem(info);
         item.gameObject.name = "Item " + n++;
         menuView.insertAt(item, index);
     }
