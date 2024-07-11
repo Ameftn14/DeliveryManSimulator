@@ -4,6 +4,8 @@ using System.Collections;
 public class SingleOrder : MonoBehaviour
 {
 
+    public MapManagerBehaviour mapManager ;
+    public PairOrder parentPairOrder;
     public int OrderID;
     private int pid;
     private Vector2 position;
@@ -14,10 +16,7 @@ public class SingleOrder : MonoBehaviour
 
     public void Start()
     {
-        pid = -1;
-        // price = 0;
-        // distance = 0;
-        isFrom = true;
+        mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
     }
 
     public void Update()
@@ -32,7 +31,7 @@ public class SingleOrder : MonoBehaviour
     public void SetPid(int pid)
     {
         this.pid = pid;
-        //TODO: get position from pid
+        position = mapManager.GetWayPoints()[pid].transform.position;
     }
 
     // isFrom operation
