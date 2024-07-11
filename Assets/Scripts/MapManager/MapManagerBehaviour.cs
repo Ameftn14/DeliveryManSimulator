@@ -15,7 +15,7 @@ public class MapManagerBehaviour : MonoBehaviour
     private Dictionary<int, GameObject> wayPoints;
 
     private Dictionary<int, GameObject> vertexObjects;
-    private Dictionary<int, Dictionary<int, GameObject>> edgeObjects;
+    private Dictionary<int, Dictionary<int, WayPointBehaviour>> edgeObjects;
 
     public MapManagerBehaviour()
     {
@@ -45,7 +45,7 @@ public class MapManagerBehaviour : MonoBehaviour
     // 获取边集合
     public Dictionary<int, Dictionary<int, float>> GetEdges() => edges;
     // 获取路标集合
-    public Dictionary<int, GameObject> GetWayPoints() => wayPoints;
+    public Dictionary<int, WayPointBehaviour> GetWayPoints() => wayPoints;
 
     // 在现存的边上插入一个中间节点，返回其vid
     public int CreateInternalVertex(int vid1, int vid2, float ratio)
@@ -175,9 +175,9 @@ public class MapManagerBehaviour : MonoBehaviour
 
     // about waypoints
 
-    public int AddWayPoint(int pid, GameObject wayPointObject)
+    public int AddWayPoint(WayPointBehaviour wayPoint)
     {
-        wayPoints[pid] = wayPointObject;
+        wayPoints[wayPoint.pid] = wayPoint;
         return 0;
     }
 

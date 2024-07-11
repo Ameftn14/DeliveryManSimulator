@@ -40,7 +40,7 @@ public class RoadBehaviour : MonoBehaviour
             if (child.gameObject.name == "WayPoint")
             {
                 child.GetComponent<WayPointBehaviour>().SetVertices(startVertex, endVertex);
-                mapManager.AddWayPoint(child.GetComponent<WayPointBehaviour>().pid, child.gameObject);
+                mapManager.AddWayPoint(child.GetComponent<WayPointBehaviour>());
             }
         }
     }

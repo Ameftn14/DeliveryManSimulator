@@ -7,6 +7,8 @@ public class WayPointBehaviour : MonoBehaviour
     static private int nextPid = 0;
     public int pid = -1;
     public int startVid = -1, endVid = -1;
+
+    // distance from start to here is Manager.GetEdges()[startVid][endVid] * ratio
     public float ratio = 0;
 
     // Start is called before the first frame update
