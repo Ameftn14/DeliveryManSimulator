@@ -10,7 +10,9 @@ public class Property : MonoBehaviour
 
     public float speed = 5.0f;
 
-    public int capacity = 2;
+    public int allCapacity = 2;
+
+    public int nowCapacity;
 
     public int money = 100;
 
@@ -18,7 +20,7 @@ public class Property : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        nowCapacity = allCapacity;
     }
 
     // Update is called once per frame
@@ -27,11 +29,6 @@ public class Property : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             increaseSpeed();
-        }
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            increaseCapacity();
         }
     }
 
@@ -50,18 +47,26 @@ public class Property : MonoBehaviour
 
     }
 
-    public void increaseCapacity()
+    public void increaseAllCapacity()
     {
-        if (capacity < maxCapacity)
+        if (allCapacity < maxCapacity)
         {
-            Debug.Log("Capacity + 1!");
-            capacity += 1;
+            Debug.Log("allCapacity + 1!");
+            allCapacity += 1;
             money -= 200;
         }
         else
         {
             Debug.Log("Reach the maxcapacity");
         }
+    }
+
+    public void increaseNowCapacity(){
+        nowCapacity ++;
+    }
+
+    public void decreaseNowCapacity(){
+        nowCapacity --;
     }
 
     public void increaseFinishedCount()

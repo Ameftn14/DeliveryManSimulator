@@ -203,7 +203,6 @@ public class SearchRoad : MonoBehaviour
                 {
                     // 到达路径末尾和wayPoint后停止移动
                     Debug.Log("Reach the final wayPoint");
-                    property.increaseFinishedCount();
                     orderFinished = true;
                     isMoving = false;
                     targetPosition = -1;
