@@ -183,16 +183,8 @@ public class SearchRoad : MonoBehaviour
                 }
                 else
                 {
-<<<<<<< Updated upstream
-                    // 到达路径末尾和wayPoint后停止移动
-                    Debug.Log("Reach the final wayPoint");
-                    orderFinished = true;
-                    isMoving = false;
-                    targetPosition = -1;
-=======
                     // 已经到达路径的最后一个点，现在目标是wayPoint
                     targetPos = wayPoints[targetwaypoint].transform.position;
->>>>>>> Stashed changes
                 }
 
                 // 向目标位置移动
