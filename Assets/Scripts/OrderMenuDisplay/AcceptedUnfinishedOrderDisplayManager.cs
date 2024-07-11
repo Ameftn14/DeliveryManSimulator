@@ -30,8 +30,8 @@ public class AcceptedUnfinishedOrderDisplayManager : MonoBehaviour {
     }
 
     // TODO hook this up
-    public void removeOrder(int pid) {
-        // menuView.removeAt(index);
+    public void removeOrder(int orderID, bool isFrom)
+    {
     }
 }
 
@@ -45,10 +45,17 @@ public class OrderInfo {
     public readonly TimeSpan dueTime;
     public readonly Color color;
     public readonly LocationType locationType;
-    public OrderInfo(TimeSpan dueTime, Color color, LocationType locationType) {
+    public readonly int pid;
+    public readonly int orderID;
+    public readonly bool isFrom;
+    public OrderInfo(TimeSpan dueTime, Color color, LocationType locationType, int pid, int orderID, bool isFrom)
+    {
         this.dueTime = dueTime;
         this.color = color;
         this.locationType = locationType;
+        this.pid = pid;
+        this.orderID = orderID;
+        this.isFrom = isFrom;
     }
 }
 
