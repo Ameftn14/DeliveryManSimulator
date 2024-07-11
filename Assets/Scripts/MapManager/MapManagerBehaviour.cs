@@ -177,6 +177,7 @@ public class MapManagerBehaviour : MonoBehaviour
 
     public int AddWayPoint(WayPointBehaviour wayPoint)
     {
+        Debug.Assert(wayPoints != null);
         wayPoints[wayPoint.pid] = wayPoint;
         return 0;
     }
