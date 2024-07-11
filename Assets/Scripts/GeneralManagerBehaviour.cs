@@ -30,6 +30,7 @@ public class GeneralManagerBehaviour : MonoBehaviour {
             SingleOrder theFrom = theOrder.fromScript;
             SingleOrder theTo = theOrder.toScript;
             TimeSpan dueTime = theOrder.GetDeadline();
+            Debug.Log("dueTime: " + dueTime);
             Color color = ColorDictionary.GetColor(theOrder.OrderID);
             displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Restaurant, theFrom.Getpid(), theOrder.OrderID));
             displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Customer, theTo.Getpid(), theOrder.OrderID));
@@ -41,8 +42,9 @@ public class GeneralManagerBehaviour : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (theSearchRoad.orderFinished) // 可能会有卡轴的bug 但是好修
+        if (theSearchRoad.orderFinished && theSearchRoad.isMoving) // 可能会有卡轴的bug 但是好修
         {
+            theSearchRoad.isMoving = false;
             SingleOrder theOrder = null;
             PairOrder thePairOrder = theOrderDB.orderDict[theSearchRoad.targetOrderID];
             if (theSearchRoad.targetIsFrom)
@@ -60,20 +62,24 @@ public class GeneralManagerBehaviour : MonoBehaviour {
                 if (virtualClock.GetTime() < thePairOrder.GetDeadline())
                     theProperty.money += thePairOrder.GetPrice();
             }
-        } else {
+            displayManager.removeOrder(theSearchRoad.targetOrderID, theSearchRoad.targetIsFrom ? LocationType.Restaurant : LocationType.Customer);
+        }
+        else {
             OrderInfo theFirstOrder = displayManager.getFirstOrder();
             if(theFirstOrder == null){
                 theSearchRoad.targetOrderID = -1;
                 theSearchRoad.targetIsFrom = false;
                 theSearchRoad.targetwaypoint = -1;
             }
-            else if (theFirstOrder.pid != theSearchRoad.targetwaypoint) {
+            else {
+                Debug.Log("theFirstOrder.pid: " + theFirstOrder.pid);
+                if (theFirstOrder.pid != theSearchRoad.targetwaypoint) {
                 theSearchRoad.targetOrderID = theFirstOrder.orderID;
                 theSearchRoad.targetIsFrom = theFirstOrder.locationType == LocationType.Restaurant;
                 theSearchRoad.targetwaypoint = theFirstOrder.pid;
                 theSearchRoad.isMoving = false;
                 theSearchRoad.orderFinished = false;
-            }
+            }}
         }
     }
 

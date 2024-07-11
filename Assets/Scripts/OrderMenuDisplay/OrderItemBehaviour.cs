@@ -20,7 +20,7 @@ public class OrderItemBehaviour : ItemModel {
         imageObject.GetComponent<Image>().color = colorToSet;
         Debug.Assert(dueTimeText != null);
         // Debug.Log("due time: " + orderInfo.dueTime);
-        dueTimeText.text = orderInfo.dueTime.ToString("HH:mm");
+        // dueTimeText.text = orderInfo.dueTime.ToString("HH:mm");
     }
     void Start() {
         init();
