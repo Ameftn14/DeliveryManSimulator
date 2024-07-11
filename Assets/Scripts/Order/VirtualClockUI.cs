@@ -104,6 +104,10 @@ public class VirtualClockUI : MonoBehaviour
     {
         return OrderRefreshRate.GetOrderRefreshRate(currentHour, currentMinute);
     }
+    public TimeSpan GetTime()
+    {
+        return new TimeSpan(currentHour, currentMinute, 0);
+    }
 }
 
 public static class OrderRefreshRate

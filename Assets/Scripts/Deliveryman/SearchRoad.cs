@@ -15,7 +15,7 @@ public class SearchRoad : MonoBehaviour {
     public float moveSpeed;
 
     private int currentPathIndex = 0; // 当前路径索引
-    private bool isMoving = false;    //when true, start to move
+    public bool isMoving = false;    //when true, start to move
 
     private bool firstBegin = true;
 

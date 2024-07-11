@@ -4,7 +4,12 @@ using System.Collections;
 public class SingleOrder : MonoBehaviour
 {
 
+    public MapManagerBehaviour mapManager ;
+    //public RingProgress ringProgress; 
+    public PairOrder parentPairOrder;
+    public SingleOrder brotherSingleOrder;
     public int OrderID;
+    public PairOrder.State state;
     private int pid;
     private Vector2 position;
     // private float price;
@@ -14,10 +19,8 @@ public class SingleOrder : MonoBehaviour
 
     public void Start()
     {
-        pid = -1;
-        // price = 0;
-        // distance = 0;
-        isFrom = true;
+        mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
+        state = PairOrder.State.NotAccept;
     }
 
     public void Update()
@@ -32,7 +35,7 @@ public class SingleOrder : MonoBehaviour
     public void SetPid(int pid)
     {
         this.pid = pid;
-        //TODO: get position from pid
+        position = mapManager.GetWayPoints()[pid].transform.position;
     }
 
     // isFrom operation

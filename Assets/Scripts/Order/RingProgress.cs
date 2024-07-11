@@ -3,9 +3,9 @@ using UnityEngine;
 public class RingProgress : MonoBehaviour
 {
     public SpriteRenderer sp_render; // 环形进度条的 SpriteRenderer 组件
-    public float transitionDuration = 6f; // 过渡时间，单位秒
+    public float transitionDuration = 5f; // 过渡时间，单位秒
 
-    private float timer = 6f; // 计时器
+    private float timer = 5f; // 计时器
 
     void Start()
     {
