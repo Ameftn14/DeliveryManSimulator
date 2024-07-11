@@ -4,6 +4,7 @@ using System;
 
 public class PairOrder : MonoBehaviour
 {
+    public OrderDB orderDB;
     public MapManagerBehaviour mapManager;
     public VirtualClockUI virtualClock;
     public int OrderID;
@@ -35,6 +36,7 @@ public class PairOrder : MonoBehaviour
 
     public void Start()
     {
+        orderDB = GameObject.Find("OrderDB").GetComponent<OrderDB>();
         mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
         virtualClock = GameObject.Find("Time").GetComponent<VirtualClockUI>();
         // OrderFromPre = Resources.Load<GameObject>("Prefabs/OrderFrom");
@@ -87,7 +89,7 @@ public class PairOrder : MonoBehaviour
 
         //截止时间是当前时间+1h
         //TODO:这个逻辑待优化
-        Deadline = virtualClock.GetTime().Add(new TimeSpan(1, 0, 0));
+        Deadline = virtualClock.GetTime().Add(new TimeSpan(2, 0, 0));
         timer = LifeTime;
         state = State.NotAccept;
     }
@@ -99,14 +101,24 @@ public class PairOrder : MonoBehaviour
             timer -= Time.deltaTime;
             if (timer <= 0f)
             {
-                Destroy(transform.Find("OrderFrom").gameObject);
-                Destroy(transform.Find("OrderTo").gameObject   );
-                Destroy(gameObject);
+                OrderFinished();
+                DistroyEverything();
             }
         }
         else{
-            //TODO:倒计时
+            TimeSpan currentTime = virtualClock.GetTime();
+            if(currentTime > Deadline)
+            {
+                DistroyEverything();
+            }
         }
+    }
+
+    public void DistroyEverything()
+    {
+        Destroy(transform.Find("OrderFrom").gameObject);
+        Destroy(transform.Find("OrderTo").gameObject);
+        Destroy(gameObject);
     }
 
     //下面是接口
@@ -163,12 +175,13 @@ public class PairOrder : MonoBehaviour
         return state;
     }
     //StateChange
-    public void OrederAccept()
+    public void OrderAccept()
     {
         state = State.Accept;
         //更新子对象状态
         fromScript.state = State.Accept;
         toScript.state = State.Accept;
+        orderDB.UpdateOrder(this);
     }
     public void OrderPickUp()
     {
@@ -176,6 +189,7 @@ public class PairOrder : MonoBehaviour
         //更新子对象状态
         fromScript.state = State.PickUp;
         toScript.state = State.PickUp;
+        orderDB.UpdateOrder(this);
     }
     public void OrderDelivered()
     {
@@ -183,6 +197,7 @@ public class PairOrder : MonoBehaviour
         //更新子对象状态
         fromScript.state = State.Delivered;
         toScript.state = State.Delivered;
+        orderDB.UpdateOrder(this);
     }
     public void OrderFinished()
     {
@@ -190,5 +205,6 @@ public class PairOrder : MonoBehaviour
         //更新子对象状态
         fromScript.state = State.Finished;
         toScript.state = State.Finished;
+        orderDB.UpdateOrder(this);
     }
 }
