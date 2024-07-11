@@ -50,12 +50,4 @@ public class ListModel : MonoBehaviour {
         if (index < 0 || index > items.Count) return null;
         return items[index];
     }
-
-    public void onAddButtonPressed() {
-        ItemModel itemModel = ItemModel.spawnNewItem();
-        addItemAt(itemModel);
-    }
-    public void onRemoveButtonPressed() {
-        removeAt(0);
-    }
 }
