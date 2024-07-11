@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using Unity.Properties;
 
 
 public class searchroad : MonoBehaviour {
 
     private MapManagerBehaviour mapManager;
+    private Property property;
     public List<int> shortestPath = new List<int>();
 
-    private float moveSpeed = 10.0f;
+    public float moveSpeed;
 
     private int currentPathIndex = 0; // 当前路径索引
     private bool isMoving = false;    //when true, start to move
@@ -21,6 +23,8 @@ public class searchroad : MonoBehaviour {
     private int beginPosition; //每段移动的起始点
     private int targetPosition; //每段移动的目标点
 
+    public bool orderFinished = false;
+
 
     void Awake() {
         Debug.Log("egg awaked");
@@ -29,6 +33,7 @@ public class searchroad : MonoBehaviour {
     void Start() {
         Debug.Log("egg started");
         mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
+        property = GameObject.Find("deliverman").GetComponent<Property>();
 
         // 检查是否找到了正确的GameObject
         if (mapManager == null) {
@@ -40,6 +45,7 @@ public class searchroad : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        moveSpeed = property.speed;
         Dictionary<int, Dictionary<int, float>> graph = mapManager.GetEdges();
         Dictionary<int, Vector3> vertices = mapManager.GetVertices();
         Dictionary<int, WayPointBehaviour> wayPoints = mapManager.GetWayPoints();
@@ -57,6 +63,7 @@ public class searchroad : MonoBehaviour {
 
             //更新当前路径索引
             currentPathIndex = 0;
+            orderFinished = false;
 
             if (wayPoints.ContainsKey(targetwaypoint)) {
 
@@ -139,7 +146,7 @@ public class searchroad : MonoBehaviour {
                 targetPos = vertices[targetPosition];
             } else {
                 // 已经到达路径的最后一个点，现在目标是wayPoint
-                targetPos = wayPoints[targetwaypoint].pos;
+                targetPos = wayPoints[targetwaypoint].transform.position;
             }
 
             // 向目标位置移动
@@ -154,6 +161,7 @@ public class searchroad : MonoBehaviour {
                 } else {
                     // 到达路径末尾和wayPoint后停止移动
                     Debug.Log("Reach the final wayPoint");
+                    orderFinished = true;
                     isMoving = false;
                     targetPosition = int.MaxValue;
                 }

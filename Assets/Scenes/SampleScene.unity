@@ -1092,6 +1092,7 @@ GameObject:
   - component: {fileID: 997905715}
   - component: {fileID: 997905714}
   - component: {fileID: 997905713}
+  - component: {fileID: 997905716}
   m_Layer: 0
   m_Name: deliverman
   m_TagString: Untagged
@@ -1112,6 +1113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shortestPath: 
+  moveSpeed: 10
 --- !u!212 &997905714
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1179,6 +1181,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &997905716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997905712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bc100c1729c800498f1565a49ccd121, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  capacity: 2
+  money: 100
 --- !u!1001 &1088165578
 PrefabInstance:
   m_ObjectHideFlags: 0
