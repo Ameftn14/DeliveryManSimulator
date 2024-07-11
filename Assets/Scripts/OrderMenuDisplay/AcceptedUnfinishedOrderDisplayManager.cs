@@ -12,14 +12,16 @@ public class AcceptedUnfinishedOrderDisplayManager : MonoBehaviour {
     public void appendNewOrder() {
         // TODO this is for static testing
         OrderInfo order;
-        order = new OrderInfo(new TimeSpan(12, 13, 14), new Color(0, 0, 0, 255), LocationType.Customer);
+        order = new OrderInfo(new TimeSpan(01, 02, 03), new Color(0, 0, 0, 255), LocationType.Customer);
 
         //OrderItemBehaviour itemModel;
         ItemModel itemModel;
         if (order.locationType == LocationType.Restaurant) {
-            itemModel = OrderItemBehaviour.spawnNewRestaurantOrderItem();
+            itemModel = ItemModel.spawnNewItem("Prefabs/UI/Restaurant Menu Item");
+            ((OrderItemBehaviour)itemModel).orderInfo = order;
+            ((OrderItemBehaviour)itemModel).setDisplayEffect();
         } else {
-            itemModel = OrderItemBehaviour.spawnNewCustomerOrderItem();
+            itemModel = ItemModel.spawnNewItem("Prefabs/UI/Customer Menu Item");
         }
         menuView.appendItem(itemModel);
     }
@@ -35,7 +37,7 @@ public enum LocationType {
     Customer
 }
 
-public class OrderInfo : ItemModel {
+public class OrderInfo {
     // TODO pid or whatever
     public readonly TimeSpan dueTime;
     public readonly Color color;
