@@ -47,7 +47,7 @@ public class ListModel : MonoBehaviour {
         items.RemoveAt(index);
     }
     public ItemModel getItemAt(int index) {
-        if (index < 0 || index > items.Count) return null;
+        if (index < 0 || index >= items.Count) return null;
         return items[index];
     }
 }

@@ -23,6 +23,9 @@ public class AcceptedUnfinishedOrderDisplayManager : MonoBehaviour {
         }
         menuView.appendItem(itemModel);
     }
+    public OrderInfo getFirstOrder() {
+        return ((OrderItemBehaviour)menuView.getItemAt(0)).getOrderInfo();
+    }
 
     public void removeOrder(int orderID, LocationType locationType) {
         int size = menuView.getSize();
