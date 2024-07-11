@@ -7,7 +7,7 @@ public class ColorDictionary
     {
         {0, new Color(1f, 0f, 0f)},             // 红色
         {1, new Color(0f, 0f, 1f)},             // 蓝色
-        {2, new Color(0.7f, 0.7f, 0.3f)},             // 黄色
+        {2, new Color(0.545f, 0.271f, 0.075f)}, // 黄色
         {3, new Color(0.5f, 0f, 0.5f)},         // 紫色
         {4, new Color(1f, 0.5f, 0f)},           // 橙色
         {5, new Color(0f, 1f, 1f)},             // 青色
