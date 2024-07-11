@@ -35,6 +35,14 @@ public class RoadBehaviour : MonoBehaviour
         transform.rotation = Quaternion.FromToRotation(Vector3.up, direction);
         transform.localScale = new Vector3(1, direction.magnitude, 1);
         mapManager.AddEdge(startVid, endVid, gameObject);
+        foreach (Transform child in transform)
+        {
+            if (child.gameObject.name == "WayPoint")
+            {
+                child.GetComponent<WayPointBehaviour>().SetVertices(startVertex, endVertex);
+                mapManager.AddWayPoint(child.GetComponent<WayPointBehaviour>().pid, child.gameObject);
+            }
+        }
     }
 
     // Update is called once per frame

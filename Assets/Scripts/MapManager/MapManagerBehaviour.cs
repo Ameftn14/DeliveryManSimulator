@@ -8,8 +8,11 @@ public class MapManagerBehaviour : MonoBehaviour
     static private int nextVid = 0;
     static private int vNum = 0;
     static private int eNum = 0;
+
+    static private int pNum = 0;
     private Dictionary<int, Vector3> vertices;
     private Dictionary<int, Dictionary<int, float>> edges;
+    private Dictionary<int, GameObject> wayPoints;
 
     private Dictionary<int, GameObject> vertexObjects;
     private Dictionary<int, Dictionary<int, GameObject>> edgeObjects;
@@ -30,14 +33,19 @@ public class MapManagerBehaviour : MonoBehaviour
     // 获取边数量
     public int GetENum() => eNum;
 
-    //获取顶点的度
+    // 获取顶点的度
     public int GetEnum(int startVid) => edges[startVid].Count;
+
+    // 获取路标数量
+    public int GetPNum() => pNum;
 
     // 获取顶点集合
     public Dictionary<int, Vector3> GetVertices() => vertices;
 
     // 获取边集合
     public Dictionary<int, Dictionary<int, float>> GetEdges() => edges;
+    // 获取路标集合
+    public Dictionary<int, GameObject> GetWayPoints() => wayPoints;
 
     // 在现存的边上插入一个中间节点，返回其vid
     public int CreateInternalVertex(int vid1, int vid2, float ratio)
@@ -163,6 +171,14 @@ public class MapManagerBehaviour : MonoBehaviour
             }
         }
         return edges.Count;
+    }
+
+    // about waypoints
+
+    public int AddWayPoint(int pid, GameObject wayPointObject)
+    {
+        wayPoints[pid] = wayPointObject;
+        return 0;
     }
 
     // Start is called before the first frame update
