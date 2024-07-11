@@ -24,11 +24,11 @@ public class AcceptedUnfinishedOrderDisplayManager : MonoBehaviour {
         menuView.appendItem(itemModel);
     }
 
-    public void removeOrder(int orderID, bool isFrom) {
+    public void removeOrder(int orderID, LocationType locationType) {
         int size = menuView.getSize();
         for (int i = 0; i < size; i++) {
             OrderItemBehaviour itemModel = (OrderItemBehaviour)menuView.getItemAt(i);
-            if (itemModel.getOrderInfo().orderID == orderID && itemModel.getOrderInfo().isFrom == isFrom) {
+            if (itemModel.getOrderInfo().orderID == orderID && itemModel.getOrderInfo().locationType == locationType) {
                 menuView.removeAt(i);
                 return;
             }
@@ -48,14 +48,12 @@ public class OrderInfo {
     public readonly LocationType locationType;
     public readonly int pid;
     public readonly int orderID;
-    public readonly bool isFrom;
-    public OrderInfo(TimeSpan dueTime, Color color, LocationType locationType, int pid, int orderID, bool isFrom) {
+    public OrderInfo(TimeSpan dueTime, Color color, LocationType locationType, int pid, int orderID) {
         this.dueTime = dueTime;
         this.color = color;
         this.locationType = locationType;
         this.pid = pid;
         this.orderID = orderID;
-        this.isFrom = isFrom;
     }
 }
 
