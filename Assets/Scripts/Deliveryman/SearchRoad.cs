@@ -38,6 +38,19 @@ public class SearchRoad : MonoBehaviour
         mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
         property = GameObject.Find("Deliveryman").GetComponent<Property>();
 
+        GameObject COM = GameObject.Find("COM");
+        if (COM != null)
+        {
+            // 获取游戏对象的位置
+            Vector3 COMPosition = COM.transform.position;
+            Debug.Log("The position of COM is: " + COMPosition);
+            transform.position = COM.transform.position;
+        }
+        else
+        {
+            Debug.Log("COM not found!");
+        }
+
         // 检查是否找到了正确的GameObject
         if (mapManager == null)
         {
@@ -190,6 +203,7 @@ public class SearchRoad : MonoBehaviour
                 {
                     // 到达路径末尾和wayPoint后停止移动
                     Debug.Log("Reach the final wayPoint");
+                    property.increaseFinishedCount();
                     orderFinished = true;
                     isMoving = false;
                     targetPosition = -1;
