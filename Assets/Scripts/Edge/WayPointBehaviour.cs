@@ -15,7 +15,7 @@ public class WayPointBehaviour : MonoBehaviour
     {
         if (mapManager == null)
         {
-            mapManager = transform.parent.GetComponent<MapManagerBehaviour>();
+            mapManager = transform.parent.parent.GetComponent<MapManagerBehaviour>();
         }
         Debug.Assert(mapManager != null);
     }
