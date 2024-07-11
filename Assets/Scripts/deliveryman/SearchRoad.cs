@@ -33,7 +33,7 @@ public class searchroad : MonoBehaviour {
     void Start() {
         Debug.Log("egg started");
         mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
-        property = GameObject.Find("deliverman").GetComponent<Property>();
+        property = GameObject.Find("deliveryman").GetComponent<Property>();
 
         // 检查是否找到了正确的GameObject
         if (mapManager == null) {
