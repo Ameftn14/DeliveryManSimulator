@@ -43,13 +43,16 @@ public class searchroad : MonoBehaviour {
         Dictionary<int, Dictionary<int, float>> graph = mapManager.GetEdges();
         Dictionary<int, Vector3> vertices = mapManager.GetVertices();
         Dictionary<int, WayPointBehaviour> wayPoints = mapManager.GetWayPoints();
-
         DijkstraAlgorithm algo = new DijkstraAlgorithm(graph);
+
+        int targetwaypoint = 0;
+
+
         // 检测按键输入
         if (Input.GetKeyDown(KeyCode.S) && !isMoving) {
             Debug.Log("S pressed, new start");
 
-            int targetwaypoint = 0;
+
             Debug.Assert(wayPoints.ContainsKey(targetwaypoint));
 
             //更新当前路径索引
@@ -128,18 +131,29 @@ public class searchroad : MonoBehaviour {
 
 
         if (isMoving) {
-            // 如果还没有到达目标位置
-            if (wayPoints.ContainsKey(targetPosition) && (gameObject.transform.position - vertices[targetPosition]).sqrMagnitude > 0.1f) {
-                // 向目标位置移动
-                gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, vertices[targetPosition], moveSpeed * Time.deltaTime);
+            Vector3 targetPos;
+
+            // 如果还有路径点未到达
+            if (currentPathIndex < shortestPath.Count) {
+                targetPosition = shortestPath[currentPathIndex];
+                targetPos = vertices[targetPosition];
             } else {
-                // 到达目标位置后更新路径索引和目标位置
-                beginPosition = shortestPath[currentPathIndex];
-                currentPathIndex++;
+                // 已经到达路径的最后一个点，现在目标是wayPoint
+                targetPos = wayPoints[targetwaypoint].pos;
+            }
+
+            // 向目标位置移动
+            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, targetPos, moveSpeed * Time.deltaTime);
+
+            // 检查是否到达目标位置
+            if ((gameObject.transform.position - targetPos).sqrMagnitude <= 0.1f) {
                 if (currentPathIndex < shortestPath.Count) {
-                    targetPosition = shortestPath[currentPathIndex];
+                    // 到达当前路径点后更新路径索引和目标位置
+                    beginPosition = shortestPath[currentPathIndex];
+                    currentPathIndex++;
                 } else {
-                    // 到达路径末尾后停止移动
+                    // 到达路径末尾和wayPoint后停止移动
+                    Debug.Log("Reach the final wayPoint");
                     isMoving = false;
                     targetPosition = int.MaxValue;
                 }

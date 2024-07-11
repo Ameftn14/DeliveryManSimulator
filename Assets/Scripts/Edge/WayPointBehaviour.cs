@@ -7,6 +7,7 @@ public class WayPointBehaviour : MonoBehaviour
     static private int nextPid = 0;
     public int pid = -1;
     public int startVid = -1, endVid = -1;
+    public Vector3 pos;
 
     // distance from start to here is Manager.GetEdges()[startVid][endVid] * ratio
     public float ratio = 0;
@@ -23,6 +24,7 @@ public class WayPointBehaviour : MonoBehaviour
         endVid = end.GetComponent<VertexBehaviour>().vid;
         Debug.Assert(ratio >= 0 && ratio <= 1);
         transform.position = start.transform.position * (1 - ratio) + end.transform.position * ratio;
+        pos = transform.position;
     }
 
     // Update is called once per frame
