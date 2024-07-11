@@ -20,7 +20,7 @@ public class PairOrder : MonoBehaviour
     private TimeSpan Deadline;
     //private Timespan AcceptTime;
     //private Timespan PickUpTime;
-    private float LifeTime = 5f;
+    private float LifeTime = 5f;//TODO:以下所有liftime都没有提供做修改的接口，待优化
     private float timer = 5f;
 
     private int Orderstate;
@@ -62,6 +62,7 @@ public class PairOrder : MonoBehaviour
         fromScript.SetOrderID(OrderID);
         fromScript.LifeTime = LifeTime;
         fromScript.parentPairOrder = this;
+        fromScript.brotherSingleOrder = toScript;
 
         OrderTo = Instantiate(OrderToPre, to_position, Quaternion.identity);
         toScript = OrderTo.GetComponent<SingleOrder>();
@@ -70,6 +71,7 @@ public class PairOrder : MonoBehaviour
         toScript.SetOrderID(OrderID);
         toScript.LifeTime = LifeTime;
         toScript.parentPairOrder = this;
+        toScript.brotherSingleOrder = fromScript;
 
         distance = Vector2.Distance(fromScript.GetPosition(), toScript.GetPosition());
         //随机生成价格
@@ -79,6 +81,7 @@ public class PairOrder : MonoBehaviour
         //TODO:这个逻辑待优化
         Deadline = virtualClock.GetTime().Add(new TimeSpan(1, 0, 0));
         timer = LifeTime;
+        state = State.NotAccept;
     }
 
     public void Update()
@@ -107,11 +110,17 @@ public class PairOrder : MonoBehaviour
     {
         return price;
     }
+    //获取订单利润
     public void SetPrice(int price)
     {
         this.price = price;
     }
-
+    //获取订单距离
+    public TimeSpan GetDeadline()
+    {
+        return Deadline;
+    }
+    //获取订单截止时间
     public float GetDistance()
     {
         return distance;
@@ -121,10 +130,6 @@ public class PairOrder : MonoBehaviour
         this.distance = distance;
     }
 
-    public TimeSpan GetDeadline()
-    {
-        return Deadline;
-    }
     public void SetDeadline(TimeSpan deadline)
     {
         this.Deadline = deadline;
@@ -147,17 +152,29 @@ public class PairOrder : MonoBehaviour
     public void OrederAccept()
     {
         state = State.Accept;
+        //更新子对象状态
+        fromScript.state = State.Accept;
+        toScript.state = State.Accept;
     }
     public void OrderPickUp()
     {
         state = State.PickUp;
+        //更新子对象状态
+        fromScript.state = State.PickUp;
+        toScript.state = State.PickUp;
     }
     public void OrderDelivered()
     {
         state = State.Delivered;
+        //更新子对象状态
+        fromScript.state = State.Delivered;
+        toScript.state = State.Delivered;
     }
     public void OrderFinished()
     {
         state = State.Finished;
+        //更新子对象状态
+        fromScript.state = State.Finished;
+        toScript.state = State.Finished;
     }
 }
