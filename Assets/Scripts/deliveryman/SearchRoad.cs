@@ -51,7 +51,7 @@ public class searchroad : MonoBehaviour {
         Dictionary<int, WayPointBehaviour> wayPoints = mapManager.GetWayPoints();
         DijkstraAlgorithm algo = new DijkstraAlgorithm(graph);
 
-        int targetwaypoint = 0;
+        int targetwaypoint = 8;
 
 
         // 检测按键输入
