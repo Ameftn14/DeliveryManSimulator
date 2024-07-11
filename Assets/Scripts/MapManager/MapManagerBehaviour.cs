@@ -23,6 +23,7 @@ public class MapManagerBehaviour : MonoBehaviour
         vertexObjects = new Dictionary<int, GameObject>();
         edges = new Dictionary<int, Dictionary<int, float>>();
         edgeObjects = new Dictionary<int, Dictionary<int, GameObject>>();
+        wayPoints = new Dictionary<int, WayPointBehaviour>();
     }
 
     // for Outside

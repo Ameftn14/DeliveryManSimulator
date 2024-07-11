@@ -21,7 +21,7 @@ public class WayPointBehaviour : MonoBehaviour
     {
         startVid = start.GetComponent<VertexBehaviour>().vid;
         endVid = end.GetComponent<VertexBehaviour>().vid;
-        Debug.Assert(ratio > 0 && ratio < 1);
+        Debug.Assert(ratio >= 0 && ratio <= 1);
         transform.position = start.transform.position * (1 - ratio) + end.transform.position * ratio;
     }
 
