@@ -37,10 +37,11 @@ public class RoadBehaviour : MonoBehaviour
         mapManager.AddEdge(startVid, endVid, gameObject);
         foreach (Transform child in transform)
         {
-            if (child.gameObject.name == "WayPoint")
+            WayPointBehaviour wayPointBehaviour = child.GetComponent<WayPointBehaviour>();
+            if (wayPointBehaviour != null)
             {
                 child.GetComponent<WayPointBehaviour>().SetVertices(startVertex, endVertex);
-                mapManager.AddWayPoint(child.GetComponent<WayPointBehaviour>());
+                mapManager.AddWayPoint(wayPointBehaviour);
             }
         }
     }

@@ -12,10 +12,10 @@ public class MapManagerBehaviour : MonoBehaviour
     static private int pNum = 0;
     private Dictionary<int, Vector3> vertices;
     private Dictionary<int, Dictionary<int, float>> edges;
-    private Dictionary<int, GameObject> wayPoints;
+    private Dictionary<int, WayPointBehaviour> wayPoints;
 
     private Dictionary<int, GameObject> vertexObjects;
-    private Dictionary<int, Dictionary<int, WayPointBehaviour>> edgeObjects;
+    private Dictionary<int, Dictionary<int, GameObject>> edgeObjects;
 
     public MapManagerBehaviour()
     {
@@ -23,6 +23,7 @@ public class MapManagerBehaviour : MonoBehaviour
         vertexObjects = new Dictionary<int, GameObject>();
         edges = new Dictionary<int, Dictionary<int, float>>();
         edgeObjects = new Dictionary<int, Dictionary<int, GameObject>>();
+        wayPoints = new Dictionary<int, WayPointBehaviour>();
     }
 
     // for Outside
@@ -177,6 +178,8 @@ public class MapManagerBehaviour : MonoBehaviour
 
     public int AddWayPoint(WayPointBehaviour wayPoint)
     {
+        Debug.Assert(wayPoint != null);
+        Debug.Log("AddWayPoint: " + wayPoint.pid);
         wayPoints[wayPoint.pid] = wayPoint;
         return 0;
     }
@@ -199,6 +202,7 @@ public class MapManagerBehaviour : MonoBehaviour
             if (roadBehaviour != null)
             {
                 roadBehaviour.mapManager = this;
+                Debug.Assert(roadBehaviour.startVertex != null && roadBehaviour.endVertex != null);
                 roadBehaviour.SetVertices(roadBehaviour.startVertex, roadBehaviour.endVertex);
                 AddEdge(roadBehaviour.startVid, roadBehaviour.endVid, roadBehaviour.gameObject);
             }
