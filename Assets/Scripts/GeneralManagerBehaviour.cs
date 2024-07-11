@@ -49,10 +49,13 @@ public class GeneralManagerBehaviour : MonoBehaviour {
                 theOrder = thePairOrder.fromScript;
             else
                 theOrder = thePairOrder.toScript;
-            if (theOrder.GetIsFrom())
+            if (theOrder.GetIsFrom()){
                 thePairOrder.state = PairOrder.State.PickUp;
+                Debug.Log("PickUp");
+            }
             else {
                 thePairOrder.state = PairOrder.State.Delivered;
+                Debug.Log("Delivered");
                 theProperty.nowCapacity += 1;
                 if (virtualClock.GetTime() < thePairOrder.GetDeadline())
                     theProperty.money += thePairOrder.GetPrice();
