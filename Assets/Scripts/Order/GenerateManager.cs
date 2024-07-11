@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class GeneratorManager : MonoBehaviour
-{
+public class GeneratorManager : MonoBehaviour {
     public MapManagerBehaviour mapManager; // 地图管理器
     public VirtualClockUI virtualClock; // 虚拟时钟
     public OrderDB orderDB; // 订单数据库
@@ -14,24 +13,20 @@ public class GeneratorManager : MonoBehaviour
     public GameObject orderPairPrefab; // 订单预制件
     public int WPcount = 0;
 
-    void Start()
-    {
+    void Start() {
         // 获取虚拟时钟 GameObject 的 VirtualClock 组件
         virtualClock = GameObject.Find("Time").GetComponent<VirtualClockUI>();
         mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
         orderDB = GameObject.Find("OrderDB").GetComponent<OrderDB>();
-        if (virtualClock == null)
-        {
+        if (virtualClock == null) {
             Debug.LogError("VirtualClock is not assigned!");
             return;
         }
-        if (mapManager == null)
-        {
+        if (mapManager == null) {
             Debug.LogError("MapManager is not assigned!");
             return;
         }
-        if (orderDB == null)
-        {
+        if (orderDB == null) {
             Debug.LogError("OrderDB is not assigned!");
             return;
         }
@@ -45,12 +40,10 @@ public class GeneratorManager : MonoBehaviour
         WPcount = mapManager.GetWayPoints().Count;
     }
 
-    void Update()
-    {
+    void Update() {
         // 更新计时器
         timer -= Time.deltaTime;
-        if (timer <= 0f)
-        {
+        if (timer <= 0f) {
             GeneratePairs(); // 生成预制件
             (float _interval, int _quality) = virtualClock.GetOrderRefreshRate();
             this.interval = _interval;
@@ -70,17 +63,17 @@ public class GeneratorManager : MonoBehaviour
         // }
     }
 
-    void GeneratePairs()
-    {
-        for (int i = 0; i < quality; i++)
-        {
+    void GeneratePairs() {
+        for (int i = 0; i < quality; i++) {
             GeneratePair();
         }
     }
 
-    void GeneratePair(){
+    void GeneratePair() {
         //TODO: 生成一对订单
         GameObject orderPair = Instantiate(orderPairPrefab);
+        orderPair.GetComponent<PairOrder>().SetOrderID(NextOrderID);
+        NextOrderID++;
         orderPair.GetComponent<PairOrder>().SetOrderID(NextOrderID);
         NextOrderID++;
         orderDB.AddOrder(orderPair.GetComponent<PairOrder>());

@@ -2,8 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class PairOrder : MonoBehaviour
-{
+public class PairOrder : MonoBehaviour {
     public OrderDB orderDB;
     public MapManagerBehaviour mapManager;
     public VirtualClockUI virtualClock;
@@ -21,8 +20,7 @@ public class PairOrder : MonoBehaviour
     private float LifeTime = 5f;//TODO:以下所有liftime都没有提供做修改的接口，待优化
     private float timer = 5f;
 
-    public enum State
-    {
+    public enum State {
         NotAccept,//未接单
         Accept,//已接单
         PickUp,//已取货
@@ -32,8 +30,7 @@ public class PairOrder : MonoBehaviour
 
     public State state;
 
-    public void Start()
-    {
+    public void Start() {
         orderDB = GameObject.Find("OrderDB").GetComponent<OrderDB>();
         mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
         virtualClock = GameObject.Find("Time").GetComponent<VirtualClockUI>();
@@ -44,13 +41,12 @@ public class PairOrder : MonoBehaviour
         // }
         // OrderToPre = Resources.Load<GameObject>("Prefabs/OrderTo");
         state = State.NotAccept;
-        
+
         Deadline = virtualClock.GetTime().Add(new TimeSpan(2, 0, 0));
         //随机获取两个pid
         from_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
         to_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
-        while (from_pid == to_pid)
-        {
+        while (from_pid == to_pid) {
             to_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
         }
         //获取两个位置
@@ -82,7 +78,7 @@ public class PairOrder : MonoBehaviour
         toScript.LifeTime = LifeTime;
         toScript.parentPairOrder = this;
         toScript.Deadline = Deadline;
- 
+
         toScript.brotherSingleOrder = fromScript;
         fromScript.brotherSingleOrder = toScript;
 
@@ -96,28 +92,22 @@ public class PairOrder : MonoBehaviour
         state = State.NotAccept;
     }
 
-    public void Update()
-    {
-        if(state == State.NotAccept)
-        {
+    public void Update() {
+        if (state == State.NotAccept) {
             timer -= Time.deltaTime;
-            if (timer <= 0f)
-            {
+            if (timer <= 0f) {
                 OrderFinished();
                 DistroyEverything();
             }
-        }
-        else{
+        } else {
             TimeSpan currentTime = virtualClock.GetTime();
-            if(currentTime > Deadline)
-            {
+            if (currentTime > Deadline) {
                 DistroyEverything();
             }
         }
     }
 
-    public void DistroyEverything()
-    {
+    public void DistroyEverything() {
         Destroy(transform.Find("OrderFrom").gameObject);
         Destroy(transform.Find("OrderTo").gameObject);
         Destroy(gameObject);
@@ -125,41 +115,33 @@ public class PairOrder : MonoBehaviour
 
     //下面是接口
 
-    public int GetOrderID()
-    {
+    public int GetOrderID() {
         return OrderID;
     }
-    public void SetOrderID(int id)
-    {
+    public void SetOrderID(int id) {
         this.OrderID = id;
     }
 
-    public int GetPrice()
-    {
+    public int GetPrice() {
         return price;
     }
     //获取订单利润
-    public void SetPrice(int price)
-    {
+    public void SetPrice(int price) {
         this.price = price;
     }
     //获取订单距离
-    public TimeSpan GetDeadline()
-    {
+    public TimeSpan GetDeadline() {
         return Deadline;
     }
     //获取订单截止时间
-    public float GetDistance()
-    {
+    public float GetDistance() {
         return distance;
     }
-    public void SetDistance(float distance)
-    {
+    public void SetDistance(float distance) {
         this.distance = distance;
     }
 
-    public void SetDeadline(TimeSpan deadline)
-    {
+    public void SetDeadline(TimeSpan deadline) {
         this.Deadline = deadline;
     }
 
@@ -172,37 +154,32 @@ public class PairOrder : MonoBehaviour
     //     this.AcceptTime = acceptTime;
     // }
 
-    public State GetState()
-    {
+    public State GetState() {
         return state;
     }
     //StateChange
-    public void OrderAccept()
-    {
+    public void OrderAccept() {
         state = State.Accept;
         //更新子对象状态
         fromScript.state = State.Accept;
         toScript.state = State.Accept;
         orderDB.UpdateOrder(this);
     }
-    public void OrderPickUp()
-    {
+    public void OrderPickUp() {
         state = State.PickUp;
         //更新子对象状态
         fromScript.state = State.PickUp;
         toScript.state = State.PickUp;
         orderDB.UpdateOrder(this);
     }
-    public void OrderDelivered()
-    {
+    public void OrderDelivered() {
         state = State.Delivered;
         //更新子对象状态
         fromScript.state = State.Delivered;
         toScript.state = State.Delivered;
         orderDB.UpdateOrder(this);
     }
-    public void OrderFinished()
-    {
+    public void OrderFinished() {
         state = State.Finished;
         //更新子对象状态
         fromScript.state = State.Finished;
