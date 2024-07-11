@@ -54,6 +54,7 @@
 //         {
 //             theSearchRoad.targetwaypoint = theMenuView.第一项的pid();
 //             theSearchRoad.isMoving = false;
+//             theSearchRoad.orderFinished = false;
 //         }
 //     }
 
