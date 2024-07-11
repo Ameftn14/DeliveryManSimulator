@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class WayPointBehaviour : MonoBehaviour
 {
-    static private int nextPid = 0;
     public int pid = -1;
     public int startVid = -1, endVid = -1;
+    public MapManagerBehaviour mapManager = null;
 
     // 到startVertex的距离与整条边长度的比例
     public float ratio = 0;
 
+    void Awake()
+    {
+        if (mapManager == null)
+        {
+            mapManager = transform.parent.GetComponent<MapManagerBehaviour>();
+        }
+        Debug.Assert(mapManager != null);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        pid = nextPid++;
     }
 
     public void SetVertices(GameObject start, GameObject end)
