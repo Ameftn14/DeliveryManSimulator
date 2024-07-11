@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public class ColorDictionary {
-    private readonly Dictionary<int, Color> colorDictionary = new Dictionary<int, Color>()
+    static private readonly Dictionary<int, Color> colorDictionary = new Dictionary<int, Color>()
     {
         {0, new Color(1f, 0f, 0f)},             // 红色
         {1, new Color(0f, 0f, 1f)},             // 蓝色
@@ -20,7 +20,8 @@ public class ColorDictionary {
         {13, new Color(0.5f, 0.5f, 0f)}         // 橄榄色
     };
 
-    public Color GetColor(int index) {
+    static public Color GetColor(int index)
+    {
         if (colorDictionary.Count == 0) {
             Debug.LogError("Color dictionary is empty!");
             return Color.black;

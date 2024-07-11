@@ -24,6 +24,8 @@ public class SearchRoad : MonoBehaviour
     private int beginPosition; //每段移动的起始点
     private int targetPosition; //每段移动的目标点
 
+    public int targetOrderID = -1;
+    public bool targetIsFrom = false;
     public bool orderFinished = false;
 
     public int targetwaypoint = -1;
