@@ -25,4 +25,15 @@ public class OrderDB
     {
         orderDict[order.OrderID] = order;
     }
+
+    //声明委托，通过OrderID用于在订单状态发生变化时通知其他对象
+    // TODO: 接口管理
+    public delegate void OrderStateChange(int OrderID);
+    public OrderStateChange orderStateChange;
+
+    //订单状态发生变化时调用委托
+    public void OnOrderStateChange(int OrderID)
+    {
+        orderStateChange(OrderID);
+    }
 }

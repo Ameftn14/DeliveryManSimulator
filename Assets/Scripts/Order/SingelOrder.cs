@@ -6,10 +6,24 @@ public class SigelOrder : MonoBehaviour
 
     public int OrderID;
     private int pid;
+    private Vector2 position;
     // private float price;
     // private float distance;
     private bool isFrom;//true for from, false for to
 
+    public void Start()
+    {
+        pid = -1;
+        position = new Vector2(0, 0);
+        // price = 0;
+        // distance = 0;
+        isFrom = true;
+    }
+
+    public void Update()
+    {
+        
+    }
     // pid operation
     public Getpid()
     {
@@ -18,6 +32,7 @@ public class SigelOrder : MonoBehaviour
     public void SetPid(int pid)
     {
         this.pid = pid;
+        //TODO: get position from pid
     }
 
     // price operation
@@ -58,5 +73,11 @@ public class SigelOrder : MonoBehaviour
     public void SetOrderID(int id)
     {
         this.OrderID = id;
+    }
+
+    // position operation
+    public Vector2 GetPosition()
+    {
+        return position;
     }
 }
