@@ -106,7 +106,7 @@ public class PairOrder : MonoBehaviour
         this.OrderID = id;
     }
 
-    public float GetPrice()
+    public int GetPrice()
     {
         return price;
     }

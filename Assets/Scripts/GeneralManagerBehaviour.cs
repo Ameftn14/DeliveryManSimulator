@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,24 +20,25 @@ public class GeneralManagerBehaviour : MonoBehaviour
         Debug.Assert(theSearchRoad != null);
         Debug.Assert(theMapManager != null);
         Debug.Assert(theOrderDB != null);
-        Debug.Assert(theMenuView != null);
+        Debug.Assert(displayManager != null);
+        Debug.Assert(virtualClock != null);
     }
 
     void DBConfirmOrder(int OrderID) // 需要挂监听
     {
+        PairOrder theOrder = theOrderDB.orderDict[OrderID];
         if (theProperty.nowCapacity + 1 <= theProperty.allCapacity)
         {
-            PairOrder theOrder = theOrderDB.orderDict[OrderID];
             SingleOrder theFrom = theOrder.fromScript;
             SingleOrder theTo = theOrder.toScript;
-            TimeSpan dueTime = theOrder.Deadline;
+            TimeSpan dueTime = theOrder.GetDeadline();
             Color color = ColorDictionary.GetColor(theOrder.OrderID);
-            displayManager.appendNewOrder(dueTime, color, LocationType.Restaurant, theFrom.pid, theOrder.OrderID);
-            displayManager.appendNewOrder(dueTime, color, LocationType.Customer, theTo.pid, theOrder.OrderID);
+            displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Restaurant, theFrom.Getpid(), theOrder.OrderID));
+            displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Customer, theTo.Getpid(), theOrder.OrderID));
             theProperty.nowCapacity += 1;
         }
         else
-            theOrder.state = NotAccept;
+            theOrder.state = PairOrder.State.NotAccept;
     }
 
 
@@ -51,14 +53,14 @@ public class GeneralManagerBehaviour : MonoBehaviour
                 theOrder = thePairOrder.fromScript;
             else
                 theOrder = thePairOrder.toScript;
-            if (FinishedOrder.isFrom)
-                thePairOrder.state = PickUp;
+            if (theOrder.GetIsFrom())
+                thePairOrder.state = PairOrder.State.PickUp;
             else
             {
-                thePairOrder.state = Delivered;
+                thePairOrder.state = PairOrder.State.Delivered;
                 theProperty.nowCapacity -= 1;
-                if (virtualClock.GetTime() < thePairOrder.Deadline)
-                    theProperty.money += thePairOrder.price;
+                if (virtualClock.GetTime() < thePairOrder.GetDeadline())
+                    theProperty.money += thePairOrder.GetPrice();
             }
         }
         else
