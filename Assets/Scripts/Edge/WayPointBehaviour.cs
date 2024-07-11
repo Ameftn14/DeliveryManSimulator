@@ -9,7 +9,7 @@ public class WayPointBehaviour : MonoBehaviour
     public int startVid = -1, endVid = -1;
     public Vector3 pos;
 
-    // distance from start to here is Manager.GetEdges()[startVid][endVid] * ratio
+    // 到startVertex的距离与整条边长度的比例
     public float ratio = 0;
 
     // Start is called before the first frame update
@@ -24,7 +24,7 @@ public class WayPointBehaviour : MonoBehaviour
         endVid = end.GetComponent<VertexBehaviour>().vid;
         Debug.Assert(ratio >= 0 && ratio <= 1);
         transform.position = start.transform.position * (1 - ratio) + end.transform.position * ratio;
-        pos = transform.position;
+        transform.localScale = new Vector3(2f, 0.01f, 1f);
     }
 
     // Update is called once per frame

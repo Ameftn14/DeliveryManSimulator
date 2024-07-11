@@ -48,51 +48,51 @@ public class MapManagerBehaviour : MonoBehaviour
     // 获取路标集合
     public Dictionary<int, WayPointBehaviour> GetWayPoints() => wayPoints;
 
-    // 在现存的边上插入一个中间节点，返回其vid
-    public int CreateInternalVertex(int vid1, int vid2, float ratio)
-    {
-        Debug.Assert(ratio > 0 && ratio < 1);
-        Debug.Assert(vertices.ContainsKey(vid1) && vertices.ContainsKey(vid2));
-        Debug.Assert(vid1 != vid2);
-        Debug.Assert(!edges.ContainsKey(vid1) || !edges[vid1].ContainsKey(vid2));
-        Vector3 p1 = vertices[vid1];
-        Vector3 p2 = vertices[vid2];
-        Vector3 p = p1 + (p2 - p1) * ratio;
-        GameObject vertexObject = Instantiate(Resources.Load("PreFabs/SubCross")) as GameObject;
-        int vid = AddVertex(p, vertexObject);
-        vertexObject.transform.position = p;
-        RemoveEdge(vid1, vid2);
-        GameObject edgeObject1 = Instantiate(Resources.Load("PreFabs/Road")) as GameObject;
-        GameObject edgeObject2 = Instantiate(Resources.Load("PreFabs/Road")) as GameObject;
-        edgeObject1.GetComponent<RoadBehaviour>().SetVertices(vertexObjects[vid1], vertexObject);
-        edgeObject2.GetComponent<RoadBehaviour>().SetVertices(vertexObject, vertexObjects[vid2]);
-        AddEdge(vid1, vid, edgeObject1);
-        AddEdge(vid, vid2, edgeObject2);
-        return vid;
-    }
+    // // 在现存的边上插入一个中间节点，返回其vid
+    // public int CreateInternalVertex(int vid1, int vid2, float ratio)
+    // {
+    //     Debug.Assert(ratio > 0 && ratio < 1);
+    //     Debug.Assert(vertices.ContainsKey(vid1) && vertices.ContainsKey(vid2));
+    //     Debug.Assert(vid1 != vid2);
+    //     Debug.Assert(!edges.ContainsKey(vid1) || !edges[vid1].ContainsKey(vid2));
+    //     Vector3 p1 = vertices[vid1];
+    //     Vector3 p2 = vertices[vid2];
+    //     Vector3 p = p1 + (p2 - p1) * ratio;
+    //     GameObject vertexObject = Instantiate(Resources.Load("PreFabs/SubCross")) as GameObject;
+    //     int vid = AddVertex(p, vertexObject);
+    //     vertexObject.transform.position = p;
+    //     RemoveEdge(vid1, vid2);
+    //     GameObject edgeObject1 = Instantiate(Resources.Load("PreFabs/Road")) as GameObject;
+    //     GameObject edgeObject2 = Instantiate(Resources.Load("PreFabs/Road")) as GameObject;
+    //     edgeObject1.GetComponent<RoadBehaviour>().SetVertices(vertexObjects[vid1], vertexObject);
+    //     edgeObject2.GetComponent<RoadBehaviour>().SetVertices(vertexObject, vertexObjects[vid2]);
+    //     AddEdge(vid1, vid, edgeObject1);
+    //     AddEdge(vid, vid2, edgeObject2);
+    //     return vid;
+    // }
 
-    // 删除中间节点，返回新建的边
-    public GameObject RemoveInternalVertex(int vid)
-    {
-        Debug.Assert(vertices.ContainsKey(vid));
-        Debug.Assert(edges.ContainsKey(vid));
-        Debug.Assert(edges[vid].Count == 2);
-        Dictionary<int, float> myEdges = edges[vid];
-        // get the two keys
-        int vid1 = -1;
-        int vid2 = -1;
-        foreach (var key in myEdges.Keys)
-            if (vid1 == -1)
-                vid1 = key;
-            else
-                vid2 = key;
-        Debug.Assert(vertices.ContainsKey(vid1) && vertices.ContainsKey(vid2));
-        RemoveVertex(vid);
-        GameObject edgeObject = Instantiate(Resources.Load("PreFabs/Road")) as GameObject;
-        edgeObject.GetComponent<RoadBehaviour>().SetVertices(vertexObjects[vid1], vertexObjects[vid2]);
-        AddEdge(vid1, vid2, edgeObject);
-        return edgeObject;
-    }
+    // // 删除中间节点，返回新建的边
+    // public GameObject RemoveInternalVertex(int vid)
+    // {
+    //     Debug.Assert(vertices.ContainsKey(vid));
+    //     Debug.Assert(edges.ContainsKey(vid));
+    //     Debug.Assert(edges[vid].Count == 2);
+    //     Dictionary<int, float> myEdges = edges[vid];
+    //     // get the two keys
+    //     int vid1 = -1;
+    //     int vid2 = -1;
+    //     foreach (var key in myEdges.Keys)
+    //         if (vid1 == -1)
+    //             vid1 = key;
+    //         else
+    //             vid2 = key;
+    //     Debug.Assert(vertices.ContainsKey(vid1) && vertices.ContainsKey(vid2));
+    //     RemoveVertex(vid);
+    //     GameObject edgeObject = Instantiate(Resources.Load("PreFabs/Road")) as GameObject;
+    //     edgeObject.GetComponent<RoadBehaviour>().SetVertices(vertexObjects[vid1], vertexObjects[vid2]);
+    //     AddEdge(vid1, vid2, edgeObject);
+    //     return edgeObject;
+    // }
 
     // about vertices
 
@@ -178,6 +178,8 @@ public class MapManagerBehaviour : MonoBehaviour
 
     public int AddWayPoint(WayPointBehaviour wayPoint)
     {
+        Debug.Assert(wayPoint != null);
+        Debug.Log("AddWayPoint: " + wayPoint.pid);
         wayPoints[wayPoint.pid] = wayPoint;
         return 0;
     }
@@ -200,6 +202,7 @@ public class MapManagerBehaviour : MonoBehaviour
             if (roadBehaviour != null)
             {
                 roadBehaviour.mapManager = this;
+                Debug.Assert(roadBehaviour.startVertex != null && roadBehaviour.endVertex != null);
                 roadBehaviour.SetVertices(roadBehaviour.startVertex, roadBehaviour.endVertex);
                 AddEdge(roadBehaviour.startVid, roadBehaviour.endVid, roadBehaviour.gameObject);
             }
