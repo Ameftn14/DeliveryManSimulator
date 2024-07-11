@@ -12,10 +12,10 @@ public class MapManagerBehaviour : MonoBehaviour
     static private int pNum = 0;
     private Dictionary<int, Vector3> vertices;
     private Dictionary<int, Dictionary<int, float>> edges;
-    private Dictionary<int, GameObject> wayPoints;
+    private Dictionary<int, WayPointBehaviour> wayPoints;
 
     private Dictionary<int, GameObject> vertexObjects;
-    private Dictionary<int, Dictionary<int, WayPointBehaviour>> edgeObjects;
+    private Dictionary<int, Dictionary<int, GameObject>> edgeObjects;
 
     public MapManagerBehaviour()
     {
