@@ -22,17 +22,18 @@ public class GeneralManagerBehaviour : MonoBehaviour {
         Debug.Assert(virtualClock != null);
     }
 
-    void DBConfirmOrder(int OrderID) // 需要挂监听
+    public void DBConfirmOrder(int OrderID) // 需要挂监听
     {
+        Debug.Log("DBConfirmOrder");
         PairOrder theOrder = theOrderDB.orderDict[OrderID];
-        if (theProperty.nowCapacity + 1 <= theProperty.allCapacity) {
+        if (theProperty.nowCapacity - 1 >= 0) {
             SingleOrder theFrom = theOrder.fromScript;
             SingleOrder theTo = theOrder.toScript;
             TimeSpan dueTime = theOrder.GetDeadline();
             Color color = ColorDictionary.GetColor(theOrder.OrderID);
             displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Restaurant, theFrom.Getpid(), theOrder.OrderID));
             displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Customer, theTo.Getpid(), theOrder.OrderID));
-            theProperty.nowCapacity += 1;
+            theProperty.nowCapacity -= 1;
         } else
             theOrder.state = PairOrder.State.NotAccept;
     }
@@ -52,13 +53,18 @@ public class GeneralManagerBehaviour : MonoBehaviour {
                 thePairOrder.state = PairOrder.State.PickUp;
             else {
                 thePairOrder.state = PairOrder.State.Delivered;
-                theProperty.nowCapacity -= 1;
+                theProperty.nowCapacity += 1;
                 if (virtualClock.GetTime() < thePairOrder.GetDeadline())
                     theProperty.money += thePairOrder.GetPrice();
             }
         } else {
             OrderInfo theFirstOrder = displayManager.getFirstOrder();
-            if (theFirstOrder.pid != theSearchRoad.targetwaypoint) {
+            if(theFirstOrder == null){
+                theSearchRoad.targetOrderID = -1;
+                theSearchRoad.targetIsFrom = false;
+                theSearchRoad.targetwaypoint = -1;
+            }
+            else if (theFirstOrder.pid != theSearchRoad.targetwaypoint) {
                 theSearchRoad.targetOrderID = theFirstOrder.orderID;
                 theSearchRoad.targetIsFrom = theFirstOrder.locationType == LocationType.Restaurant;
                 theSearchRoad.targetwaypoint = theFirstOrder.pid;

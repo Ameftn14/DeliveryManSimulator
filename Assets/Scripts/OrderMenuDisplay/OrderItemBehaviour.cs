@@ -19,7 +19,7 @@ public class OrderItemBehaviour : ItemModel {
         // colorToSet = orderInfo.color;
         imageObject.GetComponent<Image>().color = colorToSet;
         Debug.Assert(dueTimeText != null);
-        Debug.Log("due time: " + orderInfo.dueTime);
+        // Debug.Log("due time: " + orderInfo.dueTime);
         dueTimeText.text = orderInfo.dueTime.ToString();
     }
     void Start() {
@@ -29,11 +29,13 @@ public class OrderItemBehaviour : ItemModel {
         setDisplayEffect();
     }
     public static ItemModel spawnNewRestaurantOrderItem(OrderInfo orderInfo) {
+        Debug.Log("spawnNewRestaurantOrderItem");
         OrderItemBehaviour orderItemBehaviour = (OrderItemBehaviour)spawnNewItem("Prefabs/UI/Restaurant Menu Item");
         orderItemBehaviour.setOrderInfo(orderInfo);
         return orderItemBehaviour;
     }
     public static ItemModel spawnNewCustomerOrderItem(OrderInfo orderInfo) {
+        Debug.Log("spawnNewCustomerOrderItem");
         OrderItemBehaviour orderItemBehaviour = (OrderItemBehaviour)spawnNewItem("Prefabs/UI/Customer Menu Item");
         orderItemBehaviour.setOrderInfo(orderInfo);
         return orderItemBehaviour;

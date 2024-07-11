@@ -6,6 +6,7 @@ using System;
 public class SingleOrder : MonoBehaviour {
     public ColorDictionary colorDictionary;
     public VirtualClockUI virtualClockUI;
+    public GeneralManagerBehaviour generalManager;
     public MapManagerBehaviour mapManager;
     public TimeSpan acceptTime;
     public RingProgress ringProgress;
@@ -28,6 +29,7 @@ public class SingleOrder : MonoBehaviour {
         virtualClockUI = GameObject.Find("Time").GetComponent<VirtualClockUI>();
         parentPairOrder = transform.parent.GetComponent<PairOrder>();
         colorDictionary = new ColorDictionary();
+        generalManager = GameObject.Find("GeneralManager").GetComponent<GeneralManagerBehaviour>();
 
         if (mapManager == null) {
             Debug.LogError("MapManager is not assigned!");
@@ -74,6 +76,7 @@ public class SingleOrder : MonoBehaviour {
             acceptTime = virtualClockUI.GetTime();
             ringProgress.acceptTime = acceptTime;
             brotherSingleOrder.acceptTime = acceptTime;
+            generalManager.DBConfirmOrder(OrderID);
         }
     }
     // pid operation

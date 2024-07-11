@@ -116,7 +116,7 @@ public static class OrderRefreshRate
 
     public static (float TimeInterval, int Quality) GetOrderRefreshRate(int hour, int minute)
     {
-        float baseInterval = 13f; // 基准刷新间隔为 8 秒
+        float baseInterval = 8f; // 基准刷新间隔为 8 秒
         int quality = 1; // 基准订单数量为 1
 
         // 定义高峰期时间段
@@ -137,7 +137,7 @@ public static class OrderRefreshRate
             (currentTime >= lunchStart && currentTime <= lunchEnd) ||
             (currentTime >= dinnerStart && currentTime <= dinnerEnd))
         {
-            baseInterval = 10f; // 高峰期刷新间隔缩短到 5秒
+            baseInterval = 5f; // 高峰期刷新间隔缩短到 5秒
 
             // 根据概率决定 quality 的值
             int probability = random.Next(100);

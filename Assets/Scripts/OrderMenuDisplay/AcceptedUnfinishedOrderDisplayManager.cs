@@ -24,6 +24,8 @@ public class AcceptedUnfinishedOrderDisplayManager : MonoBehaviour {
         menuView.appendItem(itemModel);
     }
     public OrderInfo getFirstOrder() {
+        if(menuView.getSize() == 0)
+            return null;
         return ((OrderItemBehaviour)menuView.getItemAt(0)).getOrderInfo();
     }
 
