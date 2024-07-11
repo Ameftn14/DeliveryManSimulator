@@ -23,6 +23,7 @@ public class WayPointBehaviour : MonoBehaviour
         endVid = end.GetComponent<VertexBehaviour>().vid;
         Debug.Assert(ratio > 0 && ratio < 1);
         transform.position = start.transform.position * (1 - ratio) + end.transform.position * ratio;
+        transform.localScale = new Vector3(2f, 0.01f, 1f);
     }
 
     // Update is called once per frame
