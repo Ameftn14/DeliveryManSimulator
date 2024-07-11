@@ -4,11 +4,15 @@ using System;
 
 public class PairOrder : MonoBehaviour
 {
+    public MapManagerBehaviour mapManager;
+    public VirtualClockUI virtualClock;
     public int OrderID;
-    public GameObject OrderFrom;//预制件
-    public GameObject OrderTo;//预制件
-    public SingleOrder from;//单个订单:起点
-    public SingleOrder to;//单个订单:终点
+    public GameObject OrderFromPre;//预制件
+    public GameObject OrderToPre;//预制件
+    public SingleOrder fromScript;//单个订单:起点
+    public SingleOrder toScript;//单个订单:终点
+    public GameObject OrderFrom;
+    public GameObject OrderTo;
 
     private int price;
     private float distance;
@@ -17,6 +21,7 @@ public class PairOrder : MonoBehaviour
     //private Timespan AcceptTime;
     //private Timespan PickUpTime;
     private float LifeTime = 5f;
+    private float timer = 5f;
 
     private int Orderstate;
 
@@ -33,25 +38,60 @@ public class PairOrder : MonoBehaviour
 
     public void Start()
     {
+        mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
+        virtualClock = GameObject.Find("VirtualClock").GetComponent<VirtualClockUI>();
+        OrderFromPre = Resources.Load<GameObject>("Prefabs/SingleOrder");
+        OrderToPre = Resources.Load<GameObject>("Prefabs/SingleOrder");
         state = State.NotAccept;
-        distance = Vector2.Distance(from.GetPosition(), to.GetPosition());
-        //获取脚本
-        from = OrderFrom.GetComponent<SingleOrder>();
-        to = OrderTo.GetComponent<SingleOrder>();
+        //随机获取两个pid
+        int from_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
+        int to_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
+        while (from_pid == to_pid)
+        {
+            to_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
+        }
+        //获取两个位置
+        Vector2 from_position = mapManager.GetWayPoints()[from_pid].transform.position;
+        Vector2 to_position = mapManager.GetWayPoints()[to_pid].transform.position;
+
+        //生成预制件
+        OrderFrom = Instantiate(OrderFromPre, from_position, Quaternion.identity);
+        fromScript = OrderFrom.GetComponent<SingleOrder>();
+        fromScript.SetIsFrom(true);
+        fromScript.SetPid(from_pid);
+        fromScript.SetOrderID(OrderID);
+        fromScript.LifeTime = LifeTime;
+        fromScript.parentPairOrder = this;
+
+        OrderTo = Instantiate(OrderToPre, to_position, Quaternion.identity);
+        toScript = OrderTo.GetComponent<SingleOrder>();
+        toScript.SetIsFrom(false);
+        toScript.SetPid(to_pid);
+        toScript.SetOrderID(OrderID);
+        toScript.LifeTime = LifeTime;
+        toScript.parentPairOrder = this;
+
+        distance = Vector2.Distance(fromScript.GetPosition(), toScript.GetPosition());
         //随机生成价格
         price = UnityEngine.Random.Range(30, 100);
-        // TODO: 初始化
+
+        //截止时间是当前时间+1h
+        //TODO:这个逻辑待优化
+        Deadline = virtualClock.GetTime().Add(new TimeSpan(1, 0, 0));
+        timer = LifeTime;
     }
 
     public void Update()
     {
-
+        timer -= Time.deltaTime;
+        if (timer <= 0f)
+        {
+            Destroy(OrderFrom);
+            Destroy(OrderTo);
+            Destroy(gameObject);
+        }
     }
 
-    public void GeneratePrefab()
-    {
-        //TODO: 生成预制件
-    }
     //下面是接口
 
     public int GetOrderID()

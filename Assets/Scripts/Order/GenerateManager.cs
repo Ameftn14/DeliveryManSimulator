@@ -80,20 +80,6 @@ public class GeneratorManager : MonoBehaviour
 
     void GeneratePair(){
         //TODO: 生成一对订单
-        //随机挑选两个WayPoint
-        int fromWP = Random.Range(0, WPcount);
-
-        int toWP = Random.Range(0, WPcount);
-        while (fromWP == toWP)
-        {
-            toWP = Random.Range(0, WPcount);
-        }
-
-        //get position
-        Vector3 fromPos = mapManager.GetWayPoints()[fromWP].transform.position;
-        Vector3 toPos = mapManager.GetWayPoints()[toWP].transform.position;
-
-        //生成订单
-        GameObject orderPair = Instantiate(orderPairPrefab, fromPos, Quaternion.identity);
+        GameObject orderPair = Instantiate(orderPairPrefab);
     }
 }
