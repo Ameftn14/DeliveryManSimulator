@@ -184,6 +184,10 @@ public class SearchRoad : MonoBehaviour
                 else
                 {
                     // 已经到达路径的最后一个点，现在目标是wayPoint
+                    if (beginPosition == wayPoints[targetwaypoint].startVid)
+                        targetPosition = wayPoints[targetwaypoint].endVid;
+                    else
+                        targetPosition = wayPoints[targetwaypoint].startVid;
                     targetPos = wayPoints[targetwaypoint].transform.position;
                 }
 
@@ -206,7 +210,6 @@ public class SearchRoad : MonoBehaviour
                         property.increaseFinishedCount();
                         orderFinished = true;
                         isMoving = false;
-                        targetPosition = -1;
                     }
                 }
                 break;
