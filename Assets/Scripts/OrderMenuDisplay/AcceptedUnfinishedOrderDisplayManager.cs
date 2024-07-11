@@ -9,12 +9,7 @@ public class AcceptedUnfinishedOrderDisplayManager : MonoBehaviour {
     public void Start() {
         Debug.Assert(menuView != null);
     }
-    public void appendNewOrder() {
-        // TODO this is for static testing
-        OrderInfo order;
-        order = new OrderInfo(new TimeSpan(01, 02, 03), new Color(0, 0, 0, 255), LocationType.Customer);
-
-        //OrderItemBehaviour itemModel;
+    public void appendNewOrder(OrderInfo order) {
         ItemModel itemModel = null;
         if (order.locationType == LocationType.Restaurant) {
             itemModel = OrderItemBehaviour.spawnNewRestaurantOrderItem(order);
@@ -29,9 +24,15 @@ public class AcceptedUnfinishedOrderDisplayManager : MonoBehaviour {
         menuView.appendItem(itemModel);
     }
 
-    // TODO hook this up
-    public void removeOrder(int orderID, bool isFrom)
-    {
+    public void removeOrder(int orderID, bool isFrom) {
+        int size = menuView.getSize();
+        for (int i = 0; i < size; i++) {
+            OrderItemBehaviour itemModel = (OrderItemBehaviour)menuView.getItemAt(i);
+            if (itemModel.getOrderInfo().orderID == orderID && itemModel.getOrderInfo().isFrom == isFrom) {
+                menuView.removeAt(i);
+                return;
+            }
+        }
     }
 }
 
@@ -48,8 +49,7 @@ public class OrderInfo {
     public readonly int pid;
     public readonly int orderID;
     public readonly bool isFrom;
-    public OrderInfo(TimeSpan dueTime, Color color, LocationType locationType, int pid, int orderID, bool isFrom)
-    {
+    public OrderInfo(TimeSpan dueTime, Color color, LocationType locationType, int pid, int orderID, bool isFrom) {
         this.dueTime = dueTime;
         this.color = color;
         this.locationType = locationType;

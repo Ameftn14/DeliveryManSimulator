@@ -10,6 +10,9 @@ public class OrderItemBehaviour : ItemModel {
     private void setOrderInfo(OrderInfo orderInfo) {
         this.orderInfo = orderInfo;
     }
+    public OrderInfo getOrderInfo() {
+        return orderInfo;
+    }
     public void setDisplayEffect() {
         Color colorToSet;
         colorToSet = defaultColor;
