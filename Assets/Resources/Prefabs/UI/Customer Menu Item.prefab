@@ -88,6 +88,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8335925674127885303, guid: 2ca19064676ba4d42b1d55923e9a8988, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0764264678d76dc468cfebd85b2a03bf, type: 3}
     - target: {fileID: 8555342719168248384, guid: 2ca19064676ba4d42b1d55923e9a8988, type: 3}
       propertyPath: m_Name
       value: Customer Menu Item

@@ -29,13 +29,11 @@ public class OrderItemBehaviour : ItemModel {
         setDisplayEffect();
     }
     public static ItemModel spawnNewRestaurantOrderItem(OrderInfo orderInfo) {
-        Debug.Log("spawnNewRestaurantOrderItem");
         OrderItemBehaviour orderItemBehaviour = (OrderItemBehaviour)spawnNewItem("Prefabs/UI/Restaurant Menu Item");
         orderItemBehaviour.setOrderInfo(orderInfo);
         return orderItemBehaviour;
     }
     public static ItemModel spawnNewCustomerOrderItem(OrderInfo orderInfo) {
-        Debug.Log("spawnNewCustomerOrderItem");
         OrderItemBehaviour orderItemBehaviour = (OrderItemBehaviour)spawnNewItem("Prefabs/UI/Customer Menu Item");
         orderItemBehaviour.setOrderInfo(orderInfo);
         return orderItemBehaviour;
