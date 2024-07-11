@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI; // Add this line to import the UnityEngine.UI namespace
@@ -9,24 +10,25 @@ public class OrderItemBehaviour : ItemModel {
     public Color defaultColor = new Color(0, 0, 0, 255);
     private void setOrderInfo(OrderInfo orderInfo) {
         this.orderInfo = orderInfo;
+        syncDisplay();
     }
     public OrderInfo getOrderInfo() {
         return orderInfo;
     }
-    public void setDisplayEffect() {
+    public void syncDisplay() {
         Color colorToSet;
         // colorToSet = defaultColor;
         colorToSet = orderInfo.color;
         imageObject.GetComponent<Image>().color = colorToSet;
         Debug.Assert(dueTimeText != null);
-        // Debug.Log("due time: " + orderInfo.dueTime);
-        // dueTimeText.text = orderInfo.dueTime.ToString("HH:mm");
+        DateTime d = new DateTime(orderInfo.dueTime.Ticks);
+        // string dueTimeTextString = orderInfo.dueTime.ToString();
+        string dueTimeTextString = d.ToString("HH:mm"); ;
+        dueTimeText.text = dueTimeTextString;
     }
     void Start() {
         init();
-        // build the view
         Debug.Assert(dueTimeText != null);
-        setDisplayEffect();
     }
     public static ItemModel spawnNewRestaurantOrderItem(OrderInfo orderInfo) {
         OrderItemBehaviour orderItemBehaviour = (OrderItemBehaviour)spawnNewItem("Prefabs/UI/Restaurant Menu Item");
@@ -41,6 +43,6 @@ public class OrderItemBehaviour : ItemModel {
 
     //this is for testing purpose
     void Update() {
-        setDisplayEffect();
+        syncDisplay();
     }
 }
