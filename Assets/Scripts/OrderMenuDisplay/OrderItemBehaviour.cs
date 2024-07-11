@@ -15,12 +15,12 @@ public class OrderItemBehaviour : ItemModel {
     }
     public void setDisplayEffect() {
         Color colorToSet;
-        colorToSet = defaultColor;
-        // colorToSet = orderInfo.color;
+        // colorToSet = defaultColor;
+        colorToSet = orderInfo.color;
         imageObject.GetComponent<Image>().color = colorToSet;
         Debug.Assert(dueTimeText != null);
         // Debug.Log("due time: " + orderInfo.dueTime);
-        dueTimeText.text = orderInfo.dueTime.ToString();
+        dueTimeText.text = orderInfo.dueTime.ToString("HH:mm");
     }
     void Start() {
         init();
