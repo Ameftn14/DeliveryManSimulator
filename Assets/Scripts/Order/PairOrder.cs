@@ -111,6 +111,8 @@ public class PairOrder : MonoBehaviour
             TimeSpan currentTime = virtualClock.GetTime();
             if(currentTime > Deadline)
             {
+                //修改数据库
+                orderDB.RemoveOrder(OrderID);
                 DistroyEverything();
             }
         }
