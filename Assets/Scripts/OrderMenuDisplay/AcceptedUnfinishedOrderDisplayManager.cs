@@ -15,13 +15,16 @@ public class AcceptedUnfinishedOrderDisplayManager : MonoBehaviour {
         order = new OrderInfo(new TimeSpan(01, 02, 03), new Color(0, 0, 0, 255), LocationType.Customer);
 
         //OrderItemBehaviour itemModel;
-        ItemModel itemModel;
+        ItemModel itemModel = null;
         if (order.locationType == LocationType.Restaurant) {
-            itemModel = ItemModel.spawnNewItem("Prefabs/UI/Restaurant Menu Item");
-            ((OrderItemBehaviour)itemModel).orderInfo = order;
-            ((OrderItemBehaviour)itemModel).setDisplayEffect();
-        } else {
-            itemModel = ItemModel.spawnNewItem("Prefabs/UI/Customer Menu Item");
+            itemModel = OrderItemBehaviour.spawnNewRestaurantOrderItem(order);
+        } else if (order.locationType == LocationType.Customer) {
+            itemModel = OrderItemBehaviour.spawnNewCustomerOrderItem(order);
+        }
+        itemModel.gameObject.name = "Item " + menuView.transform.childCount;
+        if (itemModel == null) {
+            Debug.LogError("itemModel is null");
+            return;
         }
         menuView.appendItem(itemModel);
     }

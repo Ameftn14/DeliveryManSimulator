@@ -3,11 +3,11 @@ using UnityEngine;
 using UnityEngine.UI; // Add this line to import the UnityEngine.UI namespace
 
 public class OrderItemBehaviour : ItemModel {
-    public OrderInfo orderInfo;
+    private OrderInfo orderInfo;
     public GameObject imageObject;
     public TMP_Text dueTimeText;
     public Color defaultColor = new Color(0, 0, 0, 255);
-    public OrderItemBehaviour(OrderInfo orderInfo) {
+    private void setOrderInfo(OrderInfo orderInfo) {
         this.orderInfo = orderInfo;
     }
     public void setDisplayEffect() {
@@ -25,12 +25,15 @@ public class OrderItemBehaviour : ItemModel {
         Debug.Assert(dueTimeText != null);
         setDisplayEffect();
     }
-    public static ItemModel spawnNewRestaurantOrderItem() {
-        return spawnNewItem("Prefabs/UI/Restaurant Menu Item");
-
+    public static ItemModel spawnNewRestaurantOrderItem(OrderInfo orderInfo) {
+        OrderItemBehaviour orderItemBehaviour = (OrderItemBehaviour)spawnNewItem("Prefabs/UI/Restaurant Menu Item");
+        orderItemBehaviour.setOrderInfo(orderInfo);
+        return orderItemBehaviour;
     }
-    public static ItemModel spawnNewCustomerOrderItem() {
-        return spawnNewItem("Prefabs/UI/Customer Menu Item");
+    public static ItemModel spawnNewCustomerOrderItem(OrderInfo orderInfo) {
+        OrderItemBehaviour orderItemBehaviour = (OrderItemBehaviour)spawnNewItem("Prefabs/UI/Customer Menu Item");
+        orderItemBehaviour.setOrderInfo(orderInfo);
+        return orderItemBehaviour;
     }
 
     //this is for testing purpose
