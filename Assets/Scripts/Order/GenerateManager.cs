@@ -83,5 +83,6 @@ public class GeneratorManager : MonoBehaviour
         GameObject orderPair = Instantiate(orderPairPrefab);
         orderPair.GetComponent<PairOrder>().SetOrderID(NextOrderID);
         NextOrderID++;
+        orderDB.AddOrder(orderPair.GetComponent<PairOrder>());
     }
 }

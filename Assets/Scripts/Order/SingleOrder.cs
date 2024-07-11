@@ -7,6 +7,7 @@ public class SingleOrder : MonoBehaviour
 {
     public ColorDictionary colorDictionary;
     public MapManagerBehaviour mapManager ;
+    public RingProgress ringProgress;
     //public RingProgress ringProgress; 
     public PairOrder parentPairOrder;
     public SingleOrder brotherSingleOrder;
@@ -21,8 +22,11 @@ public class SingleOrder : MonoBehaviour
 
     public void Start()
     {
+        ringProgress = transform.Find("Ring").GetComponent<RingProgress>();
         mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
+        parentPairOrder = transform.parent.GetComponent<PairOrder>();
         colorDictionary = new ColorDictionary();
+        
         if(mapManager == null)
         {
             Debug.LogError("MapManager is not assigned!");
@@ -53,7 +57,28 @@ public class SingleOrder : MonoBehaviour
 
     public void Update()
     {
-        
+        if(ringProgress == null)
+        {
+            ringProgress = transform.Find("Ring").GetComponent<RingProgress>();
+        }
+        if(state > PairOrder.State.NotAccept)
+        {
+            ringProgress.isAccept = 1;            
+        }        
+    }
+
+    public void OnMouseDown()
+    {
+        if (state == PairOrder.State.NotAccept)
+        {
+            state = PairOrder.State.Accept;
+            Debug.Log("Order " + OrderID + " is accepted");
+            parentPairOrder.OrderAccept();
+
+            //ringProgress.isAccept = 1;
+            RingProgress ringProgress = transform.Find("Ring").GetComponent<RingProgress>();
+            ringProgress.isAccept = 1;
+        }
     }
     // pid operation
     public int Getpid()
