@@ -17,7 +17,7 @@ public class GeneratorManager : MonoBehaviour
     void Start()
     {
         // 获取虚拟时钟 GameObject 的 VirtualClock 组件
-        virtualClock = GameObject.Find("VirtualClock").GetComponent<VirtualClockUI>();
+        virtualClock = GameObject.Find("Time").GetComponent<VirtualClockUI>();
         mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
         orderDB = GameObject.Find("OrderDB").GetComponent<OrderDB>();
         if (virtualClock == null)
@@ -81,5 +81,8 @@ public class GeneratorManager : MonoBehaviour
     void GeneratePair(){
         //TODO: 生成一对订单
         GameObject orderPair = Instantiate(orderPairPrefab);
+        orderPair.GetComponent<PairOrder>().SetOrderID(NextOrderID);
+        NextOrderID++;
+        orderDB.AddOrder(orderPair.GetComponent<PairOrder>());
     }
 }

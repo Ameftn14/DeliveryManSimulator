@@ -30,7 +30,7 @@ public class OrderDB: MonoBehaviour
 
     public void RemoveOrder(int OrderID)
     {
-        if (orderDict.ContainsKey(OrderID))//TODO: 这里应该还要做状态判定
+        if (orderDict.ContainsKey(OrderID))//TODO:这里应该还要做状态判定
         {
             orderDict.Remove(OrderID);
             // 调用事件
