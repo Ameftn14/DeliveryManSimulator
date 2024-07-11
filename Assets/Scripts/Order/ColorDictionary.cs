@@ -20,8 +20,7 @@ public class ColorDictionary {
         {13, new Color(0.5f, 0.5f, 0f)}         // 橄榄色
     };
 
-    static public Color GetColor(int index)
-    {
+    static public Color GetColor(int index) {
         if (colorDictionary.Count == 0) {
             Debug.LogError("Color dictionary is empty!");
             return Color.black;
