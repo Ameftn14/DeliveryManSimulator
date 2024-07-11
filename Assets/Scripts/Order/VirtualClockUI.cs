@@ -6,8 +6,8 @@ using TMPro;
 public class VirtualClockUI : MonoBehaviour
 {
     public TMP_Text timeText;
-    public Button backwardButton;
-    public Button forwardButton;
+    //public Button backwardButton;
+    //public Button forwardButton;
 
     // 初始时间（24小时制）
     public int startHour = 5;
@@ -29,8 +29,8 @@ public class VirtualClockUI : MonoBehaviour
         currentMinute = startMinute;
 
         // 初始化按钮点击事件
-        forwardButton.onClick.AddListener(AdvanceOneHour);
-        backwardButton.onClick.AddListener(RetreatOneHour);
+        // forwardButton.onClick.AddListener(AdvanceOneHour);
+        // backwardButton.onClick.AddListener(RetreatOneHour);
 
         // 设置初始时间显示
         UpdateTimeDisplay();

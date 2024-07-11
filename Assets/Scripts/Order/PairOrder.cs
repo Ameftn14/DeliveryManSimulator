@@ -7,13 +7,10 @@ public class PairOrder : MonoBehaviour
     public MapManagerBehaviour mapManager;
     public VirtualClockUI virtualClock;
     public int OrderID;
-    public GameObject OrderFromPre;//预制件
-    public GameObject OrderToPre;//预制件
     public SingleOrder fromScript;//单个订单:起点
     public SingleOrder toScript;//单个订单:终点
-    public GameObject OrderFrom;
-    public GameObject OrderTo;
-
+    public int from_pid;
+    public int to_pid;
     private int price;
     private float distance;
 
@@ -39,13 +36,17 @@ public class PairOrder : MonoBehaviour
     public void Start()
     {
         mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
-        virtualClock = GameObject.Find("VirtualClock").GetComponent<VirtualClockUI>();
-        OrderFromPre = Resources.Load<GameObject>("Prefabs/SingleOrder");
-        OrderToPre = Resources.Load<GameObject>("Prefabs/SingleOrder");
+        virtualClock = GameObject.Find("Time").GetComponent<VirtualClockUI>();
+        // OrderFromPre = Resources.Load<GameObject>("Prefabs/OrderFrom");
+        // if(OrderFromPre == null)
+        // {
+        //     Debug.Log("OrderFromPre is null");
+        // }
+        // OrderToPre = Resources.Load<GameObject>("Prefabs/OrderTo");
         state = State.NotAccept;
         //随机获取两个pid
-        int from_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
-        int to_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
+        from_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
+        to_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
         while (from_pid == to_pid)
         {
             to_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
@@ -54,9 +55,14 @@ public class PairOrder : MonoBehaviour
         Vector2 from_position = mapManager.GetWayPoints()[from_pid].transform.position;
         Vector2 to_position = mapManager.GetWayPoints()[to_pid].transform.position;
 
-        //生成预制件
-        OrderFrom = Instantiate(OrderFromPre, from_position, Quaternion.identity);
-        fromScript = OrderFrom.GetComponent<SingleOrder>();
+        Vector3 from_position3 = new Vector3(from_position.x, from_position.y, -5);
+        Vector3 to_position3 = new Vector3(to_position.x, to_position.y, -5);
+
+        //修改两个子对象
+        Transform childfrom = transform.Find("OrderFrom");
+        //位置
+        childfrom.position = from_position3;
+        fromScript = childfrom.gameObject.GetComponent<SingleOrder>();
         fromScript.SetIsFrom(true);
         fromScript.SetPid(from_pid);
         fromScript.SetOrderID(OrderID);
@@ -64,8 +70,10 @@ public class PairOrder : MonoBehaviour
         fromScript.parentPairOrder = this;
         fromScript.brotherSingleOrder = toScript;
 
-        OrderTo = Instantiate(OrderToPre, to_position, Quaternion.identity);
-        toScript = OrderTo.GetComponent<SingleOrder>();
+        Transform childto = transform.Find("OrderTo");
+        //位置
+        childto.position = to_position3;
+        toScript = childto.gameObject.GetComponent<SingleOrder>();
         toScript.SetIsFrom(false);
         toScript.SetPid(to_pid);
         toScript.SetOrderID(OrderID);
@@ -86,12 +94,18 @@ public class PairOrder : MonoBehaviour
 
     public void Update()
     {
-        timer -= Time.deltaTime;
-        if (timer <= 0f)
+        if(state == State.NotAccept)
         {
-            Destroy(OrderFrom);
-            Destroy(OrderTo);
-            Destroy(gameObject);
+            timer -= Time.deltaTime;
+            if (timer <= 0f)
+            {
+                Destroy(transform.Find("OrderFrom").gameObject);
+                Destroy(transform.Find("OrderTo").gameObject   );
+                Destroy(gameObject);
+            }
+        }
+        else{
+            //TODO:倒计时
         }
     }
 
