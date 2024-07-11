@@ -14,7 +14,7 @@ public class PairOrder : MonoBehaviour
     public GameObject OrderFrom;
     public GameObject OrderTo;
 
-    private int price;
+    public int price;
     private float distance;
 
     private TimeSpan Deadline;
