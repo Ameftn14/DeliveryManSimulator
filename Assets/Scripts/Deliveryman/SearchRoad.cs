@@ -21,7 +21,7 @@ public class SearchRoad : MonoBehaviour {
 
     //private Vector3 targetPosition;   // 目标位置
     private int beginPosition; //每段移动的起始点
-    private int targetPosition; //每段移动的目标点
+    private int targetPosition = -1; //每段移动的目标点
 
     public bool orderFinished = false;
 
