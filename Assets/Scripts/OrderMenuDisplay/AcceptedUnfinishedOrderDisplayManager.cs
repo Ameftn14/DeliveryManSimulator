@@ -29,28 +29,13 @@ public class AcceptedUnfinishedOrderDisplayManager : MonoBehaviour {
         return ((OrderItemBehaviour)menuView.getItemAt(0)).getOrderInfo();
     }
 
-    public void removeOrder(int orderID, LocationType locationType) {
-        OrderInfo orderInfo = getFirstOrder();
-        if (orderInfo == null) {
-            Debug.LogError("No order to remove");
-        }
-        else
-        {
-            Debug.Log("test1:Order to remove: " + orderInfo.pid + " " + orderInfo.orderID + " " + orderInfo.locationType + " " + orderInfo.dueTime);
-        }
+    public void removeOrder(int orderID, LocationType locationType)
+    {
         int size = menuView.getSize();
         for (int i = 0; i < size; i++) {
             OrderItemBehaviour itemModel = (OrderItemBehaviour)menuView.getItemAt(i);
             if (itemModel.getOrderInfo().orderID == orderID && itemModel.getOrderInfo().locationType == locationType) {
                 menuView.removeAt(i);
-                orderInfo = getFirstOrder();
-                if (orderInfo == null) {
-                    Debug.LogError("No order to remove");
-                }
-                else
-                {
-                    Debug.Log("test1:After Remove: " + orderInfo.pid + " " + orderInfo.orderID + " " + orderInfo.locationType + " " + orderInfo.dueTime);
-                }
                 return;
             }
         }

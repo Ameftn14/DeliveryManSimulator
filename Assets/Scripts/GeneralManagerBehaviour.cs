@@ -22,7 +22,7 @@ public class GeneralManagerBehaviour : MonoBehaviour {
         Debug.Assert(virtualClock != null);
     }
 
-    public void DBConfirmOrder(int OrderID) // 需要挂监听
+    public void DBConfirmOrder(int OrderID)
     {
         Debug.Log("DBConfirmOrder");
         PairOrder theOrder = theOrderDB.orderDict[OrderID];
@@ -39,6 +39,25 @@ public class GeneralManagerBehaviour : MonoBehaviour {
             theOrder.state = PairOrder.State.NotAccept;
     }
 
+    public void LateOrder(int OrderID)
+    {
+        PairOrder theOrder = theOrderDB.orderDict[OrderID];
+        if (theOrder.state == PairOrder.State.Accept)
+        {
+            displayManager.removeOrder(OrderID, LocationType.Restaurant);
+            displayManager.removeOrder(OrderID, LocationType.Customer);
+            theProperty.money -= theOrder.GetPrice();
+            theProperty.nowCapacity += 1;
+        }
+        else
+        if (theOrder.state == PairOrder.State.PickUp)
+        {
+            displayManager.removeOrder(OrderID, LocationType.Customer);
+            theProperty.money -= theOrder.GetPrice();
+            theProperty.nowCapacity += 1;
+        }
+    }
+
 
     // Update is called once per frame
     void Update() {
@@ -51,18 +70,16 @@ public class GeneralManagerBehaviour : MonoBehaviour {
                 theOrder = thePairOrder.fromScript;
             else
                 theOrder = thePairOrder.toScript;
+            displayManager.removeOrder(theSearchRoad.targetOrderID, theSearchRoad.targetIsFrom ? LocationType.Restaurant : LocationType.Customer);
             if (theOrder.GetIsFrom()){
                 thePairOrder.state = PairOrder.State.PickUp;
-                Debug.Log("PickUp");
             }
             else {
-                thePairOrder.state = PairOrder.State.Delivered;
-                Debug.Log("Delivered");
+                thePairOrder.state = PairOrder.State.Finished;
                 theProperty.nowCapacity += 1;
                 if (virtualClock.GetTime() < thePairOrder.GetDeadline())
                     theProperty.money += thePairOrder.GetPrice();
             }
-            displayManager.removeOrder(theSearchRoad.targetOrderID, theSearchRoad.targetIsFrom ? LocationType.Restaurant : LocationType.Customer);
         }
         else {
             OrderInfo theFirstOrder = displayManager.getFirstOrder();
@@ -71,15 +88,14 @@ public class GeneralManagerBehaviour : MonoBehaviour {
                 theSearchRoad.targetIsFrom = false;
                 theSearchRoad.targetwaypoint = -1;
             }
-            else {
-                Debug.Log("theFirstOrder.pid: " + theFirstOrder.pid);
-                if (theFirstOrder.pid != theSearchRoad.targetwaypoint) {
+            else if (theFirstOrder.pid != theSearchRoad.targetwaypoint)
+            {
                 theSearchRoad.targetOrderID = theFirstOrder.orderID;
                 theSearchRoad.targetIsFrom = theFirstOrder.locationType == LocationType.Restaurant;
                 theSearchRoad.targetwaypoint = theFirstOrder.pid;
                 theSearchRoad.isMoving = false;
                 theSearchRoad.orderFinished = false;
-            }}
+            }
         }
     }
 

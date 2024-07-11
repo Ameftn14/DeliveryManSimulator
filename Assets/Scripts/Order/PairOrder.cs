@@ -6,6 +6,7 @@ public class PairOrder : MonoBehaviour {
     public OrderDB orderDB;
     public MapManagerBehaviour mapManager;
     public VirtualClockUI virtualClock;
+    public GeneralManagerBehaviour generalManager;
     public int OrderID;
     public SingleOrder fromScript;//单个订单:起点
     public SingleOrder toScript;//单个订单:终点
@@ -24,13 +25,14 @@ public class PairOrder : MonoBehaviour {
         NotAccept,//未接单
         Accept,//已接单
         PickUp,//已取货
-        Delivered,//已送达
-        Finished//已完成        
+        Finished,//已送达
+        Lated//送迟了        
     }
 
     public State state;
 
     public void Start() {
+        generalManager = GameObject.Find("GeneralManager").GetComponent<GeneralManagerBehaviour>();
         orderDB = GameObject.Find("OrderDB").GetComponent<OrderDB>();
         mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
         virtualClock = GameObject.Find("Time").GetComponent<VirtualClockUI>();
@@ -100,10 +102,16 @@ public class PairOrder : MonoBehaviour {
                 DistroyEverything();
             }
         } else {
+            if (state == State.Finished)
+            {
+                orderDB.RemoveOrder(OrderID);
+                DistroyEverything();
+            }
             TimeSpan currentTime = virtualClock.GetTime();
             if (currentTime > Deadline) {
                 //修改数据库
-                orderDB.RemoveOrder(OrderID);
+                generalManager.LateOrder(OrderID);
+                state = State.Lated;
                 DistroyEverything();
             }
         }
@@ -172,13 +180,6 @@ public class PairOrder : MonoBehaviour {
         //更新子对象状态
         fromScript.state = State.PickUp;
         toScript.state = State.PickUp;
-        orderDB.UpdateOrder(this);
-    }
-    public void OrderDelivered() {
-        state = State.Delivered;
-        //更新子对象状态
-        fromScript.state = State.Delivered;
-        toScript.state = State.Delivered;
         orderDB.UpdateOrder(this);
     }
     public void OrderFinished() {
