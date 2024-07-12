@@ -17,8 +17,6 @@ public class ItemModel : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHa
         guid = Guid.NewGuid();
         index = transform.GetSiblingIndex();
         rectTransform = GetComponent<RectTransform>();
-
-        Debug.Assert(rectTransform != null);
     }
     void Start() {
         init();
@@ -30,9 +28,8 @@ public class ItemModel : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHa
         listModel.preInsertActions += onInsertAction;
     }
     public static ItemModel spawnNewItem(string prefabFilePath = "Prefabs/UI/item") {
-        //load from Resources/Prefabs/item
-        Debug.Log("spawn new item--" + prefabFilePath);
         GameObject item = Instantiate(Resources.Load(prefabFilePath, typeof(GameObject))) as GameObject;
+        Debug.Assert(item != null, "Loading prefab failed: path=" + prefabFilePath);
         ItemModel itemModel = item.GetComponent<ItemModel>();
         return itemModel;
     }

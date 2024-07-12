@@ -8,6 +8,7 @@ public class OrderItemBehaviour : ItemModel {
     public GameObject imageObject;
     public TMP_Text dueTimeText;
     public Color defaultColor = new Color(0, 0, 0, 255);
+    public MenuItemTimeLeftBarController timeLeftBarController;
     private void setOrderInfo(OrderInfo orderInfo) {
         this.orderInfo = orderInfo;
         syncDisplay();
@@ -27,22 +28,29 @@ public class OrderItemBehaviour : ItemModel {
         dueTimeText.text = dueTimeTextString;
     }
     void Start() {
-        init();
         Debug.Assert(dueTimeText != null);
+        Debug.Assert(imageObject != null);
+        Debug.Assert(timeLeftBarController != null);
+        timeLeftBarController = GetComponentInChildren<MenuItemTimeLeftBarController>();
+        timeLeftBarController.setDueTime(orderInfo.dueTime);
+        init(); // this is from the super class
     }
     public static ItemModel spawnNewRestaurantOrderItem(OrderInfo orderInfo) {
-        OrderItemBehaviour orderItemBehaviour = (OrderItemBehaviour)spawnNewItem("Prefabs/UI/Restaurant Menu Item");
+        OrderItemBehaviour orderItemBehaviour = (OrderItemBehaviour)spawnNewItem("Prefabs/UI/Menu Item/Version 2/Restaurant Menu Item");
         orderItemBehaviour.setOrderInfo(orderInfo);
         return orderItemBehaviour;
     }
     public static ItemModel spawnNewCustomerOrderItem(OrderInfo orderInfo) {
-        OrderItemBehaviour orderItemBehaviour = (OrderItemBehaviour)spawnNewItem("Prefabs/UI/Customer Menu Item");
+        //return spawnNewRestaurantOrderItem(orderInfo);
+
+        // original code
+        OrderItemBehaviour orderItemBehaviour = (OrderItemBehaviour)spawnNewItem("Prefabs/UI/Menu Item/Version 2/Customer Menu Item");
         orderItemBehaviour.setOrderInfo(orderInfo);
         return orderItemBehaviour;
     }
 
-    //this is for testing purpose
-    void Update() {
-        syncDisplay();
-    }
+    // //this is for testing purpose
+    // void Update() {
+    //     syncDisplay();
+    // }
 }

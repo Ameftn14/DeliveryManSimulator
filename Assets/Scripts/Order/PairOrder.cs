@@ -25,8 +25,8 @@ public class PairOrder : MonoBehaviour {
         NotAccept,//未接单
         Accept,//已接单
         PickUp,//已取货
-        Finished,//已送达
-        Lated//送迟了        
+        Lated,//送迟了
+        Finished,//已送达      
     }
 
     public State state;
@@ -36,14 +36,11 @@ public class PairOrder : MonoBehaviour {
         orderDB = GameObject.Find("OrderDB").GetComponent<OrderDB>();
         mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
         virtualClock = GameObject.Find("Time").GetComponent<VirtualClockUI>();
-        // OrderFromPre = Resources.Load<GameObject>("Prefabs/OrderFrom");
-        // if(OrderFromPre == null)
-        // {
-        //     Debug.Log("OrderFromPre is null");
-        // }
-        // OrderToPre = Resources.Load<GameObject>("Prefabs/OrderTo");
+
         state = State.NotAccept;
 
+
+        //TODO:这个逻辑待优化
         Deadline = virtualClock.GetTime().Add(new TimeSpan(2, 0, 0));
         //随机获取两个pid
         from_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
@@ -88,8 +85,6 @@ public class PairOrder : MonoBehaviour {
         //随机生成价格
         price = UnityEngine.Random.Range(30, 100);
 
-        //截止时间是当前时间+1h
-        //TODO:这个逻辑待优化
         timer = LifeTime;
         state = State.NotAccept;
     }
@@ -171,22 +166,30 @@ public class PairOrder : MonoBehaviour {
     public void OrderAccept() {
         state = State.Accept;
         //更新子对象状态
-        fromScript.state = State.Accept;
-        toScript.state = State.Accept;
+        fromScript.OrderAccept();
+        toScript.OrderAccept();
         orderDB.UpdateOrder(this);
     }
     public void OrderPickUp() {
         state = State.PickUp;
         //更新子对象状态
-        fromScript.state = State.PickUp;
-        toScript.state = State.PickUp;
+        fromScript.OrderPickUp();
+        toScript.OrderPickUp();
         orderDB.UpdateOrder(this);
     }
     public void OrderFinished() {
         state = State.Finished;
         //更新子对象状态
-        fromScript.state = State.Finished;
-        toScript.state = State.Finished;
+        fromScript.OrderFinished();
+        toScript.OrderFinished();
+        orderDB.UpdateOrder(this);
+    }
+
+    public void OrderLated() {
+        state = State.Lated;
+        //更新子对象状态
+        fromScript.OrderLated();
+        toScript.OrderLated();
         orderDB.UpdateOrder(this);
     }
 }
