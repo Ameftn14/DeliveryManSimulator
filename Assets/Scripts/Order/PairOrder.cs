@@ -204,12 +204,12 @@ public class PairOrder : MonoBehaviour {
 
     //提供一个接口，调用这个接口时，两个singleoreder对象的大小逐渐变大成原来的两倍
     public void OrderSizeUp() {
-        fromScript.SizeUp();
-        toScript.SizeUp();
+        StartCoroutine(fromScript.SizeUp());
+        StartCoroutine(toScript.SizeUp());
     }
 
     public void OrderSizeDown() {
-        fromScript.SizeDown();
-        toScript.SizeDown();
+        StartCoroutine(fromScript.SizeDown());
+        StartCoroutine(toScript.SizeDown());
     }
 }
