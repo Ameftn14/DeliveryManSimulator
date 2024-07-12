@@ -52,21 +52,6 @@ public class ItemModel : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHa
         listModel.preInsertActions -= onInsertAction;
         Destroy(gameObject);
     }
-
-    public void OnDrag(PointerEventData eventData) {
-        GetComponent<RectTransform>().anchoredPosition += eventData.delta;
-    }
-
-    public void OnDrop(PointerEventData eventData) {
-        GameObject droppedGameObject = eventData.pointerDrag;
-        ItemModel droppedItemModel = droppedGameObject.GetComponent<ItemModel>();
-        // TODO more robust
-
-        int droppedIndex = droppedItemModel.getIndex();
-        Debug.Log("item " + droppedIndex + "->" + index);
-
-        listModel.swap(index, droppedIndex);
-    }
     public void setSiblingIndex(int index) {
         transform.SetSiblingIndex(index);
         this.index = index;
@@ -74,7 +59,7 @@ public class ItemModel : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHa
     public int getIndex() {
         return index;
     }
-    public void OnBeginDrag(PointerEventData eventData) {
+    virtual public void OnBeginDrag(PointerEventData eventData) {
         Debug.Log("begin drag");
         Debug.Log("sibling index: " + transform.GetSiblingIndex());
         index = transform.GetSiblingIndex();
@@ -86,10 +71,22 @@ public class ItemModel : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHa
         // rectTransform.anchoredPosition = originalPosition;
         GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
-
-    public void OnEndDrag(PointerEventData eventData) {
+    virtual public void OnDrag(PointerEventData eventData) {
+        GetComponent<RectTransform>().anchoredPosition += eventData.delta;
+    }
+    virtual public void OnEndDrag(PointerEventData eventData) {
         // canvas.sortingOrder--;
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         rectTransform.anchoredPosition = originalPosition;
+    }
+    virtual public void OnDrop(PointerEventData eventData) {
+        GameObject droppedGameObject = eventData.pointerDrag;
+        ItemModel droppedItemModel = droppedGameObject.GetComponent<ItemModel>();
+        // TODO more robust
+
+        int droppedIndex = droppedItemModel.getIndex();
+        Debug.Log("item " + droppedIndex + "->" + index);
+
+        listModel.swap(index, droppedIndex);
     }
 }

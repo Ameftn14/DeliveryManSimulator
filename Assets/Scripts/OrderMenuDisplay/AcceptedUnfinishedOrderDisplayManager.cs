@@ -6,8 +6,22 @@ using UnityEngine.PlayerLoop;
 
 public class AcceptedUnfinishedOrderDisplayManager : MonoBehaviour {
     public MenuView menuView;
+    private static AcceptedUnfinishedOrderDisplayManager instance;
+    public static AcceptedUnfinishedOrderDisplayManager Instance {
+        get {
+            if (instance == null) {
+                instance = FindObjectOfType<AcceptedUnfinishedOrderDisplayManager>();
+            }
+            return instance;
+        }
+    }
 
     public void Start() {
+        if (instance != null && instance != this) {
+            Destroy(gameObject);
+        } else {
+            instance = this;
+        }
         Debug.Assert(menuView != null);
     }
     public void appendNewOrder(OrderInfo order) {
@@ -40,6 +54,8 @@ public class AcceptedUnfinishedOrderDisplayManager : MonoBehaviour {
             }
         }
     }
+
+
 }
 
 public enum LocationType {

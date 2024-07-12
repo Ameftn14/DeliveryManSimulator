@@ -1,9 +1,10 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI; // Add this line to import the UnityEngine.UI namespace
 
-public class OrderItemBehaviour : ItemModel {
+public class OrderItemBehaviour : ItemModel, IPointerEnterHandler, IPointerExitHandler {
     private OrderInfo orderInfo;
     public GameObject imageObject;
     public TMP_Text dueTimeText;
@@ -47,6 +48,24 @@ public class OrderItemBehaviour : ItemModel {
         OrderItemBehaviour orderItemBehaviour = (OrderItemBehaviour)spawnNewItem("Prefabs/UI/Menu Item/Version 2/Customer Menu Item");
         orderItemBehaviour.setOrderInfo(orderInfo);
         return orderItemBehaviour;
+    }
+
+    // when the mouse hovers over the order item:
+    // 1. highlight the order item, both in the menu and in the game world
+    // 2. show more info about the order? so we should make this expandable
+    // 3. if player is dragging another item, stop the dragging if that order is the restaurant order of this one
+    public void OnPointerEnter(PointerEventData eventData) {
+        throw new NotImplementedException();
+    }
+    override public void OnBeginDrag(PointerEventData eventData) {
+        base.OnBeginDrag(eventData);
+    }
+
+    // when the mouse leaves the order item:
+    // 1. unhighlight the order item
+    // 2. hide the extra info
+    public void OnPointerExit(PointerEventData eventData) {
+        throw new NotImplementedException();
     }
 
     // //this is for testing purpose
