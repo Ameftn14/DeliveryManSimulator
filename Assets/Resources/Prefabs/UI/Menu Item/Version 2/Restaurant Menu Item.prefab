@@ -217,7 +217,6 @@ GameObject:
   - component: {fileID: 8480125301936069590}
   - component: {fileID: 5084527393694731061}
   - component: {fileID: 3558950870844616228}
-  - component: {fileID: 3296070054514539437}
   m_Layer: 5
   m_Name: TimeLeftBar
   m_TagString: Untagged
@@ -282,23 +281,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3296070054514539437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2775912391292383564}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19f6bba427cbf0c478091e4e2e4e9020, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  barImage: {fileID: 0}
-  percentage: 0
-  totalWidth: 0
-  componentWidth: 0
-  totalMinutes: 0
 --- !u!1 &5963301467676846170
 GameObject:
   m_ObjectHideFlags: 0
