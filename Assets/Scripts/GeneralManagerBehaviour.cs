@@ -22,8 +22,7 @@ public class GeneralManagerBehaviour : MonoBehaviour {
         Debug.Assert(virtualClock != null);
     }
 
-    public void DBConfirmOrder(int OrderID)
-    {
+    public void DBConfirmOrder(int OrderID) {
         Debug.Log("DBConfirmOrder");
         PairOrder theOrder = theOrderDB.orderDict[OrderID];
         if (theProperty.nowCapacity - 1 >= 0) {
@@ -39,19 +38,15 @@ public class GeneralManagerBehaviour : MonoBehaviour {
             theOrder.state = PairOrder.State.NotAccept;
     }
 
-    public void LateOrder(int OrderID)
-    {
+    public void LateOrder(int OrderID) {
         PairOrder theOrder = theOrderDB.orderDict[OrderID];
-        if (theOrder.state == PairOrder.State.Accept)
-        {
+        if (theOrder.state == PairOrder.State.Accept) {
             displayManager.removeOrder(OrderID, LocationType.Restaurant);
             displayManager.removeOrder(OrderID, LocationType.Customer);
             theProperty.money -= theOrder.GetPrice();
             theProperty.nowCapacity += 1;
-        }
-        else
-        if (theOrder.state == PairOrder.State.PickUp)
-        {
+        } else
+        if (theOrder.state == PairOrder.State.PickUp) {
             displayManager.removeOrder(OrderID, LocationType.Customer);
             theProperty.money -= theOrder.GetPrice();
             theProperty.nowCapacity += 1;
@@ -71,25 +66,21 @@ public class GeneralManagerBehaviour : MonoBehaviour {
             else
                 theOrder = thePairOrder.toScript;
             displayManager.removeOrder(theSearchRoad.targetOrderID, theSearchRoad.targetIsFrom ? LocationType.Restaurant : LocationType.Customer);
-            if (theOrder.GetIsFrom()){
+            if (theOrder.GetIsFrom()) {
                 thePairOrder.state = PairOrder.State.PickUp;
-            }
-            else {
+            } else {
                 thePairOrder.state = PairOrder.State.Finished;
                 theProperty.nowCapacity += 1;
                 if (virtualClock.GetTime() < thePairOrder.GetDeadline())
                     theProperty.money += thePairOrder.GetPrice();
             }
-        }
-        else {
+        } else {
             OrderInfo theFirstOrder = displayManager.getFirstOrder();
-            if(theFirstOrder == null){
+            if (theFirstOrder == null) {
                 theSearchRoad.targetOrderID = -1;
                 theSearchRoad.targetIsFrom = false;
                 theSearchRoad.targetwaypoint = -1;
-            }
-            else if (theFirstOrder.pid != theSearchRoad.targetwaypoint)
-            {
+            } else if (theFirstOrder.pid != theSearchRoad.targetwaypoint) {
                 theSearchRoad.targetOrderID = theFirstOrder.orderID;
                 theSearchRoad.targetIsFrom = theFirstOrder.locationType == LocationType.Restaurant;
                 theSearchRoad.targetwaypoint = theFirstOrder.pid;
