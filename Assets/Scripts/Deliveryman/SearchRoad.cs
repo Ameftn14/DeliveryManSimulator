@@ -72,7 +72,7 @@ public class SearchRoad : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        moveSpeed = property.speed;
+        moveSpeed = Property.speed;
 
         int switcher = 0;
         if (wayPoints.ContainsKey(targetwaypoint)) switcher += 4;
@@ -107,7 +107,7 @@ public class SearchRoad : MonoBehaviour {
 
                 Vector3 deliverymanPosition = gameObject.transform.position;
 
-                shortestPath = searchRoad(beginStartVid, beginEndVid, deliverymanPosition, targetwaypoint);
+                shortestPath = searchRoad(beginStartVid, beginEndVid,deliverymanPosition,targetwaypoint);
                 // 初始化目标位置为第一个路径点的位置
                 if (shortestPath.Any())
                     targetPosition = shortestPath[0];
@@ -159,34 +159,6 @@ public class SearchRoad : MonoBehaviour {
         }
     }
 
-    public List<int> searchRoad(int beginStartVid, int beginEndVid, Vector3 deliverymanPosition, List<int> targetwaypoints) {
-        List<int> totalShortestList = new List<int>();
-        for (int i = 0; i < targetwaypoints.Count; i++) {
-            targetwaypoint = targetwaypoints[i];
-            totalShortestList.AddRange(searchRoad(beginStartVid, beginEndVid, deliverymanPosition, targetwaypoint));
-            beginStartVid = wayPoints[targetwaypoint].startVid;
-            beginEndVid = wayPoints[targetwaypoint].endVid;
-            deliverymanPosition = wayPoints[targetwaypoint].transform.position;
-        }
-        return totalShortestList;
-    }
-
-    public List<Vector3> searchRoadPos(int beginStartVid, int beginEndVid, Vector3 deliverymanPosition, List<int> targetwaypoints) {
-        List<Vector3> totalShortestList = new List<Vector3>();
-        totalShortestList.Add(deliverymanPosition);
-        for (int i = 0; i < targetwaypoints.Count; i++) {
-            targetwaypoint = targetwaypoints[i];
-            List<int> tempShortestPath = searchRoad(beginStartVid, beginEndVid, deliverymanPosition, targetwaypoint);
-            for (int j = 0; j < tempShortestPath.Count; j++)
-                totalShortestList.Add(vertices[tempShortestPath[j]]);
-            totalShortestList.Add(wayPoints[targetwaypoint].transform.position);
-            beginStartVid = wayPoints[targetwaypoint].startVid;
-            beginEndVid = wayPoints[targetwaypoint].endVid;
-            deliverymanPosition = wayPoints[targetwaypoint].transform.position;
-        }
-        return totalShortestList;
-    }
-
     public List<int> searchRoad(int beginStartVid, int beginEndVid, Vector3 deliverymanPosition, int targetwaypoint) {
         // 目标地点所在边的起点与终点
         int targetStartVid = wayPoints[targetwaypoint].startVid;
@@ -199,40 +171,40 @@ public class SearchRoad : MonoBehaviour {
         List<int> tempShortestPath = new List<int>();
 
         var (pathss, pathssLength) = algo.ShortestPath(beginStartVid, targetStartVid);
-        var (pathse, pathseLength) = algo.ShortestPath(beginStartVid, targetEndVid);
-        var (pathes, pathesLength) = algo.ShortestPath(beginEndVid, targetStartVid);
-        var (pathee, patheeLength) = algo.ShortestPath(beginEndVid, targetEndVid);
+                var (pathse, pathseLength) = algo.ShortestPath(beginStartVid, targetEndVid);
+                var (pathes, pathesLength) = algo.ShortestPath(beginEndVid, targetStartVid);
+                var (pathee, patheeLength) = algo.ShortestPath(beginEndVid, targetEndVid);
 
-        pathssLength = pathssLength + Vector3.Distance(gameObject.transform.position, vertices[beginStartVid]) + graph[targetStartVid][targetEndVid] * ratio;
-        pathseLength = pathseLength + Vector3.Distance(gameObject.transform.position, vertices[beginStartVid]) + graph[targetStartVid][targetEndVid] * (1 - ratio);
-        pathesLength = pathesLength + Vector3.Distance(gameObject.transform.position, vertices[beginEndVid]) + graph[targetStartVid][targetEndVid] * ratio;
-        patheeLength = patheeLength + Vector3.Distance(gameObject.transform.position, vertices[beginEndVid]) + graph[targetStartVid][targetEndVid] * (1 - ratio);
+                pathssLength = pathssLength + Vector3.Distance(gameObject.transform.position, vertices[beginStartVid]) + graph[targetStartVid][targetEndVid] * ratio;
+                pathseLength = pathseLength + Vector3.Distance(gameObject.transform.position, vertices[beginStartVid]) + graph[targetStartVid][targetEndVid] * (1 - ratio);
+                pathesLength = pathesLength + Vector3.Distance(gameObject.transform.position, vertices[beginEndVid]) + graph[targetStartVid][targetEndVid] * ratio;
+                patheeLength = patheeLength + Vector3.Distance(gameObject.transform.position, vertices[beginEndVid]) + graph[targetStartVid][targetEndVid] * (1 - ratio);
 
-        float[] myArray = new float[4] { pathssLength, pathseLength, pathesLength, patheeLength };
-        int flag = 0;
-        for (int i = 1; i < 4; i++) {
-            if (myArray[i] < myArray[flag]) {
-                flag = i;
-            }
-        }
+                float[] myArray = new float[4] { pathssLength, pathseLength, pathesLength, patheeLength };
+                int flag = 0;
+                for (int i = 1; i < 4; i++) {
+                    if (myArray[i] < myArray[flag]) {
+                        flag = i;
+                    }
+                }
 
-        switch (flag) {
-            case 0:
-                tempShortestPath = pathss;
-                break;
-            case 1:
-                tempShortestPath = pathse;
-                break;
-            case 2:
-                tempShortestPath = pathes;
-                break;
-            case 3:
-                tempShortestPath = pathee;
-                break;
-        }
+                switch (flag) {
+                    case 0:
+                        tempShortestPath = pathss;
+                        break;
+                    case 1:
+                        tempShortestPath = pathse;
+                        break;
+                    case 2:
+                        tempShortestPath = pathes;
+                        break;
+                    case 3:
+                        tempShortestPath = pathee;
+                        break;
+                }
 
-        Debug.Log($"Shortest path is: {string.Join(" -> ", tempShortestPath)}");
-        return tempShortestPath;
+                Debug.Log($"Shortest path is: {string.Join(" -> ", tempShortestPath)}");
+                return tempShortestPath;
     }
 
     //public List<int> designAllPath()
