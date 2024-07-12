@@ -17,6 +17,7 @@ public class MapManagerBehaviour : MonoBehaviour
 
     private Dictionary<int, GameObject> vertexObjects;
     private Dictionary<int, Dictionary<int, GameObject>> edgeObjects;
+    private GameObject mapImage;
 
     public MapManagerBehaviour()
     {
@@ -189,6 +190,7 @@ public class MapManagerBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        mapImage = GameObject.Find("BackGround");
         foreach (Transform child in transform)
         {
             VertexBehaviour vertexBehaviour = child.GetComponent<VertexBehaviour>();
@@ -221,6 +223,9 @@ public class MapManagerBehaviour : MonoBehaviour
         //         Debug.Log("WayPoint: " + pid + " : " + wayPoints[pid].startVid + " -> " + wayPoints[pid].endVid);
         //     }
         // }
+        if (Input.GetKeyDown(KeyCode.M)) {
+            mapImage.SetActive(false);
+        }
     }
 }
 
