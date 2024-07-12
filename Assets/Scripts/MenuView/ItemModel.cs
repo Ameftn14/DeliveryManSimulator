@@ -6,10 +6,10 @@ using UnityEngine.UIElements;
 
 public class ItemModel : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHandler, IEndDragHandler {
     Guid guid; // this can be replaced with actual data class/struct
-    [SerializeField] int index;
-    [SerializeField] Vector2 originalPosition;
-    RectTransform rectTransform;
-    [SerializeField] ListModel listModel;
+    [SerializeField] protected int index;
+    [SerializeField] protected Vector2 originalPosition;
+    protected RectTransform rectTransform;
+    [SerializeField] protected ListModel listModel;
 
 
     // Start is called before the first frame update
@@ -17,6 +17,7 @@ public class ItemModel : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHa
         guid = Guid.NewGuid();
         index = transform.GetSiblingIndex();
         rectTransform = GetComponent<RectTransform>();
+        originalPosition = rectTransform.anchoredPosition;
     }
     void Start() {
         init();
