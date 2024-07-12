@@ -6,6 +6,7 @@ using UnityEngine.PlayerLoop;
 
 public class AcceptedUnfinishedOrderDisplayManager : MonoBehaviour {
     public MenuView menuView;
+
     public void Start() {
         Debug.Assert(menuView != null);
     }
@@ -24,6 +25,8 @@ public class AcceptedUnfinishedOrderDisplayManager : MonoBehaviour {
         menuView.appendItem(itemModel);
     }
     public OrderInfo getFirstOrder() {
+        if (menuView.getSize() == 0)
+            return null;
         return ((OrderItemBehaviour)menuView.getItemAt(0)).getOrderInfo();
     }
 
@@ -45,7 +48,6 @@ public enum LocationType {
 }
 
 public class OrderInfo {
-    // TODO pid or whatever
     public readonly TimeSpan dueTime;
     public readonly Color color;
     public readonly LocationType locationType;

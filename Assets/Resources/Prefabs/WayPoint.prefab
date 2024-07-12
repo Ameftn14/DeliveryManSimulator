@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6857655120978065613
 Transform:
   m_ObjectHideFlags: 0
@@ -132,4 +132,5 @@ MonoBehaviour:
   pid: -1
   startVid: -1
   endVid: -1
+  mapManager: {fileID: 0}
   ratio: 0

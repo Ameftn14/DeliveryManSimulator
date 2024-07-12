@@ -8,9 +8,9 @@ public class Property : MonoBehaviour
     private float maxSpeed = 20.0f;
     private int maxCapacity = 5;
 
-    public float speed = 5.0f;
+    public float speed = 10.0f;
 
-    public int allCapacity = 2;
+    public int allCapacity = 3;
 
     public int nowCapacity;
 
@@ -26,10 +26,10 @@ public class Property : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            increaseSpeed();
-        }
+        // if (Input.GetKeyDown(KeyCode.Space))
+        // {
+        //     increaseSpeed();
+        // }
     }
 
     public void increaseSpeed()
