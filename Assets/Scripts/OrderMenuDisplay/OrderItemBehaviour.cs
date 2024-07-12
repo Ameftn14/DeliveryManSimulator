@@ -44,6 +44,7 @@ public class OrderItemBehaviour : ItemModel, IPointerEnterHandler, IPointerExitH
     public static ItemModel spawnNewRestaurantOrderItem(OrderInfo orderInfo) {
         OrderItemBehaviour orderItemBehaviour = (OrderItemBehaviour)spawnNewItem("Prefabs/UI/Menu Item/Version 2/Restaurant Menu Item");
         orderItemBehaviour.setOrderInfo(orderInfo);
+        orderItemBehaviour.name = "Restaurant Order Item " + orderInfo.orderID;
         return orderItemBehaviour;
     }
     public static ItemModel spawnNewCustomerOrderItem(OrderInfo orderInfo) {
@@ -52,6 +53,8 @@ public class OrderItemBehaviour : ItemModel, IPointerEnterHandler, IPointerExitH
         // original code
         OrderItemBehaviour orderItemBehaviour = (OrderItemBehaviour)spawnNewItem("Prefabs/UI/Menu Item/Version 2/Customer Menu Item");
         orderItemBehaviour.setOrderInfo(orderInfo);
+        orderItemBehaviour.name = "Customer Order Item " + orderInfo.orderID;
+        orderItemBehaviour.gameObject.name = "Customer Order Item " + orderInfo.orderID;
         return orderItemBehaviour;
     }
 
@@ -90,21 +93,21 @@ public class OrderItemBehaviour : ItemModel, IPointerEnterHandler, IPointerExitH
         OrderMenuListBehaviour.Instance.setMouseDragItem(null);
     }
     public override void OnDrop(PointerEventData eventData) {
-        if (OrderMenuListBehaviour.Instance.isNotInBlockingMode())
-            base.OnDrop(eventData);
+        if (!OrderMenuListBehaviour.Instance.isInBlockingMode())
+            return;
+        int droppedIndex = eventData.pointerDrag.GetComponent<ItemModel>().getIndex();
+        if (OrderMenuListBehaviour.Instance.swapIsAllowed(droppedIndex, index)) {
+            Debug.Log("DROPPED " + droppedIndex + " ON " + index + "SWAP ALLOWED");
+            OrderMenuListBehaviour.Instance.swap(droppedIndex, index);
+        }
     }
 
     float dampingFactor = 0.2f; // smaller the stronger
     public void blockDragging() {
-        if (dragDamping) {
-            return;
-        }
         dragDamping = true;
     }
     public void unblockDragging() {
-        if (!dragDamping) {
-            return;
-        }
+        Debug.Log("Unblock dragging");
         dragDamping = false;
     }
 
@@ -136,9 +139,4 @@ public class OrderItemBehaviour : ItemModel, IPointerEnterHandler, IPointerExitH
         Debug.Log("Mouse Exit " + name);
         OrderMenuListBehaviour.Instance.setMouseHoverItem(null);
     }
-
-    // //this is for testing purpose
-    // void Update() {
-    //     syncDisplay();
-    // }
 }

@@ -540,3 +540,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items: []
+  draggingItem: {fileID: 0}
+  hoveringItem: {fileID: 0}
+  isInSpecialMode: 0
