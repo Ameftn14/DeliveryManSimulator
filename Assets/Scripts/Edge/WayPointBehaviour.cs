@@ -8,6 +8,7 @@ public class WayPointBehaviour : MonoBehaviour {
     public bool isBusy = false;
     public int isResturant = 0;
     public MapManagerBehaviour mapManager = null;
+    public string wayPointName = "WayPoint";
 
     // 到startVertex的距离与整条边长度的比例
     public float ratio = 0.5f;
@@ -21,6 +22,9 @@ public class WayPointBehaviour : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+        if (transform.name != wayPointName) {
+            wayPointName = transform.name;
+        }
     }
 
     public void SetVertices(GameObject start, GameObject end) {
@@ -28,7 +32,7 @@ public class WayPointBehaviour : MonoBehaviour {
         endVid = end.GetComponent<VertexBehaviour>().vid;
         Debug.Assert(ratio >= 0 && ratio <= 1);
         transform.position = start.transform.position * (1 - ratio) + end.transform.position * ratio;
-        transform.localScale = new Vector3(2f, 0.01f, 1f);
+        transform.localScale = new Vector3(2f, 0.05f, 1f);
     }
 
     // Update is called once per frame

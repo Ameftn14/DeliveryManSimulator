@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MapManagerBehaviour : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class MapManagerBehaviour : MonoBehaviour
 
     private Dictionary<int, GameObject> vertexObjects;
     private Dictionary<int, Dictionary<int, GameObject>> edgeObjects;
-    private GameObject mapImage;
+    private int backgroundId = 1;
 
     public MapManagerBehaviour()
     {
@@ -188,9 +189,7 @@ public class MapManagerBehaviour : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
-        mapImage = GameObject.Find("Background");
+    void Start() {
         foreach (Transform child in transform)
         {
             VertexBehaviour vertexBehaviour = child.GetComponent<VertexBehaviour>();
@@ -224,7 +223,18 @@ public class MapManagerBehaviour : MonoBehaviour
         //     }
         // }
         if (Input.GetKeyDown(KeyCode.M)) {
-            mapImage.SetActive(false);
+            int backgroundCnt = 0;
+            foreach (Transform child in transform) {
+                string name = child.name;
+                if (name.Contains("Background")) {
+                    backgroundCnt++;
+                    if ("Background" + backgroundId == child.name)
+                        child.gameObject.SetActive(true);
+                    else
+                        child.gameObject.SetActive(false);
+                }
+            }
+            backgroundId = (backgroundId + 1) % (backgroundCnt + 1);
         }
     }
 }
