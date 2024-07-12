@@ -6,6 +6,7 @@ public class MapManagerBehaviour : MonoBehaviour
 {
 
     static private int nextVid = 0;
+    static private int nextPid = 0;
     static private int vNum = 0;
     static private int eNum = 0;
 
@@ -178,6 +179,7 @@ public class MapManagerBehaviour : MonoBehaviour
 
     public int AddWayPoint(WayPointBehaviour wayPoint)
     {
+        wayPoint.pid = nextPid++;
         Debug.Assert(wayPoint != null);
         Debug.Log("AddWayPoint: " + wayPoint.pid);
         wayPoints[wayPoint.pid] = wayPoint;
@@ -212,7 +214,13 @@ public class MapManagerBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        // if (Input.GetKeyDown(KeyCode.V))
+        // {
+        //     foreach (var pid in wayPoints.Keys)
+        //     {
+        //         Debug.Log("WayPoint: " + pid + " : " + wayPoints[pid].startVid + " -> " + wayPoints[pid].endVid);
+        //     }
+        // }
     }
 }
 

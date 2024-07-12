@@ -1,42 +1,80 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-public class Property : MonoBehaviour {
+public class Property : MonoBehaviour
+{
+    private float maxSpeed = 20.0f;
+    private int maxCapacity = 5;
 
-    public float speed = 5.0f;
+    public float speed = 10.0f;
 
-    public int capacity = 2;
+    public int allCapacity = 3;
+
+    public int nowCapacity;
 
     public int money = 100;
-    // Start is called before the first frame update
-    void Start() {
 
+    public int finishedcount = 0;
+    // Start is called before the first frame update
+    void Start()
+    {
+        nowCapacity = allCapacity;
     }
 
     // Update is called once per frame
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            increaseSpeed();
+    void Update()
+    {
+        // if (Input.GetKeyDown(KeyCode.Space))
+        // {
+        //     increaseSpeed();
+        // }
+    }
+
+    public void increaseSpeed()
+    {
+        if (speed < maxSpeed)
+        {
+            Debug.Log("Speed up!");
+            speed = speed * (float)1.5;
+            money -= 100;
+        }
+        else
+        {
+            Debug.Log("Reach the maxspeed");
         }
 
-        if (Input.GetKeyDown(KeyCode.K)) {
-            increaseCapacity();
+    }
+
+    public void increaseAllCapacity()
+    {
+        if (allCapacity < maxCapacity)
+        {
+            Debug.Log("allCapacity + 1!");
+            allCapacity += 1;
+            money -= 200;
+        }
+        else
+        {
+            Debug.Log("Reach the maxcapacity");
         }
     }
 
-    void increaseSpeed() {
-        Debug.Log("Speed up!");
-        speed = speed * (float)1.5;
-        money -= 100;
+    public void increaseNowCapacity(){
+        nowCapacity ++;
     }
 
-    void increaseCapacity() {
-        Debug.Log("Capacity + 1!");
-        capacity += 1;
-        money -= 200;
+    public void decreaseNowCapacity(){
+        nowCapacity --;
     }
-    void increaseMoney(int earning) {
+
+    public void increaseFinishedCount()
+    {
+        finishedcount++;
+    }
+    public void increaseMoney(int earning)
+    {
         money += earning;
     }
 }
