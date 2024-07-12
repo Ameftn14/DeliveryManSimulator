@@ -100,4 +100,5 @@ public class RingProgress : MonoBehaviour
             shouldDestroy = true;
         }
     }
+    
 }

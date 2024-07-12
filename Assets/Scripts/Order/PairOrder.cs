@@ -43,11 +43,15 @@ public class PairOrder : MonoBehaviour {
         //TODO:这个逻辑待优化
         Deadline = virtualClock.GetTime().Add(new TimeSpan(2, 0, 0));
         //随机获取两个pid
-        from_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
-        to_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
-        while (from_pid == to_pid) {
+        do {
+            from_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
+        } while (mapManager.GetWayPoints()[from_pid].GetComponent<WayPointBehaviour>().isBusy);
+        do {
             to_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
-        }
+        } while (from_pid == to_pid||mapManager.GetWayPoints()[to_pid].GetComponent<WayPointBehaviour>().isBusy);
+
+        mapManager.GetWayPoints()[from_pid].GetComponent<WayPointBehaviour>().BecomeBusy();
+        mapManager.GetWayPoints()[to_pid].GetComponent<WayPointBehaviour>().BecomeBusy();
         //获取两个位置
         Vector2 from_position = mapManager.GetWayPoints()[from_pid].transform.position;
         Vector2 to_position = mapManager.GetWayPoints()[to_pid].transform.position;
@@ -96,16 +100,18 @@ public class PairOrder : MonoBehaviour {
                 OrderFinished();
                 DistroyEverything();
             }
-        } else {
+        } 
+        else {
             if (state == State.Finished)
             {
+                OrderFinished();
                 orderDB.RemoveOrder(OrderID);
                 DistroyEverything();
             }
             TimeSpan currentTime = virtualClock.GetTime();
             if (currentTime > Deadline) {
-                //修改数据库
                 generalManager.LateOrder(OrderID);
+                OrderLated();
                 state = State.Lated;
                 DistroyEverything();
             }
@@ -116,6 +122,9 @@ public class PairOrder : MonoBehaviour {
         Destroy(transform.Find("OrderFrom").gameObject);
         Destroy(transform.Find("OrderTo").gameObject);
         Destroy(gameObject);
+        //两个pid变成free
+        mapManager.GetWayPoints()[from_pid].GetComponent<WayPointBehaviour>().BecomeFree();
+        mapManager.GetWayPoints()[to_pid].GetComponent<WayPointBehaviour>().BecomeFree();
     }
 
     //下面是接口
@@ -191,5 +200,16 @@ public class PairOrder : MonoBehaviour {
         fromScript.OrderLated();
         toScript.OrderLated();
         orderDB.UpdateOrder(this);
+    }
+
+    //提供一个接口，调用这个接口时，两个singleoreder对象的大小逐渐变大成原来的两倍
+    public void OrderSizeUp() {
+        fromScript.SizeUp();
+        toScript.SizeUp();
+    }
+
+    public void OrderSizeDown() {
+        fromScript.SizeDown();
+        toScript.SizeDown();
     }
 }

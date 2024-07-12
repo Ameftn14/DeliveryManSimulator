@@ -56,28 +56,49 @@ Shader "RingProgress"
 
 		   if (_Fill < 0.5)
 		   {
-			   float compare = (_Fill * 2 - 0.5)*3.1415926;
+			//    float compare = (_Fill * 2 - 0.5)*3.1415926;
+			//    float theta = atan(p.y / p.x);
+			//    if (theta > compare)
+			//    {
+			// 	   result.a = 0;
+			//    }
+			//    if (p.x > 0)
+			//    {
+			//    result.a = 0;
+			//    }
+			//改成逆时针
+			   float compare = (0.5 - _Fill * 2)*3.1415926;
 			   float theta = atan(p.y / p.x);
-			   if (theta > compare)
+			   if (p.x < 0)
 			   {
 				   result.a = 0;
 			   }
-			   if (p.x > 0)
+			   if (theta < compare)
 			   {
-			   result.a = 0;
+				   result.a = 0;
 			   }
 		   }
 		   else
 		   {
-			   float compare = ((_Fill - 0.5) * 2 - 0.5)*3.1415926;
-			   float theta = atan(p.y / p.x);
-			   if (p.x > 0)
-			   {
-				   if (theta > compare)
-				   {
-				   result.a = 0;
-				   }
-			   }
+			//    float compare = ((_Fill - 0.5) * 2 - 0.5)*3.1415926;
+			//    float theta = atan(p.y / p.x);
+			//    if (p.x > 0)
+			//    {
+			// 	   if (theta > compare)
+			// 	   {
+			// 	   result.a = 0;
+			// 	   }
+			//    }
+			    float compare = ( 0.5 - (_Fill - 0.5) * 2)*3.1415926;
+				float theta = atan(p.y / p.x);
+				if (p.x < 0){
+					if (theta < compare)
+					{
+						result.a = 0;
+					}
+				}
+											
+
 		   }
 		   return result;
 	   }

@@ -169,6 +169,6 @@ public static class OrderRefreshRate {
         // 添加随机浮动性
         float timeInterval = baseInterval + UnityEngine.Random.Range(-1f, 1f); // 浮动范围在±1秒
 
-        return (timeInterval, quality);
+        return (timeInterval, 1);
     }
 }

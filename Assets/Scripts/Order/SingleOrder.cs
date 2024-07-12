@@ -5,6 +5,7 @@ using System;
 
 public class SingleOrder : MonoBehaviour {
     public ColorDictionary colorDictionary;
+    public Vector3 originalScale;
     public VirtualClockUI virtualClockUI;
     public GeneralManagerBehaviour generalManager;
     public MapManagerBehaviour mapManager;
@@ -32,6 +33,8 @@ public class SingleOrder : MonoBehaviour {
         parentPairOrder = transform.parent.GetComponent<PairOrder>();
         colorDictionary = new ColorDictionary();
         generalManager = GameObject.Find("GeneralManager").GetComponent<GeneralManagerBehaviour>();
+
+        originalScale = transform.localScale;
 
         if (mapManager == null) {
             Debug.LogError("MapManager is not assigned!");
@@ -78,6 +81,7 @@ public class SingleOrder : MonoBehaviour {
             brotherSingleOrder.SetAcceptTime(virtualClockUI.GetTime());
             generalManager.DBConfirmOrder(OrderID);
         }
+        //StartCoroutine(SizeUpAndDown());
     }
     // pid operation
     public int Getpid() {
@@ -155,5 +159,70 @@ public class SingleOrder : MonoBehaviour {
     public void OrderFinished() {
         state = PairOrder.State.Finished;
         ringProgress.state = PairOrder.State.Finished;
+    }
+
+    public IEnumerator SizeUp() {
+        Vector3 targetScale = originalScale * 2f;
+
+        float duration = 0.5f; // 增大和消失的时间
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            transform.localScale = Vector3.Lerp(originalScale, targetScale, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    public IEnumerator SizeDown() {
+        Vector3 targetScale = originalScale / 2f;
+
+        float duration = 0.3f; // 增大和消失的时间
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            transform.localScale = Vector3.Lerp(originalScale, targetScale, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    public IEnumerator SizeUpAndDown() {
+        Vector3 targetScale = originalScale * 2f;
+
+        float duration = 0.3f; // 增大和消失的时间
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            transform.localScale = Vector3.Lerp(originalScale, targetScale, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        duration = 0.3f; // 增大和消失的时间
+        elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            transform.localScale = Vector3.Lerp(targetScale, originalScale, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    public IEnumerator BackToOriginalSize() {
+        Vector3 currentScale = transform.localScale;
+        float duration = 0.3f; // 增大和消失的时间
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            transform.localScale = Vector3.Lerp(currentScale, originalScale, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
     }
 }

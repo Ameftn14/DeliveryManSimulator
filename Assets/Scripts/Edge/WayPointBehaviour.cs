@@ -6,6 +6,7 @@ public class WayPointBehaviour : MonoBehaviour
 {
     public int pid = -1;
     public int startVid = -1, endVid = -1;
+    public bool isBusy = false;
     public MapManagerBehaviour mapManager = null;
 
     // 到startVertex的距离与整条边长度的比例
@@ -38,5 +39,15 @@ public class WayPointBehaviour : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void BecomeBusy()
+    {
+        isBusy = true;
+    }
+
+    public void BecomeFree()
+    {
+        isBusy = false;
     }
 }
