@@ -8,18 +8,19 @@ public class Property : MonoBehaviour
     private float maxSpeed = 20.0f;
     private int maxCapacity = 5;
 
-    public float speed = 10.0f;
+    public static float speed = 10.0f;
 
-    public int allCapacity = 3;
+    public static int allCapacity = 3;
 
-    public int nowCapacity;
+    public static int nowCapacity;
 
-    public int money = 100;
+    public static int money = 100;
 
-    public int finishedcount = 0;
+    public static int finishedcount = 0;
     // Start is called before the first frame update
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
         nowCapacity = allCapacity;
     }
 
