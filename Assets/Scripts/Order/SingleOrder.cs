@@ -8,7 +8,9 @@ public class SingleOrder : MonoBehaviour {
     public VirtualClockUI virtualClockUI;
     public GeneralManagerBehaviour generalManager;
     public MapManagerBehaviour mapManager;
+
     public TimeSpan acceptTime;
+    public bool visible;
     public RingProgress ringProgress;
     //public RingProgress ringProgress; 
     public PairOrder parentPairOrder;
@@ -53,29 +55,27 @@ public class SingleOrder : MonoBehaviour {
         }
         ringProgress.ddl = Deadline;
         acceptTime = new TimeSpan(0, 0, 0);
+
+        visible = true;
+        ringProgress.state = PairOrder.State.NotAccept;
+        ringProgress.isFrom = isFrom;
     }
 
     public void Update() {
-        if (ringProgress == null) {
-            ringProgress = transform.Find("Ring").GetComponent<RingProgress>();
-        }
-        if (state > PairOrder.State.NotAccept) {
-            ringProgress.isAccept = 1;
-            ringProgress.acceptTime = acceptTime;
-        }
+
     }
 
     public void OnMouseDown() {
         if (state == PairOrder.State.NotAccept) {
             state = PairOrder.State.Accept;
             Debug.Log("Order " + OrderID + " is accepted");
+            
             parentPairOrder.OrderAccept();
 
-            RingProgress ringProgress = transform.Find("Ring").GetComponent<RingProgress>();
-            ringProgress.isAccept = 1;
-            acceptTime = virtualClockUI.GetTime();
-            ringProgress.acceptTime = acceptTime;
-            brotherSingleOrder.acceptTime = acceptTime;
+            ringProgress = transform.Find("Ring").GetComponent<RingProgress>();
+            ringProgress.state = PairOrder.State.Accept;
+            SetAcceptTime(virtualClockUI.GetTime());
+            brotherSingleOrder.SetAcceptTime(virtualClockUI.GetTime());
             generalManager.DBConfirmOrder(OrderID);
         }
     }
@@ -89,7 +89,7 @@ public class SingleOrder : MonoBehaviour {
         if (mapManager == null) {
             mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
         }
-        Debug.Log("mapManager.GetWayPoints().Count is " + mapManager.GetWayPoints().Count);
+        //Debug.Log("mapManager.GetWayPoints().Count is " + mapManager.GetWayPoints().Count);
         position = mapManager.GetWayPoints()[pid].transform.position;
     }
 
@@ -109,8 +109,51 @@ public class SingleOrder : MonoBehaviour {
         this.OrderID = id;
     }
 
+    public void SetAcceptTime(TimeSpan time) {
+        acceptTime = time;
+        ringProgress.acceptTime = time;
+    }
+
     // position operation
     public Vector2 GetPosition() {
         return position;
+    }
+
+    public void SetUnvisible() {
+        visible = false;
+        foreach (Transform child in transform) {
+            child.gameObject.SetActive(false);
+        }
+    }
+
+    public void SetVisible() {
+        visible = true;
+        foreach (Transform child in transform) {
+            child.gameObject.SetActive(true);
+        }
+    }
+
+    //statechange
+    public void OrderAccept() {
+        state = PairOrder.State.Accept;
+        ringProgress.state = PairOrder.State.Accept;
+    }
+
+    public void OrderPickUp() {
+        state = PairOrder.State.PickUp;
+        ringProgress.state = PairOrder.State.PickUp;
+        if(isFrom){
+            SetUnvisible();
+        }
+    }
+
+    public void OrderLated() {
+        state = PairOrder.State.Lated;
+        ringProgress.state = PairOrder.State.Lated;
+    }
+
+    public void OrderFinished() {
+        state = PairOrder.State.Finished;
+        ringProgress.state = PairOrder.State.Finished;
     }
 }
