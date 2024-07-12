@@ -190,7 +190,7 @@ public class MapManagerBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mapImage = GameObject.Find("BackGround");
+        mapImage = GameObject.Find("Background");
         foreach (Transform child in transform)
         {
             VertexBehaviour vertexBehaviour = child.GetComponent<VertexBehaviour>();
