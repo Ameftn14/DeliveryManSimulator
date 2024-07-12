@@ -52,7 +52,7 @@ public class SingleOrder : MonoBehaviour {
             }
         }
         ringProgress.ddl = Deadline;
-
+        acceptTime = new TimeSpan(0, 0, 0);
     }
 
     public void Update() {

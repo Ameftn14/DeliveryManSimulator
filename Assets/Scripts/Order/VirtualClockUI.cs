@@ -110,6 +110,11 @@ public class VirtualClockUI : MonoBehaviour {
     public TimeSpan GetTime() {
         return new TimeSpan(currentHour, currentMinute, 0);
     }
+    //换算真实时间间隔到虚拟时间间隔
+    public TimeSpan GetVirtualTime(float realseconds) {
+        int virtualminutes = (int)(realseconds / timeStepMinutes);
+        return new TimeSpan(0, virtualminutes, 0);//超出60分钟会自动进位
+    }
 }
 
 public static class OrderRefreshRate {
