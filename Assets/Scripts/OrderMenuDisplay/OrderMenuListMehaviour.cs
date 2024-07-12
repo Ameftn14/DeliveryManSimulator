@@ -40,8 +40,8 @@ public class OrderMenuListBehaviour : ListModel {
         return draggingItem;
     }
     public bool isInSpecialMode = false;
-    public bool isNotInBlockingMode() {
-        return !isInSpecialMode;
+    public bool isInBlockingMode() {
+        return isInSpecialMode;
     }
     void backToNormal() {
         if (hoveringItem != null) {
@@ -59,19 +59,19 @@ public class OrderMenuListBehaviour : ListModel {
         }
         OrderInfo hoveringOrder = hoveringItem.getOrderInfo();
         OrderInfo draggingOrder = draggingItem.getOrderInfo();
-        if (hoveringOrder.orderID != draggingOrder.orderID || hoveringOrder.locationType == draggingOrder.locationType) {
+        // if (hoveringOrder.orderID != draggingOrder.orderID || hoveringOrder.locationType == draggingOrder.locationType) {
+        //     isInSpecialMode = false;
+        //     backToNormal();
+        //     return;
+        // }
+        if (swapIsAllowed(draggingItem.getIndex(), hoveringItem.getIndex())) {
             isInSpecialMode = false;
             backToNormal();
             return;
         }
         isInSpecialMode = true;
-        if (draggingOrder.locationType == LocationType.Restaurant) {
-            draggingItem.blockDragging();
-            hoveringItem.startFollowingAlong();
-        } else {
-            draggingItem.blockDragging();
-            hoveringItem.startFollowingAlong();
-        }
+        draggingItem.blockDragging();
+        hoveringItem.startFollowingAlong();
     }
     public PointerEventData sharedEventData;
     public void setSharedEventData(PointerEventData eventData) {
@@ -92,6 +92,35 @@ public class OrderMenuListBehaviour : ListModel {
         OnMouseDragOrderChanged?.Invoke(item);
         checkBlockingCondition();
     }
+
+    /* -------------------------------------------------------------------------- */
+    /*  Unfortunatly, player can bypass the above system, so... here you go:      */
+    /* -------------------------------------------------------------------------- */
+    public bool swapIsAllowed(int droppedIndex, int targetIndex) {
+        OrderItemBehaviour droppedItem = (OrderItemBehaviour)getItemAt(droppedIndex);
+        OrderInfo droppedOrder = droppedItem.getOrderInfo();
+        if (droppedOrder.locationType == LocationType.Restaurant) {
+            for (int i = droppedIndex + 1; i <= targetIndex; i++) {
+                OrderItemBehaviour item = (OrderItemBehaviour)getItemAt(i);
+                if (item.getOrderInfo().orderID == droppedOrder.orderID &&
+                    item.getOrderInfo().locationType == LocationType.Customer) {
+                    return false;
+                }
+            }
+            return true;
+        } else if (droppedOrder.locationType == LocationType.Customer) {
+            for (int i = targetIndex; i < droppedIndex; i++) {
+                OrderItemBehaviour item = (OrderItemBehaviour)getItemAt(i);
+                if (item.getOrderInfo().orderID == droppedOrder.orderID &&
+                    item.getOrderInfo().locationType == LocationType.Restaurant) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
 
     public delegate void MouseHoverOrderChangedHandler(OrderItemBehaviour orderInfo);
     public event MouseHoverOrderChangedHandler OnMouseHoverOrderChanged;
