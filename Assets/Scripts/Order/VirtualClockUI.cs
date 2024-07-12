@@ -4,6 +4,15 @@ using UnityEngine.UI;
 using TMPro;
 
 public class VirtualClockUI : MonoBehaviour {
+    private static VirtualClockUI instance;
+    public static VirtualClockUI Instance {
+        get {
+            if (instance == null) {
+                instance = FindObjectOfType<VirtualClockUI>();
+            }
+            return instance;
+        }
+    }
     public TMP_Text timeText;
     //public Button backwardButton;
     //public Button forwardButton;
@@ -22,6 +31,13 @@ public class VirtualClockUI : MonoBehaviour {
     private float timer = 0f;
 
     void Start() {
+        if (instance != null && instance != this) {
+            Destroy(gameObject);
+        } else {
+            instance = this;
+        }
+
+
         // 设置初始时间
         currentHour = startHour;
         currentMinute = startMinute;
