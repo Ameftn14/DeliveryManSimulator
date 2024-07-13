@@ -27,6 +27,11 @@ public class OrderMenuListBehaviour : ListModel {
             instance = this;
         }
     }
+    void OnDestroy() {
+        if (instance == this) {
+            instance = null;
+        }
+    }
     /* -------------------------------------------------------------------------- */
     /*             for the additional dragging and hovering functionality         */
     /* -------------------------------------------------------------------------- */
