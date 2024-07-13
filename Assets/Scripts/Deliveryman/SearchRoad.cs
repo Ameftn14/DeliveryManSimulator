@@ -33,11 +33,21 @@ public class SearchRoad : MonoBehaviour {
     public int targetwaypoint = -1;
 
 
+    private LineRenderer lineRenderer;
+
     void Awake() {
         Debug.Log("egg awaked");
     }
     // Start is called before the first frame update
     void Start() {
+        if (lineRenderer == null) {
+            lineRenderer = gameObject.GetComponent<LineRenderer>();
+            Debug.Assert(lineRenderer != null);
+            lineRenderer.startColor = Color.yellow;
+            lineRenderer.endColor = Color.white;
+            lineRenderer.startWidth = 0.3f;
+            lineRenderer.endWidth = 0.3f;
+        }
         Debug.Log("egg started");
         mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
         property = GameObject.Find("Deliveryman").GetComponent<Property>();
@@ -55,12 +65,14 @@ public class SearchRoad : MonoBehaviour {
         // 检查是否找到了正确的GameObject
         if (mapManager == null) {
             Debug.LogError("MapManager not found!");
+            Debug.Assert(false);
         } else {
             Debug.Log("mapManager found");
         }
         // 检查是否找到了正确的GameObject
         if (property == null) {
             Debug.LogError("property not found!");
+            Debug.Assert(false);
         } else {
             Debug.Log("property found");
         }
@@ -82,11 +94,11 @@ public class SearchRoad : MonoBehaviour {
             case 0:
             case 1:
             case 2:
-            case 3:
+            case 3:// 非法目标：不移动
                 orderFinished = false;
                 isMoving = false;
                 break;
-            case 4:
+            case 4:// 新目标：重新设计路径
                 Debug.Log("New start, redesign the path");
 
                 //更新当前路径索引
@@ -115,7 +127,7 @@ public class SearchRoad : MonoBehaviour {
                 // 开始移动
                 isMoving = true;
                 break;
-            case 5:
+            case 5:// 移动中
                 Vector3 targetPos;
 
                 // 如果还有路径点未到达
@@ -132,7 +144,10 @@ public class SearchRoad : MonoBehaviour {
                 }
 
                 // 向目标位置移动
-                gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, targetPos, moveSpeed * Time.deltaTime);
+                if (Input.GetKey(KeyCode.LeftShift))
+                    gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, targetPos, 1.5f * moveSpeed * Time.deltaTime);
+                else
+                    gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, targetPos, moveSpeed * Time.deltaTime);
 
                 // 检查是否到达目标位置
                 if ((gameObject.transform.position - targetPos).sqrMagnitude <= 0.1f) {
@@ -146,10 +161,14 @@ public class SearchRoad : MonoBehaviour {
                         property.increaseFinishedCount();
                         orderFinished = true;
                     }
+                    hidePath();
+                } else {
+                    // 画出路径
+                    showPath(searchRoadPos(beginPosition, targetPosition, gameObject.transform.position, targetwaypoint), Color.yellow);
                 }
                 break;
-            case 6:
-            case 7:
+            case 6:// 等待目标设定
+            case 7:// 达到目标：停止移动
                 isMoving = false;
                 break;
             default:
@@ -157,6 +176,22 @@ public class SearchRoad : MonoBehaviour {
                 Debug.Assert(false);
                 break;
         }
+        if (switcher != 5)
+            hidePath();
+    }
+
+    public void showPath(List<Vector3> nodes, Color color) {
+        lineRenderer.startColor = color;
+        lineRenderer.endColor = color;
+        lineRenderer.positionCount = nodes.Count;
+        for (int i = 0; i < nodes.Count; i++) {
+            lineRenderer.SetPosition(i, nodes[i]);
+            // lineRenderer.SetPosition(nodes.Count * 2 - 1 - i, nodes[i]);
+        }
+    }
+
+    public void hidePath() {
+        lineRenderer.positionCount = 0;
     }
 
     public List<int> searchRoad(int beginStartVid, int beginEndVid, Vector3 deliverymanPosition, List<int> targetwaypoints) {
@@ -168,6 +203,16 @@ public class SearchRoad : MonoBehaviour {
             beginEndVid = wayPoints[targetwaypoint].endVid;
             deliverymanPosition = wayPoints[targetwaypoint].transform.position;
         }
+        return totalShortestList;
+    }
+
+    public List<Vector3> searchRoadPos(int beginStartVid, int beginEndVid, Vector3 deliverymanPosition, int targetwaypoint) {
+        List<Vector3> totalShortestList = new List<Vector3>();
+        totalShortestList.Add(deliverymanPosition);
+        List<int> tempShortestPath = searchRoad(beginStartVid, beginEndVid, deliverymanPosition, targetwaypoint);
+        for (int j = 0; j < tempShortestPath.Count; j++)
+            totalShortestList.Add(vertices[tempShortestPath[j]]);
+        totalShortestList.Add(wayPoints[targetwaypoint].transform.position);
         return totalShortestList;
     }
 
