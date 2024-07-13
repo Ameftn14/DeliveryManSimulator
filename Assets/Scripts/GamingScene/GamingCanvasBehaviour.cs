@@ -17,6 +17,7 @@ public class GamingCanvasBehaviour : MonoBehaviour
         // 检测空格键是否被按下
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            //Destroy(instance);
             // 加载指定的场景
             UnityEngine.SceneManagement.SceneManager.LoadScene("Settlement");
         }

@@ -45,6 +45,7 @@ public class PairOrder : MonoBehaviour {
         //随机获取两个pid
         do {
             from_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
+            Debug.Log("from_pid is"+from_pid);
         } while (mapManager.GetWayPoints()[from_pid].GetComponent<WayPointBehaviour>().isBusy);
         do {
             to_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);

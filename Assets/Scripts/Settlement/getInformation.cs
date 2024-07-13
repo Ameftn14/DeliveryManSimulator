@@ -14,11 +14,11 @@ public class getInformation : MonoBehaviour
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.I)){
-            Debug.Log("speed is" + Property.speed + "and money is" + Property.money);
+            Debug.Log("speed is" + DeliverymanManager.speed + "and money is" + DeliverymanManager.money);
         }
         if(Input.GetKeyDown(KeyCode.O)){
-            Property.money += 10;
-            Debug.Log("Moneyup! Now money is" + Property.money);
+            DeliverymanManager.money += 10;
+            Debug.Log("Moneyup! Now money is" + DeliverymanManager.money);
         }
 
         if(Input.GetKeyDown(KeyCode.Space)){
