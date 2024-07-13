@@ -4,6 +4,7 @@ using System;
 public class RingProgress : MonoBehaviour
 {
     public TimeSpan ddl;
+    public TimeSpan TimeToDeadline;
     public VirtualClockUI virtualClockUI;
     public SpriteRenderer sp_render; // 环形进度条的 SpriteRenderer 组件
     public float lifetime = 5f; // 存在时间，单位秒
@@ -68,6 +69,12 @@ public class RingProgress : MonoBehaviour
 
     private void UpdateTo(){
         timer -= Time.deltaTime;
+        TimeSpan currentTime = virtualClockUI.GetTime();
+        if(currentTime > ddl){
+            //把自己的颜色变成红色
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            spriteRenderer.color = new Color(1f, 0f, 0f);
+        }
 
         // 计算当前进度比例
         if(state == PairOrder.State.NotAccept){
@@ -82,18 +89,29 @@ public class RingProgress : MonoBehaviour
                 shouldDestroy = true;
             }
         }
-        else if (state >= PairOrder.State.Accept && state <= PairOrder.State.Lated){
+        else if (state >= PairOrder.State.Accept && state <= PairOrder.State.PickUp){
             //计算（截止时间-当前时间）/（截止时间-接收时间）
-            TimeSpan currentTime = virtualClockUI.GetTime();
-            TimeSpan lefttime = ddl - currentTime;
-            TimeSpan totaltime = ddl - acceptTime;
-            float Timeratio = (float)lefttime.TotalSeconds / (float)totaltime.TotalSeconds;
-            sp_render.material.SetFloat("_Fill", Timeratio);
-            // 如果时间到了，销毁自身 GameObject
-            if (currentTime >= ddl)
+            if (currentTime < ddl)
             {
-                shouldDestroy = true;
+                TimeSpan lefttime = ddl - currentTime;
+                TimeSpan totaltime = ddl - acceptTime;
+                float Timeratio = (float)lefttime.TotalSeconds / (float)totaltime.TotalSeconds;
+                sp_render.material.SetFloat("_Fill", Timeratio);
             }
+            else if(currentTime >= ddl)
+            {
+                TimeSpan overtime = ddl - currentTime;
+                float Timeratio = (float)overtime.TotalSeconds / ((float)TimeToDeadline.TotalSeconds/2);
+                if(Timeratio < -1){
+                    shouldDestroy = true;
+                }
+                sp_render.material.SetFloat("_Fill", Timeratio);
+            }
+            
+            // if (currentTime >= ddl)
+            // {
+            //     shouldDestroy = true;
+            // }
         }
         else if (state == PairOrder.State.Finished){
             sp_render.material.SetFloat("_Fill", 0);

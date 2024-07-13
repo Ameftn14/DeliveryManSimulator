@@ -14,10 +14,11 @@ public class PairOrder : MonoBehaviour {
     public int to_pid;
     private int price;
     private float distance;
-
+    public bool isLate;
     public TimeSpan Deadline;
     //public Timespan AcceptTime;
     //private Timespan PickUpTime;
+    public TimeSpan TimeToDeadline;
     private float LifeTime = 5f;//TODO:以下所有liftime都没有提供做修改的接口，待优化
     private float timer = 5f;
 
@@ -25,7 +26,6 @@ public class PairOrder : MonoBehaviour {
         NotAccept,//未接单
         Accept,//已接单
         PickUp,//已取货
-        Lated,//送迟了
         Finished,//已送达      
     }
 
@@ -38,11 +38,11 @@ public class PairOrder : MonoBehaviour {
         virtualClock = GameObject.Find("Time").GetComponent<VirtualClockUI>();
 
         state = State.NotAccept;
-
+        TimeToDeadline = new TimeSpan(2, 0, 0);
 
         //TODO:这个逻辑待优化
-        Deadline = virtualClock.GetTime().Add(new TimeSpan(2, 0, 0));
-        
+        Deadline = virtualClock.GetTime().Add(TimeToDeadline);
+
         WayPointBehaviour from_wp = null;
         WayPointBehaviour to_wp = null;
         bool isSameEdge = false;
@@ -69,8 +69,8 @@ public class PairOrder : MonoBehaviour {
 
         //修改两个子对象
         Transform childfrom = transform.Find("OrderFrom");
-        //位置
         childfrom.position = from_position3;
+
         fromScript = childfrom.gameObject.GetComponent<SingleOrder>();
         fromScript.SetIsFrom(true);
         fromScript.SetPid(from_pid);
@@ -78,10 +78,11 @@ public class PairOrder : MonoBehaviour {
         fromScript.LifeTime = LifeTime;
         fromScript.parentPairOrder = this;
         fromScript.Deadline = Deadline;
+        fromScript.SetTimeToDeadline(TimeToDeadline);
 
         Transform childto = transform.Find("OrderTo");
-        //位置
         childto.position = to_position3;
+
         toScript = childto.gameObject.GetComponent<SingleOrder>();
         toScript.SetIsFrom(false);
         toScript.SetPid(to_pid);
@@ -89,6 +90,7 @@ public class PairOrder : MonoBehaviour {
         toScript.LifeTime = LifeTime;
         toScript.parentPairOrder = this;
         toScript.Deadline = Deadline;
+        toScript.SetTimeToDeadline(TimeToDeadline);
 
         toScript.brotherSingleOrder = fromScript;
         fromScript.brotherSingleOrder = toScript;
@@ -99,29 +101,42 @@ public class PairOrder : MonoBehaviour {
 
         timer = LifeTime;
         state = State.NotAccept;
+        isLate = false;
     }
 
     public void Update() {
+
+        TimeSpan currentTime = virtualClock.GetTime();
+        TimeSpan AllowExceedTime = TimeToDeadline / 2;
+        if (currentTime > Deadline + AllowExceedTime) {
+            if (!isLate) {
+                Debug.LogError("Order " + OrderID + " exceeds the time but not marked as late!");
+            }
+            else{
+                OrderFinished();
+                //TODO:调用上层接口
+            }
+        } 
+        //状态传达
         if (state == State.NotAccept) {
             timer -= Time.deltaTime;
-            if (timer <= 0f) {
+            if (timer <= 0f) {//超时未接单
                 OrderFinished();
                 DistroyEverything();
             }
         } 
         else {
-            if (state == State.Finished)
+            if (state == State.Finished)//已送达或者过量超时
             {
                 OrderFinished();
                 orderDB.RemoveOrder(OrderID);
                 DistroyEverything();
             }
-            TimeSpan currentTime = virtualClock.GetTime();
-            if (currentTime > Deadline) {
+            currentTime = virtualClock.GetTime();
+            if (currentTime > Deadline) {//超时
                 generalManager.LateOrder(OrderID);
                 OrderLated();
-                state = State.Lated;
-                DistroyEverything();
+                isLate = true;
             }
         }
     }
@@ -203,11 +218,9 @@ public class PairOrder : MonoBehaviour {
     }
 
     public void OrderLated() {
-        state = State.Lated;
-        //更新子对象状态
+        isLate = true;
         fromScript.OrderLated();
         toScript.OrderLated();
-        orderDB.UpdateOrder(this);
     }
 
     //提供一个接口，调用这个接口时，两个singleoreder对象的大小逐渐变大成原来的两倍
@@ -219,5 +232,8 @@ public class PairOrder : MonoBehaviour {
     public void OrderSizeDown() {
         StartCoroutine(fromScript.SizeDown());
         StartCoroutine(toScript.SizeDown());
+    }
+    public bool GetIsLate() {
+        return isLate;
     }
 }

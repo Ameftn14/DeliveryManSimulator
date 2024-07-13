@@ -6,7 +6,7 @@ Shader "RingProgress"
 	 [PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
 	 _Color("Tint", Color) = (1,1,1,1)
 	 [MaterialToggle] PixelSnap("Pixel snap", Float) = 0
-	 _Fill("Fill",Range(0,1)) = 0
+	 _Fill("Fill",Range(-1,1)) = 0
 	}
 
 		SubShader
@@ -54,7 +54,7 @@ Shader "RingProgress"
 		   fixed4 result = tex2D(_MainTex,IN.texcoord)*IN.color;
 		   fixed2 p = fixed2(IN.texcoord.x - 0.5,IN.texcoord.y - 0.5);
 
-		   if (_Fill < 0.5)
+		   if (_Fill < 0.5 && _Fill >= 0)
 		   {
 			//    float compare = (_Fill * 2 - 0.5)*3.1415926;
 			//    float theta = atan(p.y / p.x);
@@ -78,7 +78,7 @@ Shader "RingProgress"
 				   result.a = 0;
 			   }
 		   }
-		   else
+		   else if(_Fill >= 0.5 && _Fill <= 1)
 		   {
 			//    float compare = ((_Fill - 0.5) * 2 - 0.5)*3.1415926;
 			//    float theta = atan(p.y / p.x);
@@ -99,6 +99,34 @@ Shader "RingProgress"
 				}
 											
 
+		   }
+		   else if(_Fill > -0.5 && _Fill < 0)
+		   {
+			   float tempfill = 1+_Fill;
+			   float compare = ( 0.5 - (tempfill - 0.5) * 2)*3.1415926;
+			   float theta = atan(p.y / p.x);
+				if (p.x < 0){
+					if (theta > compare)
+					{
+						result.a = 0;
+					}
+				}
+				else{
+					result.a = 0;
+				}
+		   }
+		   else if(_Fill <= -0.5 && _Fill >= -1)
+		   {
+			   float tempfill = 1+_Fill;
+			   float compare = (0.5 - tempfill * 2)*3.1415926;
+			   float theta = atan(p.y / p.x);
+			   if (p.x > 0)
+			   {
+				   if (theta > compare)
+				   {
+					   result.a = 0;
+				   }
+	           }
 		   }
 		   return result;
 	   }

@@ -120,9 +120,9 @@ public class VirtualClockUI : MonoBehaviour {
 public static class OrderRefreshRate {
     private static readonly System.Random random = new System.Random();
 
-    public static (float TimeInterval, int Quality) GetOrderRefreshRate(int hour, int minute) {
+    public static (float TimeInterval, int Quantity) GetOrderRefreshRate(int hour, int minute) {
         float baseInterval = 8f; // 基准刷新间隔为 8 秒
-        int quality = 1; // 基准订单数量为 1
+        int quantity = 1; // 基准订单数量为 1
 
         // 定义高峰期时间段
         TimeSpan breakfastStart = new TimeSpan(7, 20, 0);
@@ -147,22 +147,22 @@ public static class OrderRefreshRate {
             int probability = random.Next(100);
 
             if (probability < 40) {
-                quality = 2; // 40% 的概率 quality 为 2
+                quantity = 2; // 40% 的概率 quality 为 2
             } else if (probability < 55) {
-                quality = 3; // 15% 的概率 quality 为 3
+                quantity = 3; // 15% 的概率 quality 为 3
             } else {
-                quality = 1; // 60% 的概率 quality 为 1
+                quantity = 1; // 60% 的概率 quality 为 1
             }
         } else {
             // 非高峰期，根据概率决定 quality 的值
             int probability = random.Next(100);
 
             if (probability < 15) {
-                quality = 2; // 15% 的概率 quality 为 2
+                quantity = 2; // 15% 的概率 quality 为 2
             } else if (probability < 20) {
-                quality = 3; // 5% 的概率 quality 为 3
+                quantity = 3; // 5% 的概率 quality 为 3
             } else {
-                quality = 1; // 80% 的概率 quality 为 1
+                quantity = 1; // 80% 的概率 quality 为 1
             }
         }
 
