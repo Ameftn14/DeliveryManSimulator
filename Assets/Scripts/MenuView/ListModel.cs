@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ListModel : MonoBehaviour {
     public List<ItemModel> items = new List<ItemModel>();
@@ -25,15 +26,12 @@ public class ListModel : MonoBehaviour {
         else if (index < 0) {
             index = 0;
         }
+        Debug.Log("Base Model Adding item at " + index);
         preInsertActions?.Invoke(index);
 
         items.Insert(index, itemModel);
         itemModel.bindTo(this);
         itemModel.setSiblingIndex(index);
-    }
-    public void appendItem(ItemModel itemModel) {
-        items.Add(itemModel);
-        itemModel.bindTo(this);
     }
 
     public delegate void listUpdateAction(int deletedIndex);
@@ -41,10 +39,11 @@ public class ListModel : MonoBehaviour {
     public event listUpdateAction preInsertActions;
 
     public void removeAt(int index) {
-        // remove the first one
         if (items.Count <= 0 || index >= items.Count) return;
         postDeleteActions?.Invoke(index);
         items.RemoveAt(index);
+        // force refresh the vertical layout
+        GetComponent<RectTransform>().ForceUpdateRectTransforms();
     }
     public ItemModel getItemAt(int index) {
         if (index < 0 || index >= items.Count) return null;

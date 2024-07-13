@@ -1,11 +1,12 @@
 using UnityEngine;
 
-public class MenuView : MonoBehaviour {
-    public ListModel listModel;
+public class OrderMenuView : MonoBehaviour {
+    public OrderMenuListBehaviour listModel;
     void Start() {
         Debug.Assert(listModel != null);
     }
     public void appendItem(ItemModel item) {
+        Debug.Log("order menu view: appendItem");
         listModel.addItemAt(item, listModel.getSize());
     }
     public void insertAt(ItemModel item, int index) {
