@@ -4,6 +4,15 @@ using UnityEngine.UI;
 using TMPro;
 
 public class VirtualClockUI : MonoBehaviour {
+    private static VirtualClockUI instance;
+    public static VirtualClockUI Instance {
+        get {
+            if (instance == null) {
+                instance = FindObjectOfType<VirtualClockUI>();
+            }
+            return instance;
+        }
+    }
     public TMP_Text timeText;
     //public Button backwardButton;
     //public Button forwardButton;
@@ -22,6 +31,13 @@ public class VirtualClockUI : MonoBehaviour {
     private float timer = 0f;
 
     void Start() {
+        if (instance != null && instance != this) {
+            Destroy(gameObject);
+        } else {
+            instance = this;
+        }
+
+
         // 设置初始时间
         currentHour = startHour;
         currentMinute = startMinute;
@@ -94,6 +110,11 @@ public class VirtualClockUI : MonoBehaviour {
     public TimeSpan GetTime() {
         return new TimeSpan(currentHour, currentMinute, 0);
     }
+    //换算真实时间间隔到虚拟时间间隔
+    public TimeSpan GetVirtualTime(float realseconds) {
+        int virtualminutes = (int)(realseconds / timeStepMinutes);
+        return new TimeSpan(0, virtualminutes, 0);//超出60分钟会自动进位
+    }
 }
 
 public static class OrderRefreshRate {
@@ -148,6 +169,6 @@ public static class OrderRefreshRate {
         // 添加随机浮动性
         float timeInterval = baseInterval + UnityEngine.Random.Range(-1f, 1f); // 浮动范围在±1秒
 
-        return (timeInterval, quality);
+        return (timeInterval, 1);
     }
 }
