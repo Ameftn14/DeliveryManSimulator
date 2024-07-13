@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 5659995694832261312}
   - component: {fileID: 8004785232378965367}
   - component: {fileID: 6583531552245060899}
-  - component: {fileID: 2633061257787102358}
+  - component: {fileID: 3827739679261483924}
   m_Layer: 5
   m_Name: Order Item Menu View
   m_TagString: Untagged
@@ -274,7 +274,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2633061257787102358
+--- !u!114 &3827739679261483924
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -283,7 +283,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3885558630732333057}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48528c54bd75bfa469685dda6da32ae0, type: 3}
+  m_Script: {fileID: 11500000, guid: 6639b0e337b54ff43883fa2173d82d31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   listModel: {fileID: 3620186467954917206}
