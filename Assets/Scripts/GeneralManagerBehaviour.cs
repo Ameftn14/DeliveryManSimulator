@@ -52,12 +52,21 @@ public class GeneralManagerBehaviour : MonoBehaviour {
             // theProperty.nowCapacity += 1;
         }
     }
-
+    public void DistroyOrder(int OrderID) {
+        PairOrder theOrder = theOrderDB.orderDict[OrderID];
+        theProperty.nowCapacity += 1;
+        if (theOrder.state == PairOrder.State.Accept) {
+            SingleOrder theFrom = theOrder.fromScript;
+            displayManager.removeOrder(OrderID, LocationType.Restaurant);
+        }
+        SingleOrder theTo = theOrder.toScript;
+        displayManager.removeOrder(OrderID, LocationType.Customer);
+        return;
+    }
 
     // Update is called once per frame
     void Update() {
-        if (theSearchRoad.orderFinished && theSearchRoad.isMoving) // 可能会有卡轴的bug 但是好修
-        {
+        if (theSearchRoad.orderFinished && theSearchRoad.isMoving) {
             theSearchRoad.isMoving = false;
             SingleOrder theOrder = null;
             PairOrder thePairOrder = theOrderDB.orderDict[theSearchRoad.targetOrderID];

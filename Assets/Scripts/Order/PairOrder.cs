@@ -113,6 +113,7 @@ public class PairOrder : MonoBehaviour {
                 Debug.LogError("Order " + OrderID + " exceeds the time but not marked as late!");
             }
             else{
+                generalManager.DistroyOrder(OrderID);
                 OrderFinished();
                 //TODO:调用上层接口
             }
