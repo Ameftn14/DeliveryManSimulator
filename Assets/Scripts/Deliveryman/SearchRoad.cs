@@ -85,7 +85,26 @@ public class SearchRoad : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         moveSpeed = property.speed;
-
+        float realMoveSpeed;
+        AudioSource audio = GameObject.Find("Camera").GetComponent<AudioSource>();
+        if (Input.GetKey(KeyCode.LeftShift))
+            realMoveSpeed = moveSpeed * 2;
+        else
+            realMoveSpeed = moveSpeed;
+        // 控制时间流速
+        if (Input.GetKey(KeyCode.LeftControl)) {
+            if (audio.pitch > 0.5f)
+                audio.pitch *= 0.995f;
+            else
+                audio.pitch = 0.5f;
+            Time.timeScale = 0.2f;
+        } else {
+            if (audio.pitch < 1)
+                audio.pitch *= 1.005f;
+            else
+                audio.pitch = 1;
+            Time.timeScale = 1;
+        }
         int switcher = 0;
         if (wayPoints.ContainsKey(targetwaypoint)) switcher += 4;
         if (orderFinished) switcher += 2;
@@ -143,11 +162,9 @@ public class SearchRoad : MonoBehaviour {
                     targetPos = wayPoints[targetwaypoint].transform.position;
                 }
 
+
                 // 向目标位置移动
-                if (Input.GetKey(KeyCode.LeftShift))
-                    gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, targetPos, 1.5f * moveSpeed * Time.deltaTime);
-                else
-                    gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, targetPos, moveSpeed * Time.deltaTime);
+                gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, targetPos, realMoveSpeed * Time.deltaTime);
 
                 // 检查是否到达目标位置
                 if ((gameObject.transform.position - targetPos).sqrMagnitude <= 0.1f) {
