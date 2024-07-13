@@ -1,4 +1,5 @@
 using System;
+using System.Dynamic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -78,7 +79,8 @@ public class ItemModel : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHa
     virtual public void OnEndDrag(PointerEventData eventData) {
         // canvas.sortingOrder--;
         GetComponent<CanvasGroup>().blocksRaycasts = true;
-        rectTransform.anchoredPosition = originalPosition;
+        // rectTransform.anchoredPosition = originalPosition;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(listModel.GetComponent<RectTransform>());
     }
     virtual public void OnDrop(PointerEventData eventData) {
         GameObject droppedGameObject = eventData.pointerDrag;

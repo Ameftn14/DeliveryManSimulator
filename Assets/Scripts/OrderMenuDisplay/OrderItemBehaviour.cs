@@ -126,7 +126,8 @@ public class OrderItemBehaviour : ItemModel, IPointerEnterHandler, IPointerExitH
         if (!followingAlong) {
             return;
         }
-        rectTransform.anchoredPosition = originalPosition;
+        // rectTransform.anchoredPosition = originalPosition;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(listModel.GetComponent<RectTransform>());
         followingAlong = false;
     }
     void Update() {
