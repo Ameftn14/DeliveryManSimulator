@@ -72,7 +72,7 @@ public class SearchRoad : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        moveSpeed = Property.speed;
+        moveSpeed = property.speed;
 
         int switcher = 0;
         if (wayPoints.ContainsKey(targetwaypoint)) switcher += 4;

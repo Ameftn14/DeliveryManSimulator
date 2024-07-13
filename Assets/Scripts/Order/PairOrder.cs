@@ -50,13 +50,13 @@ public class PairOrder : MonoBehaviour {
         do {
             from_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
             from_wp = mapManager.GetWayPoints()[from_pid].GetComponent<WayPointBehaviour>();
-        } while (from_wp.isBusy||from_wp.isResturant==0);
+        } while (from_wp.isBusy || from_wp.isResturant == 0);
 
         do {
             to_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
             to_wp = mapManager.GetWayPoints()[to_pid].GetComponent<WayPointBehaviour>();
             isSameEdge = (from_wp.startVid == to_wp.startVid && from_wp.endVid == to_wp.endVid);
-        } while (to_wp.isBusy||to_wp.isResturant==1||to_pid==from_pid||isSameEdge);
+        } while (to_wp.isBusy || to_wp.isResturant == 1 || to_pid == from_pid || isSameEdge);
 
         mapManager.GetWayPoints()[from_pid].GetComponent<WayPointBehaviour>().BecomeBusy();
         mapManager.GetWayPoints()[to_pid].GetComponent<WayPointBehaviour>().BecomeBusy();
@@ -111,13 +111,12 @@ public class PairOrder : MonoBehaviour {
         if (currentTime > Deadline + AllowExceedTime) {
             if (!isLate) {
                 Debug.LogError("Order " + OrderID + " exceeds the time but not marked as late!");
-            }
-            else{
+            } else {
                 generalManager.DistroyOrder(OrderID);
                 OrderFinished();
                 //TODO:调用上层接口
             }
-        } 
+        }
         //状态传达
         if (state == State.NotAccept) {
             timer -= Time.deltaTime;
@@ -125,8 +124,7 @@ public class PairOrder : MonoBehaviour {
                 OrderFinished();
                 DistroyEverything();
             }
-        } 
-        else {
+        } else {
             if (state == State.Finished)//已送达或者过量超时
             {
                 OrderFinished();
