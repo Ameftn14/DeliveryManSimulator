@@ -37,7 +37,7 @@ public class GeneralManagerBehaviour : MonoBehaviour {
             displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Customer, theTo.Getpid(), theOrder.OrderID));
             theProperty.nowCapacity -= 1;
         } else
-            theOrder.state = PairOrder.State.NotAccept;
+            theOrder.OrderNotAccept();
     }
 
     public void LateOrder(int OrderID)
@@ -73,10 +73,10 @@ public class GeneralManagerBehaviour : MonoBehaviour {
                 theOrder = thePairOrder.toScript;
             displayManager.removeOrder(theSearchRoad.targetOrderID, theSearchRoad.targetIsFrom ? LocationType.Restaurant : LocationType.Customer);
             if (theOrder.GetIsFrom()){
-                thePairOrder.state = PairOrder.State.PickUp;
+                thePairOrder.OrderPickUp();
             }
             else {
-                thePairOrder.state = PairOrder.State.Finished;
+                thePairOrder.OrderFinished();
                 theProperty.nowCapacity += 1;
                 if (virtualClock.GetTime() < thePairOrder.GetDeadline())
                     theProperty.money += thePairOrder.GetPrice();

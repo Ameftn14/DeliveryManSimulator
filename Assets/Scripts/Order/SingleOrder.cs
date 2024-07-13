@@ -11,12 +11,14 @@ public class SingleOrder : MonoBehaviour {
     public MapManagerBehaviour mapManager;
 
     public TimeSpan acceptTime;
+    public TimeSpan TimeToDeadline;
     public bool visible;
     public RingProgress ringProgress;
     //public RingProgress ringProgress; 
     public PairOrder parentPairOrder;
     public SingleOrder brotherSingleOrder;
     public int OrderID;
+    private bool isLate;
     public TimeSpan Deadline;
     public PairOrder.State state;
     private int pid;
@@ -65,7 +67,6 @@ public class SingleOrder : MonoBehaviour {
     }
 
     public void Update() {
-
     }
 
     public void OnMouseDown() {
@@ -74,8 +75,9 @@ public class SingleOrder : MonoBehaviour {
             Debug.Log("Order " + OrderID + " is accepted");
             
             parentPairOrder.OrderAccept();
-
-            ringProgress = transform.Find("Ring").GetComponent<RingProgress>();
+            if(ringProgress == null){
+                ringProgress = transform.Find("Ring").GetComponent<RingProgress>();
+            }
             ringProgress.state = PairOrder.State.Accept;
             SetAcceptTime(virtualClockUI.GetTime());
             brotherSingleOrder.SetAcceptTime(virtualClockUI.GetTime());
@@ -138,6 +140,10 @@ public class SingleOrder : MonoBehaviour {
     }
 
     //statechange
+    public void OrderNotAccept() {
+        state = PairOrder.State.NotAccept;
+        ringProgress.state = PairOrder.State.NotAccept;
+    }
     public void OrderAccept() {
         state = PairOrder.State.Accept;
         ringProgress.state = PairOrder.State.Accept;
@@ -152,8 +158,7 @@ public class SingleOrder : MonoBehaviour {
     }
 
     public void OrderLated() {
-        state = PairOrder.State.Lated;
-        ringProgress.state = PairOrder.State.Lated;
+        isLate = true;
     }
 
     public void OrderFinished() {
@@ -224,5 +229,13 @@ public class SingleOrder : MonoBehaviour {
             elapsed += Time.deltaTime;
             yield return null;
         }
+    }
+
+    public void SetTimeToDeadline(TimeSpan time) {
+        if(ringProgress == null){
+            ringProgress = transform.Find("Ring").GetComponent<RingProgress>();
+        }
+        TimeToDeadline = time;
+        ringProgress.TimeToDeadline = time;
     }
 }
