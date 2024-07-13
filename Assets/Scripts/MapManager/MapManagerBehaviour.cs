@@ -6,12 +6,12 @@ using UnityEngine.UIElements;
 public class MapManagerBehaviour : MonoBehaviour
 {
 
-    static private int nextVid = 0;
-    static private int nextPid = 0;
-    static private int vNum = 0;
-    static private int eNum = 0;
+    private int nextVid = 0;
+    private int nextPid = 0;
+    private int vNum = 0;
+    private int eNum = 0;
 
-    static private int pNum = 0;
+    private int pNum = 0;
     private Dictionary<int, Vector3> vertices = new Dictionary<int, Vector3>();
     private Dictionary<int, Dictionary<int, float>> edges = new Dictionary<int, Dictionary<int, float>>();
     private Dictionary<int, WayPointBehaviour> wayPoints = new Dictionary<int, WayPointBehaviour>();
