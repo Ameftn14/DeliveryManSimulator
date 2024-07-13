@@ -47,6 +47,7 @@ public class OrderMenuListBehaviour : ListModel {
     void backToNormal() {
         if (hoveringItem != null) {
             hoveringItem.stopFollowingAlong();
+
         }
         if (draggingItem != null) {
             draggingItem.unblockDragging();
@@ -101,7 +102,7 @@ public class OrderMenuListBehaviour : ListModel {
     /* -------------------------------------------------------------------------- */
     /*  Unfortunatly, player can bypass the above system, so... here you go:      */
     /* -------------------------------------------------------------------------- */
-    public bool swapIsAllowed(int droppedIndex, int targetIndex) {
+    public bool dropIsAllowed(int droppedIndex, int targetIndex) {
         OrderItemBehaviour droppedItem = (OrderItemBehaviour)getItemAt(droppedIndex);
         OrderInfo droppedOrder = droppedItem.getOrderInfo();
         if (droppedOrder.locationType == LocationType.Restaurant) {
@@ -124,6 +125,11 @@ public class OrderMenuListBehaviour : ListModel {
             return true;
         }
         return false;
+    }
+    public bool swapIsAllowed(int indexA, int indexB) {
+        // if (indexA == indexB) return false;
+        // if (indexA < 0 || indexA >= getSize() || indexB < 0 || indexB >= getSize()) return false;
+        return dropIsAllowed(indexA, indexB) && dropIsAllowed(indexB, indexA);
     }
 
     /* -------------------------------------------------------------------------- */
