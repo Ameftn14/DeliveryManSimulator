@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MenuViewTest : MonoBehaviour {
     // Start is called before the first frame update
-    public MenuView menuView;
+    public OrderMenuView menuView;
     public int index;
     int n = 0;
     public void setIndex(string index) {
@@ -11,10 +11,16 @@ public class MenuViewTest : MonoBehaviour {
         this.index = Convert.ToInt32(index);
     }
     public void add() {
-        OrderInfo info = new OrderInfo(new TimeSpan(01, 02, 03), new Color(0, 0, 0, 255), LocationType.Customer, n, n);
-        ItemModel item = OrderItemBehaviour.spawnNewCustomerOrderItem(info);
-        item.gameObject.name = "Item " + n++;
-        menuView.insertAt(item, index);
+        Color color = ColorDictionary.GetColor(n);
+        TimeSpan dueTime = VirtualClockUI.Instance.GetTime().Add(new TimeSpan(2, 0, 0));
+        OrderInfo restInfo = new OrderInfo(dueTime, color, LocationType.Restaurant, n, n);
+        OrderInfo custInfo = new OrderInfo(dueTime, color, LocationType.Customer, n, n);
+        ItemModel restItem = OrderItemBehaviour.spawnNewRestaurantOrderItem(restInfo);
+        ItemModel custItem = OrderItemBehaviour.spawnNewCustomerOrderItem(custInfo);
+        restItem.gameObject.name = "Item " + n++;
+        menuView.insertAt(restItem, index);
+        custItem.gameObject.name = "Item " + n++;
+        menuView.insertAt(custItem, index + 1);
     }
     public void remove() {
         menuView.removeAt(index);

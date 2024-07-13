@@ -5,9 +5,23 @@ using UnityEngine;
 using UnityEngine.PlayerLoop;
 
 public class AcceptedUnfinishedOrderDisplayManager : MonoBehaviour {
-    public MenuView menuView;
+    public OrderMenuView menuView;
+    private static AcceptedUnfinishedOrderDisplayManager instance;
+    public static AcceptedUnfinishedOrderDisplayManager Instance {
+        get {
+            if (instance == null) {
+                instance = FindObjectOfType<AcceptedUnfinishedOrderDisplayManager>();
+            }
+            return instance;
+        }
+    }
 
     public void Start() {
+        if (instance != null && instance != this) {
+            Destroy(gameObject);
+        } else {
+            instance = this;
+        }
         Debug.Assert(menuView != null);
     }
     public void appendNewOrder(OrderInfo order) {
@@ -17,7 +31,8 @@ public class AcceptedUnfinishedOrderDisplayManager : MonoBehaviour {
         } else if (order.locationType == LocationType.Customer) {
             itemModel = OrderItemBehaviour.spawnNewCustomerOrderItem(order);
         }
-        itemModel.gameObject.name = "Item " + menuView.transform.childCount;
+        Debug.Log("itemModel: " + itemModel.getIndex());
+        // itemModel.gameObject.name = "Item " + menuView.transform.childCount;
         if (itemModel == null) {
             Debug.LogError("itemModel is null");
             return;
@@ -40,6 +55,8 @@ public class AcceptedUnfinishedOrderDisplayManager : MonoBehaviour {
             }
         }
     }
+
+
 }
 
 public enum LocationType {

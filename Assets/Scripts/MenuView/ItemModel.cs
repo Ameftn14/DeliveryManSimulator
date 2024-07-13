@@ -1,4 +1,5 @@
 using System;
+using System.Dynamic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -6,10 +7,10 @@ using UnityEngine.UIElements;
 
 public class ItemModel : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHandler, IEndDragHandler {
     Guid guid; // this can be replaced with actual data class/struct
-    [SerializeField] int index;
-    [SerializeField] Vector2 originalPosition;
-    RectTransform rectTransform;
-    [SerializeField] ListModel listModel;
+    [SerializeField] protected int index;
+    [SerializeField] protected Vector2 originalPosition;
+    protected RectTransform rectTransform;
+    [SerializeField] protected ListModel listModel;
 
 
     // Start is called before the first frame update
@@ -17,6 +18,7 @@ public class ItemModel : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHa
         guid = Guid.NewGuid();
         index = transform.GetSiblingIndex();
         rectTransform = GetComponent<RectTransform>();
+        originalPosition = rectTransform.anchoredPosition;
     }
     void Start() {
         init();
@@ -52,21 +54,6 @@ public class ItemModel : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHa
         listModel.preInsertActions -= onInsertAction;
         Destroy(gameObject);
     }
-
-    public void OnDrag(PointerEventData eventData) {
-        GetComponent<RectTransform>().anchoredPosition += eventData.delta;
-    }
-
-    public void OnDrop(PointerEventData eventData) {
-        GameObject droppedGameObject = eventData.pointerDrag;
-        ItemModel droppedItemModel = droppedGameObject.GetComponent<ItemModel>();
-        // TODO more robust
-
-        int droppedIndex = droppedItemModel.getIndex();
-        Debug.Log("item " + droppedIndex + "->" + index);
-
-        listModel.swap(index, droppedIndex);
-    }
     public void setSiblingIndex(int index) {
         transform.SetSiblingIndex(index);
         this.index = index;
@@ -74,7 +61,7 @@ public class ItemModel : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHa
     public int getIndex() {
         return index;
     }
-    public void OnBeginDrag(PointerEventData eventData) {
+    virtual public void OnBeginDrag(PointerEventData eventData) {
         Debug.Log("begin drag");
         Debug.Log("sibling index: " + transform.GetSiblingIndex());
         index = transform.GetSiblingIndex();
@@ -86,10 +73,23 @@ public class ItemModel : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHa
         // rectTransform.anchoredPosition = originalPosition;
         GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
-
-    public void OnEndDrag(PointerEventData eventData) {
+    virtual public void OnDrag(PointerEventData eventData) {
+        GetComponent<RectTransform>().anchoredPosition += eventData.delta;
+    }
+    virtual public void OnEndDrag(PointerEventData eventData) {
         // canvas.sortingOrder--;
         GetComponent<CanvasGroup>().blocksRaycasts = true;
-        rectTransform.anchoredPosition = originalPosition;
+        // rectTransform.anchoredPosition = originalPosition;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(listModel.GetComponent<RectTransform>());
+    }
+    virtual public void OnDrop(PointerEventData eventData) {
+        GameObject droppedGameObject = eventData.pointerDrag;
+        ItemModel droppedItemModel = droppedGameObject.GetComponent<ItemModel>();
+        // TODO more robust
+
+        int droppedIndex = droppedItemModel.getIndex();
+        Debug.Log("item " + droppedIndex + "->" + index);
+
+        listModel.swap(index, droppedIndex);
     }
 }
