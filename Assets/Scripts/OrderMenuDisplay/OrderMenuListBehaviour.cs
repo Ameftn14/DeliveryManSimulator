@@ -168,7 +168,4 @@ public class OrderMenuListBehaviour : ListModel {
     public delegate void MouseDragOrderChangedHandler(OrderInfo orderInfo);
     public event MouseDragOrderChangedHandler OnMouseDragOrderChanged;
 
-
-
-
 }

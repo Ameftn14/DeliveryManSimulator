@@ -114,7 +114,6 @@ public class PairOrder : MonoBehaviour {
             } else {
                 generalManager.DistroyOrder(OrderID);
                 OrderFinished();
-                //TODO:调用上层接口
             }
         }
         //状态传达
@@ -141,6 +140,7 @@ public class PairOrder : MonoBehaviour {
     }
 
     public void DistroyEverything() {
+        orderDB.RemoveOrder(OrderID);
         Destroy(transform.Find("OrderFrom").gameObject);
         Destroy(transform.Find("OrderTo").gameObject);
         Destroy(gameObject);
@@ -238,6 +238,11 @@ public class PairOrder : MonoBehaviour {
     public void OrderSizeDown() {
         StartCoroutine(fromScript.SizeDown());
         StartCoroutine(toScript.SizeDown());
+    }
+
+    public void OrderSizeUpAndDown() {
+        StartCoroutine(fromScript.SizeUpAndDown());
+        StartCoroutine(toScript.SizeUpAndDown());
     }
     public bool GetIsLate() {
         return isLate;
