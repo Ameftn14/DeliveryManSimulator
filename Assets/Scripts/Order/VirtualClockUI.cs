@@ -121,8 +121,8 @@ public static class OrderRefreshRate {
     private static readonly System.Random random = new System.Random();
 
     public static (float TimeInterval, int Quantity) GetOrderRefreshRate(int hour, int minute) {
-        float baseInterval = 8f; // 基准刷新间隔为 8 秒
-        int quantity = 1; // 基准订单数量为 1
+        float baseInterval = 10f; // 基准刷新间隔为 10 秒
+        //int quantity; // 基准订单数量为 1
 
         // 定义高峰期时间段
         TimeSpan breakfastStart = new TimeSpan(7, 20, 0);
@@ -141,29 +141,29 @@ public static class OrderRefreshRate {
         if ((currentTime >= breakfastStart && currentTime <= breakfastEnd) ||
             (currentTime >= lunchStart && currentTime <= lunchEnd) ||
             (currentTime >= dinnerStart && currentTime <= dinnerEnd)) {
-            baseInterval = 5f; // 高峰期刷新间隔缩短到 5秒
+            baseInterval = 7f; // 高峰期刷新间隔缩短到 7秒
 
             // 根据概率决定 quality 的值
             int probability = random.Next(100);
 
-            if (probability < 40) {
-                quantity = 2; // 40% 的概率 quality 为 2
-            } else if (probability < 55) {
-                quantity = 3; // 15% 的概率 quality 为 3
-            } else {
-                quantity = 1; // 60% 的概率 quality 为 1
-            }
+            // if (probability < 40) {
+            //     quantity = 2; // 40% 的概率 quality 为 2
+            // } else if (probability < 55) {
+            //     quantity = 3; // 15% 的概率 quality 为 3
+            // } else {
+            //     quantity = 1; // 60% 的概率 quality 为 1
+            // }
         } else {
             // 非高峰期，根据概率决定 quality 的值
             int probability = random.Next(100);
 
-            if (probability < 15) {
-                quantity = 2; // 15% 的概率 quality 为 2
-            } else if (probability < 20) {
-                quantity = 3; // 5% 的概率 quality 为 3
-            } else {
-                quantity = 1; // 80% 的概率 quality 为 1
-            }
+            // if (probability < 15) {
+            //     quantity = 2; // 15% 的概率 quality 为 2
+            // } else if (probability < 20) {
+            //     quantity = 3; // 5% 的概率 quality 为 3
+            // } else {
+            //     quantity = 1; // 80% 的概率 quality 为 1
+            // }
         }
 
         // 添加随机浮动性

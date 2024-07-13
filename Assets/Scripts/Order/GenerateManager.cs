@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GeneratorManager : MonoBehaviour
@@ -6,8 +7,9 @@ public class GeneratorManager : MonoBehaviour
     public VirtualClockUI virtualClock; // 虚拟时钟
     public OrderDB orderDB; // 订单数据库
     public float interval = 8f; // 计时器持续时间，单位秒
-    public int quality = 1; // 订单数量
+    public int quantity = 1; // 订单数量
     private float timer; // 计时器
+    public TimeSpan cutoffTime; // 结算时间
 
     public static int NextOrderID; // 订单编号
 
@@ -35,14 +37,15 @@ public class GeneratorManager : MonoBehaviour
             Debug.LogError("OrderDB is not assigned!");
             return;
         }
-        (float _interval, int _quality) = virtualClock.GetOrderRefreshRate();
-        this.interval = _interval;
-        this.quality = _quality;
+        (float _interval, int _quantity) = virtualClock.GetOrderRefreshRate();
+        interval = _interval;
+        quantity = _quantity;
 
         // 初始化计时器
-        timer = interval;
+        timer = 2f;
         NextOrderID = 0;
         WPcount = mapManager.GetWayPoints().Count;
+        cutoffTime = new TimeSpan(23, 0, 0);
     }
 
     void Update()
@@ -51,10 +54,13 @@ public class GeneratorManager : MonoBehaviour
         timer -= Time.deltaTime;
         if (timer <= 0f)
         {
-            GeneratePairs(); // 生成预制件
+            if(virtualClock.GetTime() < new TimeSpan(21, 0, 0))//TODO:这里要配合DDL的时间，暂时这么写了
+            {
+                GeneratePairs(); // 生成预制件
+            }           
             (float _interval, int _quality) = virtualClock.GetOrderRefreshRate();
-            this.interval = _interval;
-            this.quality = _quality;
+            interval = _interval;
+            quantity = _quality;
             timer = interval;
         }
 
@@ -72,14 +78,13 @@ public class GeneratorManager : MonoBehaviour
 
     void GeneratePairs()
     {
-        for (int i = 0; i < quality; i++)
+        for (int i = 0; i < quantity; i++)
         {
             GeneratePair();
         }
     }
 
     void GeneratePair(){
-        //TODO: 生成一对订单
         GameObject orderPair = Instantiate(orderPairPrefab);
         orderPair.GetComponent<PairOrder>().SetOrderID(NextOrderID);
         NextOrderID++;
