@@ -584,6 +584,7 @@ GameObject:
   - component: {fileID: 587932360}
   - component: {fileID: 587932359}
   - component: {fileID: 587932358}
+  - component: {fileID: 587932361}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1826,7 +1827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20104b9b77cf4874e97c60fd615b6eb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theProperty: {fileID: 0}
+  theProperty: {fileID: 1646932717}
   theSearchRoad: {fileID: 1646932718}
   theMapManager: {fileID: 4491989847327961980}
   theOrderDB: {fileID: 988894633}
