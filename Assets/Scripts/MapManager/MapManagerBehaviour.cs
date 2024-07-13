@@ -237,6 +237,10 @@ public class MapManagerBehaviour : MonoBehaviour
             backgroundId = (backgroundId + 1) % (backgroundCnt + 1);
         }
     }
+    public void LogtoDebug(int index)
+    {
+        Debug.Log("MapManagerBehaviour: " + wayPoints[index].pid);
+    }
 }
 
 
