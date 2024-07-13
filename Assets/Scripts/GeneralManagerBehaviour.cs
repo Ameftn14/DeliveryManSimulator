@@ -43,18 +43,13 @@ public class GeneralManagerBehaviour : MonoBehaviour {
     {
         PairOrder theOrder = theOrderDB.orderDict[OrderID];
         if (theOrder.state == PairOrder.State.Accept)
-        {
-            displayManager.removeOrder(OrderID, LocationType.Restaurant);
-            displayManager.removeOrder(OrderID, LocationType.Customer);
             theProperty.money -= theOrder.GetPrice();
-            theProperty.nowCapacity += 1;
-        }
         else
         if (theOrder.state == PairOrder.State.PickUp)
         {
-            displayManager.removeOrder(OrderID, LocationType.Customer);
+            // displayManager.removeOrder(OrderID, LocationType.Customer);
             theProperty.money -= theOrder.GetPrice();
-            theProperty.nowCapacity += 1;
+            // theProperty.nowCapacity += 1;
         }
     }
 

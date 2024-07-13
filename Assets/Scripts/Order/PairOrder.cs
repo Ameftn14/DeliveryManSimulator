@@ -133,7 +133,7 @@ public class PairOrder : MonoBehaviour {
                 DistroyEverything();
             }
             currentTime = virtualClock.GetTime();
-            if (currentTime > Deadline) {//超时
+            if (currentTime > Deadline && isLate == false) {//超时
                 generalManager.LateOrder(OrderID);
                 OrderLated();
                 isLate = true;
