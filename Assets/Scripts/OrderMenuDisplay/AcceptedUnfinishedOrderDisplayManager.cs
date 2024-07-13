@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.PlayerLoop;
 
 public class AcceptedUnfinishedOrderDisplayManager : MonoBehaviour {
-    public MenuView menuView;
+    public OrderMenuView menuView;
     private static AcceptedUnfinishedOrderDisplayManager instance;
     public static AcceptedUnfinishedOrderDisplayManager Instance {
         get {
@@ -31,7 +31,8 @@ public class AcceptedUnfinishedOrderDisplayManager : MonoBehaviour {
         } else if (order.locationType == LocationType.Customer) {
             itemModel = OrderItemBehaviour.spawnNewCustomerOrderItem(order);
         }
-        itemModel.gameObject.name = "Item " + menuView.transform.childCount;
+        Debug.Log("itemModel: " + itemModel.getIndex());
+        // itemModel.gameObject.name = "Item " + menuView.transform.childCount;
         if (itemModel == null) {
             Debug.LogError("itemModel is null");
             return;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.PlayerLoop;
@@ -51,7 +52,7 @@ public class OrderMenuListBehaviour : ListModel {
             draggingItem.unblockDragging();
         }
     }
-    void checkBlockingCondition() {
+    void checkBlockingCondition(OrderItemBehaviour droppedItem, OrderItemBehaviour targetItem) {
         if (hoveringItem == null || draggingItem == null) {
             isInSpecialMode = false;
             backToNormal();
@@ -85,12 +86,16 @@ public class OrderMenuListBehaviour : ListModel {
         if (isInSpecialMode) return;
         hoveringItem = item;
         OnMouseHoverOrderChanged?.Invoke(item);
-        checkBlockingCondition();
+        checkBlockingCondition(targetItem: hoveringItem, droppedItem: draggingItem);
     }
     public void setMouseDragItem(OrderItemBehaviour item) {
+        if (item == null) {
+            isInSpecialMode = false;
+            backToNormal();
+        }
         draggingItem = item;
         OnMouseDragOrderChanged?.Invoke(item);
-        checkBlockingCondition();
+        checkBlockingCondition(targetItem: hoveringItem, droppedItem: draggingItem);
     }
 
     /* -------------------------------------------------------------------------- */
@@ -119,6 +124,29 @@ public class OrderMenuListBehaviour : ListModel {
             return true;
         }
         return false;
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                 To Solve the Deleting And Inserting Problem                */
+    /* -------------------------------------------------------------------------- */
+
+    public new void removeAt(int index) {
+        if (getSize() < 0 || index >= getSize()) return;
+        // fix this
+        Debug.Log("Removing " + items[index].name);
+        if (hoveringItem != null && hoveringItem.getIndex() == index) {
+            hoveringItem = null;
+        }
+        if (draggingItem != null && draggingItem.getIndex() == index) {
+            draggingItem = null;
+        }
+        checkBlockingCondition(draggingItem, hoveringItem);
+        base.removeAt(index);
+    }
+
+    public new void addItemAt(ItemModel itemModel, int index = 0) {
+        Debug.Log("Menu List Model: adding item at " + index);
+        base.addItemAt(itemModel, index);
     }
 
 
