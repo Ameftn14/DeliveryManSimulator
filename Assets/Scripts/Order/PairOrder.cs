@@ -38,12 +38,12 @@ public class PairOrder : MonoBehaviour {
             Debug.LogError("MapManager is not assigned!");
             return;
         }
-        else {
-            Debug.Log("The Dictionary Count:" + mapManager.GetWayPoints().Count);       
-            mapManager.LogtoDebug(0);
-            bool test = mapManager.GetWayPoints()[0].GetComponent<WayPointBehaviour>().isBusy;
-            Debug.Log("test is" + test);
-        }
+        // else {
+        //     Debug.Log("The Dictionary Count:" + mapManager.GetWayPoints().Count);       
+        //     //mapManager.LogtoDebug(0);
+        //     //bool test = mapManager.GetWayPoints()[0].GetComponent<WayPointBehaviour>().isBusy;
+        //     //Debug.Log("test is" + test);
+        // }
         virtualClock = GameObject.Find("Time").GetComponent<VirtualClockUI>();
 
         state = State.NotAccept;
