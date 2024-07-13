@@ -16,17 +16,22 @@ public class VirtualClockUI : MonoBehaviour {
             return instance;
         }
     }
+
+    // if I am 'The' instance of this class, set instance to null
     void OnDestroy() {
-        // if I am 'The' instance of this class, set instance to null
         if (instance == this) {
             instance = null;
         }
     }
-    void singletonCheck() {
+
+    // call this in the Start() method to check if there is already an instance of this class
+    bool alreadyInitialised() {
         if (instance != null && instance != this) {
             Destroy(gameObject);
+            return true;
         } else {
             instance = this;
+            return false;
         }
     }
     /* -------------------------------------------------------------------------- */
@@ -51,7 +56,7 @@ public class VirtualClockUI : MonoBehaviour {
     private float timer = 0f;
 
     void Start() {
-        singletonCheck();
+        if (alreadyInitialised()) return;
 
         // 设置初始时间
         currentHour = startHour;
