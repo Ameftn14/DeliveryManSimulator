@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Property : MonoBehaviour
 {
+    public static Property Instance { get; private set; }
     private float maxSpeed = 20.0f;
     private int maxCapacity = 5;
 
@@ -18,19 +19,32 @@ public class Property : MonoBehaviour
 
     public static int finishedcount = 0;
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+    }
+
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         nowCapacity = allCapacity;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // if (Input.GetKeyDown(KeyCode.Space))
-        // {
-        //     increaseSpeed();
-        // }
+       if(Input.GetKeyDown(KeyCode.P)){
+            Debug.Log("In SampleScene money is" + money);
+        }
     }
 
     public void increaseSpeed()
