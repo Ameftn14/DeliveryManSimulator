@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MenuViewTest : MonoBehaviour {
     // Start is called before the first frame update
-    public MenuView menuView;
+    public OrderMenuView menuView;
     public int index;
     int n = 0;
     public void setIndex(string index) {
