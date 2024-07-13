@@ -93,7 +93,7 @@ public class OrderItemBehaviour : ItemModel, IPointerEnterHandler, IPointerExitH
         OrderMenuListBehaviour.Instance.setMouseDragItem(null);
     }
     public override void OnDrop(PointerEventData eventData) {
-        if (!OrderMenuListBehaviour.Instance.isInBlockingMode())
+        if (OrderMenuListBehaviour.Instance.isInBlockingMode())
             return;
         int droppedIndex = eventData.pointerDrag.GetComponent<ItemModel>().getIndex();
         if (OrderMenuListBehaviour.Instance.swapIsAllowed(droppedIndex, index)) {
