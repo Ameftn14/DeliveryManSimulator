@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class MapManagerBehaviour : MonoBehaviour
-{
+public class MapManagerBehaviour : MonoBehaviour {
 
     private int nextVid = 0;
     private int nextPid = 0;
@@ -100,8 +99,7 @@ public class MapManagerBehaviour : MonoBehaviour
     // about vertices
 
 
-    public int AddVertex(Vector3 p, GameObject vertexObject)
-    {
+    public int AddVertex(Vector3 p, GameObject vertexObject) {
         int vid = nextVid++;
         vertices[vid] = p;
         vertexObjects[vid] = vertexObject;
@@ -109,8 +107,7 @@ public class MapManagerBehaviour : MonoBehaviour
         return vid;
     }
 
-    public void RemoveVertex(int vid)
-    {
+    public void RemoveVertex(int vid) {
         vertices.Remove(vid);
         vertexObjects[vid].SetActive(false);
         vertexObjects.Remove(vid);
@@ -120,10 +117,8 @@ public class MapManagerBehaviour : MonoBehaviour
         vNum--;
     }
 
-    public int PrintVertices()
-    {
-        foreach (var vid in vertices.Keys)
-        {
+    public int PrintVertices() {
+        foreach (var vid in vertices.Keys) {
             Debug.Log("Vertex: " + vid + " : " + vertices[vid]);
         }
         return vertices.Count;
@@ -133,18 +128,15 @@ public class MapManagerBehaviour : MonoBehaviour
     // about edges
 
 
-    public int AddEdge(int startVid, int endVid, GameObject edgeObject)
-    {
+    public int AddEdge(int startVid, int endVid, GameObject edgeObject) {
         Debug.Log("AddEdge: Road: " + startVid + " -> " + endVid);
-        if (!edges.ContainsKey(startVid))
-        {
+        if (!edges.ContainsKey(startVid)) {
             edges[startVid] = new Dictionary<int, float>();
             edgeObjects[startVid] = new Dictionary<int, GameObject>();
         }
         edges[startVid][endVid] = Vector3.Distance(vertices[startVid], vertices[endVid]);
         edgeObjects[startVid][endVid] = edgeObject;
-        if (!edges.ContainsKey(endVid))
-        {
+        if (!edges.ContainsKey(endVid)) {
             edges[endVid] = new Dictionary<int, float>();
             edgeObjects[endVid] = new Dictionary<int, GameObject>();
         }
@@ -154,8 +146,7 @@ public class MapManagerBehaviour : MonoBehaviour
         return edges[startVid].Count;
     }
 
-    public void RemoveEdge(int startVid, int endVid)
-    {
+    public void RemoveEdge(int startVid, int endVid) {
         edges[startVid].Remove(endVid);
         edgeObjects[startVid][endVid].SetActive(false);
         edgeObjects[startVid].Remove(endVid);
@@ -165,12 +156,9 @@ public class MapManagerBehaviour : MonoBehaviour
         eNum--;
     }
 
-    public int PrintEdges()
-    {
-        foreach (var startVid in edges.Keys)
-        {
-            foreach (var endVid in edges[startVid].Keys)
-            {
+    public int PrintEdges() {
+        foreach (var startVid in edges.Keys) {
+            foreach (var endVid in edges[startVid].Keys) {
                 Debug.Log("Edge: " + startVid + " -> " + endVid + " : " + edges[startVid][endVid]);
             }
         }
@@ -179,8 +167,7 @@ public class MapManagerBehaviour : MonoBehaviour
 
     // about waypoints
 
-    public int AddWayPoint(WayPointBehaviour wayPoint)
-    {
+    public int AddWayPoint(WayPointBehaviour wayPoint) {
         wayPoint.pid = nextPid++;
         Debug.Assert(wayPoint != null);
         Debug.Log("AddWayPoint: " + wayPoint.pid);
@@ -190,20 +177,16 @@ public class MapManagerBehaviour : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
-        foreach (Transform child in transform)
-        {
+        foreach (Transform child in transform) {
             VertexBehaviour vertexBehaviour = child.GetComponent<VertexBehaviour>();
-            if (vertexBehaviour != null)
-            {
+            if (vertexBehaviour != null) {
                 vertexBehaviour.mapManager = this;
                 vertexBehaviour.vid = AddVertex(child.position, child.gameObject);
             }
         }
-        foreach (Transform child in transform)
-        {
+        foreach (Transform child in transform) {
             RoadBehaviour roadBehaviour = child.GetComponent<RoadBehaviour>();
-            if (roadBehaviour != null)
-            {
+            if (roadBehaviour != null) {
                 roadBehaviour.mapManager = this;
                 Debug.Assert(roadBehaviour.startVertex != null && roadBehaviour.endVertex != null);
                 roadBehaviour.SetVertices(roadBehaviour.startVertex, roadBehaviour.endVertex);
@@ -213,8 +196,7 @@ public class MapManagerBehaviour : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         // if (Input.GetKeyDown(KeyCode.V))
         // {
         //     foreach (var pid in wayPoints.Keys)
@@ -237,8 +219,7 @@ public class MapManagerBehaviour : MonoBehaviour
             backgroundId = (backgroundId + 1) % (backgroundCnt + 1);
         }
     }
-    public void LogtoDebug(int index)
-    {
+    public void LogtoDebug(int index) {
         Debug.Log("MapManagerBehaviour: " + wayPoints[index].pid);
     }
 }
