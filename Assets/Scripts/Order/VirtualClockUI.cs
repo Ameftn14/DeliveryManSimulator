@@ -125,14 +125,14 @@ public static class OrderRefreshRate {
         //int quantity; // 基准订单数量为 1
 
         // 定义高峰期时间段
-        TimeSpan breakfastStart = new TimeSpan(7, 20, 0);
-        TimeSpan breakfastEnd = new TimeSpan(9, 20, 0);
+        TimeSpan breakfastStart = new(7, 20, 0);
+        TimeSpan breakfastEnd = new(9, 20, 0);
 
-        TimeSpan lunchStart = new TimeSpan(11, 30, 0);
-        TimeSpan lunchEnd = new TimeSpan(13, 20, 0);
+        TimeSpan lunchStart = new(11, 30, 0);
+        TimeSpan lunchEnd = new(13, 20, 0);
 
-        TimeSpan dinnerStart = new TimeSpan(17, 30, 0);
-        TimeSpan dinnerEnd = new TimeSpan(19, 20, 0);
+        TimeSpan dinnerStart = new(17, 30, 0);
+        TimeSpan dinnerEnd = new(19, 20, 0);
 
         // 当前时间
         TimeSpan currentTime = new TimeSpan(hour, minute, 0);
