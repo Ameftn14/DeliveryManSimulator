@@ -12,22 +12,22 @@ public class MapManagerBehaviour : MonoBehaviour
     static private int eNum = 0;
 
     static private int pNum = 0;
-    private Dictionary<int, Vector3> vertices;
-    private Dictionary<int, Dictionary<int, float>> edges;
-    private Dictionary<int, WayPointBehaviour> wayPoints;
+    private Dictionary<int, Vector3> vertices = new Dictionary<int, Vector3>();
+    private Dictionary<int, Dictionary<int, float>> edges = new Dictionary<int, Dictionary<int, float>>();
+    private Dictionary<int, WayPointBehaviour> wayPoints = new Dictionary<int, WayPointBehaviour>();
 
-    private Dictionary<int, GameObject> vertexObjects;
-    private Dictionary<int, Dictionary<int, GameObject>> edgeObjects;
+    private Dictionary<int, GameObject> vertexObjects = new Dictionary<int, GameObject>();
+    private Dictionary<int, Dictionary<int, GameObject>> edgeObjects = new Dictionary<int, Dictionary<int, GameObject>>();
     private int backgroundId = 1;
 
-    public MapManagerBehaviour()
-    {
-        vertices = new Dictionary<int, Vector3>();
-        vertexObjects = new Dictionary<int, GameObject>();
-        edges = new Dictionary<int, Dictionary<int, float>>();
-        edgeObjects = new Dictionary<int, Dictionary<int, GameObject>>();
-        wayPoints = new Dictionary<int, WayPointBehaviour>();
-    }
+    // public MapManagerBehaviour()
+    // {
+    //     vertices = new Dictionary<int, Vector3>();
+    //     vertexObjects = new Dictionary<int, GameObject>();
+    //     edges = new Dictionary<int, Dictionary<int, float>>();
+    //     edgeObjects = new Dictionary<int, Dictionary<int, GameObject>>();
+    //     wayPoints = new Dictionary<int, WayPointBehaviour>();
+    // }
 
     // for Outside
 
