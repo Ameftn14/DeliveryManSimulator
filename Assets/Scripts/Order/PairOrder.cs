@@ -195,6 +195,13 @@ public class PairOrder : MonoBehaviour {
         return state;
     }
     //StateChange
+    public void OrderNotAccept() {
+        state = State.NotAccept;
+        //更新子对象状态
+        fromScript.OrderNotAccept();
+        toScript.OrderNotAccept();
+        orderDB.UpdateOrder(this);
+    }
     public void OrderAccept() {
         state = State.Accept;
         //更新子对象状态

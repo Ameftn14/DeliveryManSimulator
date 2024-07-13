@@ -140,6 +140,10 @@ public class SingleOrder : MonoBehaviour {
     }
 
     //statechange
+    public void OrderNotAccept() {
+        state = PairOrder.State.NotAccept;
+        ringProgress.state = PairOrder.State.NotAccept;
+    }
     public void OrderAccept() {
         state = PairOrder.State.Accept;
         ringProgress.state = PairOrder.State.Accept;
