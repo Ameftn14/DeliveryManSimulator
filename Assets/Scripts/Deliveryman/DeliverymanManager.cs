@@ -30,30 +30,36 @@ public class DeliverymanManager : MonoBehaviour {
     }
 
     void Start() {
-        //DontDestroyOnLoad(gameObject);
-        property = GameObject.Find("Deliveryman").GetComponent<Property>();
-        nowCapacity = allCapacity;
     }
 
     // Update is called once per frame
     void Update() {
+        GameObject deliveryman = GameObject.Find("Deliveryman");
+        if (deliveryman == null) {
+            return;
+        }
+        property = deliveryman.GetComponent<Property>();
+        nowCapacity = allCapacity;
+        if (property == null) {
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.P)) {
             Debug.Log("In SampleScene money is" + money);
         }
 
-        if (speed != property.speed){
+        if (speed != property.speed) {
             speed = property.speed;
         }
-        if(allCapacity != property.allCapacity){
+        if (allCapacity != property.allCapacity) {
             allCapacity = property.allCapacity;
         }
-        if(nowCapacity != property.nowCapacity){
+        if (nowCapacity != property.nowCapacity) {
             nowCapacity = property.nowCapacity;
         }
-        if(money != property.money){
+        if (money != property.money) {
             money = property.money;
         }
-        if(finishedcount != property.finishedcount){
+        if (finishedcount != property.finishedcount) {
             finishedcount = property.finishedcount;
         }
     }
