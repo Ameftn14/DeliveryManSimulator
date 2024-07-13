@@ -34,16 +34,7 @@ public class PairOrder : MonoBehaviour {
     public void Start() {
         generalManager = GameObject.Find("GeneralManager").GetComponent<GeneralManagerBehaviour>();
         orderDB = GameObject.Find("OrderDB").GetComponent<OrderDB>();
-        if (!GameObject.Find("MapManager").TryGetComponent<MapManagerBehaviour>(out mapManager)) {
-            Debug.LogError("MapManager is not assigned!");
-            return;
-        }
-        // else {
-        //     Debug.Log("The Dictionary Count:" + mapManager.GetWayPoints().Count);       
-        //     //mapManager.LogtoDebug(0);
-        //     //bool test = mapManager.GetWayPoints()[0].GetComponent<WayPointBehaviour>().isBusy;
-        //     //Debug.Log("test is" + test);
-        // }
+        mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
         virtualClock = GameObject.Find("Time").GetComponent<VirtualClockUI>();
 
         state = State.NotAccept;

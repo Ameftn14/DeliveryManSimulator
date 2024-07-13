@@ -25,7 +25,7 @@ public class VirtualClockUI : MonoBehaviour {
     }
 
     // call this in the Start() method to check if there is already an instance of this class
-    bool alreadyInitialised() {
+    bool AlreadyInitialised() {
         if (instance != null && instance != this) {
             Destroy(gameObject);
             return true;
@@ -43,11 +43,12 @@ public class VirtualClockUI : MonoBehaviour {
     //public Button forwardButton;
 
     // 初始时间（24小时制）
-    public int startHour = 8;
-    public int startMinute = 30;
-
+    public int startHour;
+    public int startMinute;
     // 虚拟时间的时间间隔（每过真实的一秒钟，虚拟时间增加的分钟数）
-    public int timeStepMinutes = 5;
+    //public int timeStepMinutes = 5;
+    //虚拟时间走一分钟所需要的真实时间
+    public float VMinInSeconds;
 
     // 虚拟时间
     private int currentHour;
@@ -56,7 +57,7 @@ public class VirtualClockUI : MonoBehaviour {
     private float timer = 0f;
 
     void Start() {
-        if (alreadyInitialised()) return;
+        if (AlreadyInitialised()) return;
 
         // 设置初始时间
         currentHour = startHour;
@@ -75,7 +76,7 @@ public class VirtualClockUI : MonoBehaviour {
         timer += Time.deltaTime;
 
         // 每过1秒钟，虚拟时间增加timeStepMinutes分钟
-        if (timer >= 1f) {
+        if (timer >= VMinInSeconds) {
             timer = 0f;
             UpdateVirtualTime();
         }
@@ -83,7 +84,7 @@ public class VirtualClockUI : MonoBehaviour {
 
     void UpdateVirtualTime() {
         // 增加虚拟时间
-        currentMinute += timeStepMinutes;
+        currentMinute += 1;
 
         if (currentMinute >= 60) {
             currentMinute -= 60;
@@ -93,12 +94,6 @@ public class VirtualClockUI : MonoBehaviour {
         if (currentHour >= 24) {
             currentHour -= 24;
         }
-
-        // 获取订单刷新频率和数量
-        var result = OrderRefreshRate.GetOrderRefreshRate(currentHour, currentMinute);
-
-        // 输出结果
-        // Debug.Log($"Virtual Time: {currentHour:D2}:{currentMinute:D2} - TimeInterval: {result.TimeInterval} seconds, Quality: {result.Quality}");
 
         // 更新时间显示
         UpdateTimeDisplay();
@@ -130,10 +125,23 @@ public class VirtualClockUI : MonoBehaviour {
     public TimeSpan GetTime() {
         return new TimeSpan(currentHour, currentMinute, 0);
     }
+    
     //换算真实时间间隔到虚拟时间间隔
-    public TimeSpan GetVirtualTime(float realseconds) {
-        int virtualminutes = (int)(realseconds / timeStepMinutes);
-        return new TimeSpan(0, virtualminutes, 0);//超出60分钟会自动进位
+    public TimeSpan GetVirtualTime(float RealSeconds) {
+        float virtualMinuts = RealSeconds * VMinInSeconds;
+        int hour = (int)virtualMinuts / 60;
+        int minute = (int)virtualMinuts % 60;
+        int second = (int)((virtualMinuts - hour * 60 - minute) * 60);
+
+        return new TimeSpan(hour, minute, second);
+    }
+
+    public float GetRealTime(TimeSpan VirtualTime) {
+        return (VirtualTime.Hours * 60 + VirtualTime.Minutes + VirtualTime.Seconds / 60) * VMinInSeconds;
+    }
+
+    public float GetRealTime(int virtualMinuts) {
+        return virtualMinuts * VMinInSeconds;
     }
 }
 
@@ -155,7 +163,7 @@ public static class OrderRefreshRate {
         TimeSpan dinnerEnd = new(19, 20, 0);
 
         // 当前时间
-        TimeSpan currentTime = new TimeSpan(hour, minute, 0);
+        TimeSpan currentTime = new(hour, minute, 0);
 
         // 判断是否在高峰期
         if ((currentTime >= breakfastStart && currentTime <= breakfastEnd) ||
