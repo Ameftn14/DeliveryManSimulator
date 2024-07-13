@@ -72,7 +72,7 @@ public class GeneralManagerBehaviour : MonoBehaviour {
                 theOrder = thePairOrder.fromScript;
             else
                 theOrder = thePairOrder.toScript;
-            displayManager.removeOrder(theSearchRoad.targetOrderID, theSearchRoad.targetIsFrom ? LocationType.Restaurant : LocationType.Customer);
+            // change the order's state
             if (theOrder.GetIsFrom()){
                 thePairOrder.OrderPickUp();
             }
@@ -85,6 +85,9 @@ public class GeneralManagerBehaviour : MonoBehaviour {
                 theProperty.nowCapacity += 1;
                 theProperty.money += thePairOrder.GetPrice();
             }
+            // update the display
+            displayManager.removeOrder(theSearchRoad.targetOrderID, theSearchRoad.targetIsFrom ? LocationType.Restaurant : LocationType.Customer);
+            // change the player's state
             theSearchRoad.isMoving = false;
         }
         else {
