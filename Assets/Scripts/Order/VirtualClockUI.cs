@@ -4,6 +4,9 @@ using UnityEngine.UI;
 using TMPro;
 
 public class VirtualClockUI : MonoBehaviour {
+    /* -------------------------------------------------------------------------- */
+    /*                            for singleton partern                           */
+    /* -------------------------------------------------------------------------- */
     private static VirtualClockUI instance;
     public static VirtualClockUI Instance {
         get {
@@ -13,6 +16,23 @@ public class VirtualClockUI : MonoBehaviour {
             return instance;
         }
     }
+    void OnDestroy() {
+        // if I am 'The' instance of this class, set instance to null
+        if (instance == this) {
+            instance = null;
+        }
+    }
+    void singletonCheck() {
+        if (instance != null && instance != this) {
+            Destroy(gameObject);
+        } else {
+            instance = this;
+        }
+    }
+    /* -------------------------------------------------------------------------- */
+    /*                        rest of the functional codes                        */
+    /* -------------------------------------------------------------------------- */
+
     public TMP_Text timeText;
     //public Button backwardButton;
     //public Button forwardButton;
@@ -31,12 +51,7 @@ public class VirtualClockUI : MonoBehaviour {
     private float timer = 0f;
 
     void Start() {
-        if (instance != null && instance != this) {
-            Destroy(gameObject);
-        } else {
-            instance = this;
-        }
-
+        singletonCheck();
 
         // 设置初始时间
         currentHour = startHour;
