@@ -42,13 +42,21 @@ public class PairOrder : MonoBehaviour {
 
         //TODO:这个逻辑待优化
         Deadline = virtualClock.GetTime().Add(new TimeSpan(2, 0, 0));
+        
+        WayPointBehaviour from_wp = null;
+        WayPointBehaviour to_wp = null;
+        bool isSameEdge = false;
         //随机获取两个pid
         do {
             from_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
-        } while (mapManager.GetWayPoints()[from_pid].GetComponent<WayPointBehaviour>().isBusy);
+            from_wp = mapManager.GetWayPoints()[from_pid].GetComponent<WayPointBehaviour>();
+        } while (from_wp.isBusy||from_wp.isResturant==0);
+
         do {
             to_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
-        } while (from_pid == to_pid||mapManager.GetWayPoints()[to_pid].GetComponent<WayPointBehaviour>().isBusy);
+            to_wp = mapManager.GetWayPoints()[to_pid].GetComponent<WayPointBehaviour>();
+            isSameEdge = (from_wp.startVid == to_wp.startVid && from_wp.endVid == to_wp.endVid);
+        } while (to_wp.isBusy||to_wp.isResturant==1||to_pid==from_pid||isSameEdge);
 
         mapManager.GetWayPoints()[from_pid].GetComponent<WayPointBehaviour>().BecomeBusy();
         mapManager.GetWayPoints()[to_pid].GetComponent<WayPointBehaviour>().BecomeBusy();
