@@ -47,7 +47,6 @@ public class OrderMenuListBehaviour : ListModel {
     void backToNormal() {
         if (hoveringItem != null) {
             hoveringItem.stopFollowingAlong();
-
         }
         if (draggingItem != null) {
             draggingItem.unblockDragging();
@@ -59,8 +58,8 @@ public class OrderMenuListBehaviour : ListModel {
             backToNormal();
             return;
         }
-        OrderInfo hoveringOrder = hoveringItem.getOrderInfo();
-        OrderInfo draggingOrder = draggingItem.getOrderInfo();
+        // OrderInfo hoveringOrder = hoveringItem.getOrderInfo();
+        // OrderInfo draggingOrder = draggingItem.getOrderInfo();
         // if (hoveringOrder.orderID != draggingOrder.orderID || hoveringOrder.locationType == draggingOrder.locationType) {
         //     isInSpecialMode = false;
         //     backToNormal();
