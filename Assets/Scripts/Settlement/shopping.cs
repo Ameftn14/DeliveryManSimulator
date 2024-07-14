@@ -80,9 +80,9 @@ public class Shopping : MonoBehaviour {
         //     DeliverymanManager.money += 100;
         // }
 
-        if (Input.GetKeyDown(KeyCode.Q)) {
-            Debug.Log("In shopping: speed:" + DeliverymanManager.speed + "allCapacity:" + DeliverymanManager.allCapacity + "speedup:" + DeliverymanManager.speedUp + "timeSlow:" + DeliverymanManager.timeSlow + "money:" + DeliverymanManager.money);
-        }
+        // if (Input.GetKeyDown(KeyCode.Q)) {
+        //     Debug.Log("In shopping: speed:" + DeliverymanManager.speed + "allCapacity:" + DeliverymanManager.allCapacity + "speedup:" + DeliverymanManager.speedUp + "timeSlow:" + DeliverymanManager.timeSlow + "money:" + DeliverymanManager.money);
+        // }
     }
 
     public void doPurchace(UpgradeOption option) {
@@ -125,7 +125,12 @@ public class Shopping : MonoBehaviour {
                 break;
 
         }
-
+        if (shoppingCount == 0) {
+            Debug.Log("No shoppingCount");
+        }
+        GameObject Canvas = GameObject.Find("Canvas");
+        GameObject nextDayPanel = Canvas.transform.Find("NextDayPanel").gameObject;
+        nextDayPanel.SetActive(true);
         Debug.Log("Now shoppingCount: " + shoppingCount + " Money: " + DeliverymanManager.money);
     }
     
