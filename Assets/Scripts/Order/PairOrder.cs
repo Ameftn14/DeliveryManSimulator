@@ -11,8 +11,9 @@ public class PairOrder : MonoBehaviour {
     public SingleOrder fromScript;//单个订单:起点
     public SingleOrder toScript;//单个订单:终点
     public int from_pid;
-    public int to_pid;
+    public int level;
     private int price;
+    public int to_pid;
     private float distance;
     public bool isLate;
     public TimeSpan Deadline;
@@ -38,7 +39,7 @@ public class PairOrder : MonoBehaviour {
         virtualClock = GameObject.Find("Time").GetComponent<VirtualClockUI>();
 
         state = State.NotAccept;
-        TimeToDeadline = new TimeSpan(2, 0, 0);
+        TimeToDeadline = new TimeSpan(1, UnityEngine.Random.Range(40, 61), 0);
 
         //TODO:这个逻辑待优化
         Deadline = virtualClock.GetTime().Add(TimeToDeadline);
@@ -94,10 +95,12 @@ public class PairOrder : MonoBehaviour {
 
         toScript.brotherSingleOrder = fromScript;
         fromScript.brotherSingleOrder = toScript;
-
+        //设置等级
+        SetLevel();
+        //设置价格
+        SetPrice();
+        //获取距离
         distance = Vector2.Distance(fromScript.GetPosition(), toScript.GetPosition());
-        //随机生成价格
-        price = UnityEngine.Random.Range(30, 100);
 
         timer = LifeTime;
         state = State.NotAccept;
@@ -249,6 +252,36 @@ public class PairOrder : MonoBehaviour {
         return isLate;
     }
 
+    public void SetLevel() {
+        int probability = UnityEngine.Random.Range(0, 100);
+        if (probability < 55) {
+            level = 1;
+        } else if (probability < 85) {
+            level = 2;
+        } else {
+            level = 3;
+        }
+        fromScript.level = level;
+        toScript.level = level;
+    }
+
+    public void SetLevel(int level){
+        this.level = level;
+        fromScript.level = level;
+        toScript.level = level;    
+    }
+
+    public void SetPrice() {
+        int priceOnlevel = level switch {
+            1 => UnityEngine.Random.Range(30, 45),
+            2 => UnityEngine.Random.Range(45, 70),
+            3 => UnityEngine.Random.Range(70, 100),
+            _ => 30,
+        };
+
+        price = priceOnlevel + (int)(distance*0.1);
+    }
+
     public void HighLight(OrderInfo orderinfo) {
         if(orderinfo == null){
             return;
@@ -256,6 +289,5 @@ public class PairOrder : MonoBehaviour {
         else if(orderinfo.orderID == OrderID){
             OrderSizeUpAndDown();
         }
-
     }
 }
