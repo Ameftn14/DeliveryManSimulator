@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 using System;
 
 public class SingleOrder : MonoBehaviour {
@@ -19,6 +18,7 @@ public class SingleOrder : MonoBehaviour {
     public int OrderID;
     private bool isLate;
     public int level;
+    private bool isBig;
     public TimeSpan Deadline;
     public PairOrder.State state;
     private int pid;
@@ -51,47 +51,12 @@ public class SingleOrder : MonoBehaviour {
         acceptTime = new TimeSpan(0, 0, 0);
 
         visible = true;
+        isBig = false;
         ringProgress.state = PairOrder.State.NotAccept;
         ringProgress.isFrom = isFrom;
 
-        if(isFrom){
-            if(level == 1){
-                TheStar[0] = Instantiate(Resources.Load("PreFabs/1star")) as GameObject;
-                TheStar[0].transform.parent = transform;
-                TheStar[0].transform.localPosition = new Vector3(-0.8f, 7.6f, -1);
-                TheStar[0].transform.localScale = new Vector3(6f, 6f, 1f);
-            }
-            else if(level == 2){
-                //-5.6 5.1   3.9 5.1
-                TheStar[0] = Instantiate(Resources.Load("PreFabs/1star")) as GameObject;
-                TheStar[0].transform.parent = transform;
-                TheStar[0].transform.localPosition = new Vector3(-5.6f, 4.3f, -1);
-                TheStar[0].transform.localScale = new Vector3(6f, 6f, 1f);
-
-                TheStar[1] = Instantiate(Resources.Load("PreFabs/1star")) as GameObject;
-                TheStar[1].transform.parent = transform;
-                TheStar[1].transform.localPosition = new Vector3(4f, 4.3f, -1);
-                TheStar[1].transform.localScale = new Vector3(6f, 6f, 1f);
-            }
-            else if(level == 3){
-                TheStar[0] = Instantiate(Resources.Load("PreFabs/1star")) as GameObject;
-                TheStar[0].transform.parent = transform;
-                TheStar[0].transform.localPosition = new Vector3(-0.8f, 7.6f, -1);
-                TheStar[0].transform.localScale = new Vector3(6f, 6f, 1f);
-
-                TheStar[1] = Instantiate(Resources.Load("PreFabs/1star")) as GameObject;
-                TheStar[1].transform.parent = transform;
-                TheStar[1].transform.localPosition = new Vector3(-5f, -1.2f, -1);
-                TheStar[1].transform.localScale = new Vector3(6f, 6f, 1f);
-
-                TheStar[2] = Instantiate(Resources.Load("PreFabs/1star")) as GameObject;
-                TheStar[2].transform.parent = transform;
-                TheStar[2].transform.localPosition = new Vector3(3.4f, -1.2f, -1);
-                TheStar[2].transform.localScale = new Vector3(6f, 6f, 1f);
-
-            }
-        }
-
+        AddStar();
+        
         //改颜色
         foreach (Transform child in transform) {
             // 获取子对象的 SpriteRenderer 组件
@@ -133,6 +98,20 @@ public class SingleOrder : MonoBehaviour {
             generalManager.DBConfirmOrder(OrderID);
         }
         //StartCoroutine(SizeUpAndDown());
+    }
+
+    public void OnMouseEnter(){
+        if(parentPairOrder == null){
+            parentPairOrder = transform.parent.GetComponent<PairOrder>();
+        }
+        parentPairOrder.MouseEnter();
+    }
+
+    public void OnMouseExit(){
+        if(parentPairOrder == null){
+            parentPairOrder = transform.parent.GetComponent<PairOrder>();
+        }
+        parentPairOrder.MouseExit();
     }
     // pid operation
     public int Getpid() {
@@ -216,9 +195,12 @@ public class SingleOrder : MonoBehaviour {
     }
 
     public IEnumerator SizeUp() {
-        Vector3 targetScale = originalScale * 2f;
+        while(isBig){
+            yield return null;
+        }
+        Vector3 targetScale = originalScale * 1.75f;    
 
-        float duration = 0.5f; // 增大和消失的时间
+        float duration = 0.1f; // 增大和消失的时间
         float elapsed = 0f;
 
         while (elapsed < duration)
@@ -227,6 +209,8 @@ public class SingleOrder : MonoBehaviour {
             elapsed += Time.deltaTime;
             yield return null;
         }
+
+        isBig = true;
     }
 
     public IEnumerator SizeDown() {
@@ -268,9 +252,14 @@ public class SingleOrder : MonoBehaviour {
     }
 
     public IEnumerator BackToOriginalSize() {
+        while(!isBig){
+            yield return null;
+        }
         Vector3 currentScale = transform.localScale;
-        float duration = 0.3f; // 增大和消失的时间
+        float duration = 0.1f; // 增大和消失的时间
         float elapsed = 0f;
+
+
 
         while (elapsed < duration)
         {
@@ -278,6 +267,8 @@ public class SingleOrder : MonoBehaviour {
             elapsed += Time.deltaTime;
             yield return null;
         }
+
+        isBig = false;
     }
 
     public void SetTimeToDeadline(TimeSpan time) {
@@ -288,10 +279,42 @@ public class SingleOrder : MonoBehaviour {
         ringProgress.TimeToDeadline = time;
     }
 
-    public void AddOneStar(){
-        //在Texture文件夹中加载一个叫“1star”的图片
-        Sprite star = Resources.Load<Sprite>("Texture/1star");
-        //在指定位置添加这个图片
+    private void AddStar(){
+        if(isFrom){
+            if(level == 1){
+                TheStar[0] = Instantiate(Resources.Load("PreFabs/1star")) as GameObject;
+                TheStar[0].transform.parent = transform;
+                TheStar[0].transform.localPosition = new Vector3(-0.8f, 7.6f, -1);
+                TheStar[0].transform.localScale = new Vector3(6f, 6f, 1f);
+            }
+            else if(level == 2){
+                //-5.6 5.1   3.9 5.1
+                TheStar[0] = Instantiate(Resources.Load("PreFabs/1star")) as GameObject;
+                TheStar[0].transform.parent = transform;
+                TheStar[0].transform.localPosition = new Vector3(-5.6f, 4.3f, -1);
+                TheStar[0].transform.localScale = new Vector3(6f, 6f, 1f);
 
+                TheStar[1] = Instantiate(Resources.Load("PreFabs/1star")) as GameObject;
+                TheStar[1].transform.parent = transform;
+                TheStar[1].transform.localPosition = new Vector3(4f, 4.3f, -1);
+                TheStar[1].transform.localScale = new Vector3(6f, 6f, 1f);
+            }
+            else if(level == 3){
+                TheStar[0] = Instantiate(Resources.Load("PreFabs/1star")) as GameObject;
+                TheStar[0].transform.parent = transform;
+                TheStar[0].transform.localPosition = new Vector3(-0.8f, 7.6f, -1);
+                TheStar[0].transform.localScale = new Vector3(6f, 6f, 1f);
+
+                TheStar[1] = Instantiate(Resources.Load("PreFabs/1star")) as GameObject;
+                TheStar[1].transform.parent = transform;
+                TheStar[1].transform.localPosition = new Vector3(-5f, -1.2f, -1);
+                TheStar[1].transform.localScale = new Vector3(6f, 6f, 1f);
+
+                TheStar[2] = Instantiate(Resources.Load("PreFabs/1star")) as GameObject;
+                TheStar[2].transform.parent = transform;
+                TheStar[2].transform.localPosition = new Vector3(3.4f, -1.2f, -1);
+                TheStar[2].transform.localScale = new Vector3(6f, 6f, 1f);
+            }
+        }
     }
 }
