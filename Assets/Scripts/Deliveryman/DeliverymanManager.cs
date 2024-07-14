@@ -16,6 +16,15 @@ public class DeliverymanManager : MonoBehaviour {
     public static float speedUp = 25.0f;
     public static float timeSlow = 25.0f;
 
+    public static int speedAvailable = 2;
+    public static int capacityAvailable = 2;
+    public static int speedUpAvailable = 2;
+    public static int timeSlowAvailable = 2;
+
+    public static float addSpeedUp = 25.0f;
+    public static float addTimeSlow = 25.0f;
+
+
     private Property property;
     // Start is called before the first frame update
     private void Awake() {
