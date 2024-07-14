@@ -102,6 +102,7 @@ public class PairOrder : MonoBehaviour {
         timer = LifeTime;
         state = State.NotAccept;
         isLate = false;
+        OrderMenuListBehaviour.Instance.OnMouseHoverOrderChanged += HighLight;
     }
 
     public void Update() {
@@ -246,5 +247,15 @@ public class PairOrder : MonoBehaviour {
     }
     public bool GetIsLate() {
         return isLate;
+    }
+
+    public void HighLight(OrderInfo orderinfo) {
+        if(orderinfo == null){
+            return;
+        }
+        else if(orderinfo.orderID == OrderID){
+            OrderSizeUpAndDown();
+        }
+
     }
 }
