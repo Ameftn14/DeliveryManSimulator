@@ -33,8 +33,6 @@ public class Property : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Q)) {
             Debug.Log("In Property: speed:" + speed + "allCapacity:" + allCapacity + "speedup:" + speedUp + "timeSlow:" + timeSlow + "money:" + money);
         }
-        BalanceDiplayBehaviour balanceDiplayBehaviour = GameObject.Find("Money").GetComponent<BalanceDiplayBehaviour>();
-        balanceDiplayBehaviour.setBalance(money);
     }
 
 }

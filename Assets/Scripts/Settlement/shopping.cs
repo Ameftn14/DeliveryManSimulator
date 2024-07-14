@@ -26,8 +26,9 @@ public class Shopping : MonoBehaviour {
         public bool available;
     }
 
+    public List<UpgradeOption> options = new List<UpgradeOption>();
+
     void Start() {
-        List<UpgradeOption> options = new List<UpgradeOption>();
 
         // foreach (UpgradeType type in Enum.GetValues(typeof(UpgradeType))) {
         //     UpgradeOption upgrade = new UpgradeOption();
@@ -37,40 +38,36 @@ public class Shopping : MonoBehaviour {
         // }
         UpgradeOption upgradeSpeed = new UpgradeOption();
         upgradeSpeed.type = UpgradeType.Speed;
-        if(DeliverymanManager.speedAvailable>0){
+        if (DeliverymanManager.speedAvailable > 0) {
             upgradeSpeed.available = true;
-        }
-        else{
+        } else {
             upgradeSpeed.available = false;
         }
 
 
         UpgradeOption upgradeCapacity = new UpgradeOption();
         upgradeCapacity.type = UpgradeType.Capacity;
-        if(DeliverymanManager.capacityAvailable>0){
+        if (DeliverymanManager.capacityAvailable > 0) {
             upgradeCapacity.available = true;
-        }
-        else{
+        } else {
             upgradeCapacity.available = false;
         }
 
 
         UpgradeOption upgradeSpeedUp = new UpgradeOption();
         upgradeSpeedUp.type = UpgradeType.TemporarySpeedUp;
-        if(DeliverymanManager.speedUpAvailable>0){
+        if (DeliverymanManager.speedUpAvailable > 0) {
             upgradeSpeedUp.available = true;
-        }
-        else{
+        } else {
             upgradeSpeedUp.available = false;
         }
 
 
         UpgradeOption upgradeTimeSlow = new UpgradeOption();
         upgradeTimeSlow.type = UpgradeType.TimeSlow;
-        if(DeliverymanManager.timeSlowAvailable>0){
+        if (DeliverymanManager.timeSlowAvailable > 0) {
             upgradeTimeSlow.available = true;
-        }
-        else{
+        } else {
             upgradeTimeSlow.available = false;
         }
 
@@ -100,30 +97,30 @@ public class Shopping : MonoBehaviour {
         UpgradeType type = option.type;
         switch (type) {
             case UpgradeType.Speed:
-                if (shoppingCount > 0 && DeliverymanManager.money > 0) {
+                if (shoppingCount > 0) {
                     DeliverymanManager.speed *= addSpeed;
-                    DeliverymanManager.money -= 50;
+                    DeliverymanManager.speedAvailable--;
                     shoppingCount--;
                 }
                 break;
             case UpgradeType.Capacity:
-                if (shoppingCount > 0 && DeliverymanManager.money > 0) {
+                if (shoppingCount > 0) {
                     DeliverymanManager.allCapacity += addCapacity;
-                    DeliverymanManager.money -= 50;
+                    DeliverymanManager.capacityAvailable--;
                     shoppingCount--;
                 }
                 break;
             case UpgradeType.TimeSlow:
-                if (shoppingCount > 0 && DeliverymanManager.money > 0) {
+                if (shoppingCount > 0) {
                     DeliverymanManager.timeSlow += addTimeSlow;
-                    DeliverymanManager.money -= 50;
+                    DeliverymanManager.timeSlowAvailable--;
                     shoppingCount--;
                 }
                 break;
             case UpgradeType.TemporarySpeedUp:
-                if (shoppingCount > 0 && DeliverymanManager.money > 0) {
+                if (shoppingCount > 0) {
                     DeliverymanManager.speedUp += addSpeedUp;
-                    DeliverymanManager.money -= 50;
+                    DeliverymanManager.speedAvailable--;
                     shoppingCount--;
                 }
                 break;
@@ -133,7 +130,12 @@ public class Shopping : MonoBehaviour {
 
         }
 
-        Debug.Log("Now shoppingCount: " + shoppingCount+" Money: "+ DeliverymanManager.money);
+        Debug.Log("Now shoppingCount: " + shoppingCount + " Money: " + DeliverymanManager.money);
+        if (shoppingCount <= 0) {
+            foreach (var tempoption in options) {
+                tempoption.available = false;
+            }
+        }
     }
 
 }
