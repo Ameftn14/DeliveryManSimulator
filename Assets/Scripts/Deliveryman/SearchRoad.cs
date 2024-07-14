@@ -292,7 +292,7 @@ public class SearchRoad : MonoBehaviour {
                 break;
         }
 
-        Debug.Log($"Shortest path is: {string.Join(" -> ", tempShortestPath)}");
+        // Debug.Log($"Shortest path is: {string.Join(" -> ", tempShortestPath)}");
         return tempShortestPath;
     }
 

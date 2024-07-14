@@ -98,10 +98,10 @@ public class OrderItemBehaviour : ItemModel, IPointerEnterHandler, IPointerExitH
             return;
         int droppedIndex = eventData.pointerDrag.GetComponent<ItemModel>().getIndex();
         Debug.Log("DROPPED " + droppedIndex + " ON " + index);
-        Debug.Log("SWAP ALLOWED: " + OrderMenuListBehaviour.Instance.swapIsAllowed(droppedIndex, index));
-        if (OrderMenuListBehaviour.Instance.swapIsAllowed(droppedIndex, index)) {
-            Debug.Log("DROPPED " + droppedIndex + " ON " + index + "SWAP ALLOWED");
-            OrderMenuListBehaviour.Instance.swap(droppedIndex, index);
+        Debug.Log("DROP ALLOWED: " + OrderMenuListBehaviour.Instance.dropIsAllowed(droppedIndex, index));
+        if (OrderMenuListBehaviour.Instance.dropIsAllowed(droppedIndex, index)) {
+            Debug.Log("DROPPED " + droppedIndex + " ON " + index + "DROP ALLOWED");
+            OrderMenuListBehaviour.Instance.drop(droppedIndex, index);
         }
     }
 
