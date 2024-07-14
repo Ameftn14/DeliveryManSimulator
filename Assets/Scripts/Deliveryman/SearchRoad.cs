@@ -35,9 +35,10 @@ public class SearchRoad : MonoBehaviour {
     public RouteManagerBehaviour routeManager;
     private LineRenderer lineRenderer;
 
-    void Awake() {
-        Debug.Log("egg awaked");
-    }
+    public float realSpeedUp;
+    public float realTimeSlow;
+    private float decreaseSpeedPerSecond = 5.0f; // 每秒减少速度
+
     // Start is called before the first frame update
     void Start() {
         if (lineRenderer == null) {
@@ -48,20 +49,19 @@ public class SearchRoad : MonoBehaviour {
             lineRenderer.startWidth = 0.3f;
             lineRenderer.endWidth = 0.3f;
         }
-        Debug.Log("egg started");
         mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
         property = GameObject.Find("Deliveryman").GetComponent<Property>();
         routeManager = GameObject.Find("RouteManager").GetComponent<RouteManagerBehaviour>();
 
-        GameObject COM = GameObject.Find("COM");
-        if (COM != null) {
-            // 获取游戏对象的位置
-            Vector3 COMPosition = COM.transform.position;
-            Debug.Log("The position of COM is: " + COMPosition);
-            transform.position = COM.transform.position;
-        } else {
-            Debug.Log("COM not found!");
-        }
+        // GameObject COM = GameObject.Find("COM");
+        // if (COM != null) {
+        //     // 获取游戏对象的位置
+        //     Vector3 COMPosition = COM.transform.position;
+        //     Debug.Log("The position of COM is: " + COMPosition);
+        //     transform.position = COM.transform.position;
+        // } else {
+        //     Debug.Log("COM not found!");
+        // }
 
         // 检查是否找到了正确的GameObject
         if (mapManager == null) {
@@ -81,24 +81,32 @@ public class SearchRoad : MonoBehaviour {
         graph = mapManager.GetEdges();
         vertices = mapManager.GetVertices();
         wayPoints = mapManager.GetWayPoints();
+
+        moveSpeed = property.speed;
+        realSpeedUp = property.speedUp;
+        realTimeSlow = property.timeSlow;
     }
 
     // Update is called once per frame
     void Update() {
-        moveSpeed = property.speed;
+
         float realMoveSpeed;
         AudioSource audio = GameObject.Find("Camera").GetComponent<AudioSource>();
-        if (Input.GetKey(KeyCode.LeftShift))
+
+        if (Input.GetKey(KeyCode.LeftShift) && realSpeedUp > 0) {
             realMoveSpeed = moveSpeed * 2;
-        else
+            realSpeedUp = Mathf.Max(0, realSpeedUp - decreaseSpeedPerSecond * Time.deltaTime);
+        } else {
             realMoveSpeed = moveSpeed;
+        }
         // 控制时间流速
-        if (Input.GetKey(KeyCode.LeftControl)) {
+        if (Input.GetKey(KeyCode.LeftControl) && realTimeSlow > 0) {
             if (audio.pitch > 0.5f)
                 audio.pitch *= 0.995f;
             else
                 audio.pitch = 0.5f;
             Time.timeScale = 0.2f;
+            realTimeSlow = Mathf.Max(0, realTimeSlow - 5 * decreaseSpeedPerSecond * Time.deltaTime);
         } else {
             if (audio.pitch < 1)
                 audio.pitch *= 1.005f;
@@ -106,6 +114,7 @@ public class SearchRoad : MonoBehaviour {
                 audio.pitch = 1;
             Time.timeScale = 1;
         }
+
         int switcher = 0;
         if (wayPoints.ContainsKey(targetwaypoint)) switcher += 4;
         if (orderFinished) switcher += 2;
@@ -176,7 +185,7 @@ public class SearchRoad : MonoBehaviour {
                     } else {
                         // 到达路径末尾和wayPoint后停止移动
                         Debug.Log("Reach the final wayPoint");
-                        property.increaseFinishedCount();
+                        //property.increaseFinishedCount();
                         orderFinished = true;
                     }
                     routeManager.playerHidePath();
@@ -197,6 +206,11 @@ public class SearchRoad : MonoBehaviour {
         }
         if (switcher != 5)
             routeManager.playerHidePath();
+
+
+        if (Input.GetKeyDown(KeyCode.W)) {
+            Debug.Log("In SearchRoad: realMoveSpeed:" + realMoveSpeed + "realSpeedUp:" + realSpeedUp + "realTimeSlow:" + realTimeSlow);
+        }
     }
 
     // public List<int> searchRoad(int beginStartVid, int beginEndVid, Vector3 deliverymanPosition, List<int> targetwaypoints) {
