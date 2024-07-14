@@ -242,4 +242,10 @@ public class PairOrder : MonoBehaviour {
     public bool GetIsLate() {
         return isLate;
     }
+
+    public void playMusic(string musicName) {
+        Debug.Log("playMusic: " + musicName);
+        GameObject music = Instantiate(Resources.Load("Prefabs/Music/" + musicName)) as GameObject;
+        Debug.Assert(music != null);
+    }
 }
