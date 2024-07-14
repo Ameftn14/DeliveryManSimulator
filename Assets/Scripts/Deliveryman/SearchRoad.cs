@@ -179,11 +179,11 @@ public class SearchRoad : MonoBehaviour {
                         property.increaseFinishedCount();
                         orderFinished = true;
                     }
-                    routeManager.hidePath();
+                    routeManager.playerHidePath();
                 } else {
                     // 画出路径
                     routeManager.setRouteBegin(beginPosition, targetPosition, gameObject.transform.position);
-                    routeManager.setRouteEnd(targetwaypoint);
+                    routeManager.playerSetRouteEnd(targetwaypoint);
                 }
                 break;
             case 6:// 等待目标设定
@@ -196,7 +196,7 @@ public class SearchRoad : MonoBehaviour {
                 break;
         }
         if (switcher != 5)
-            routeManager.hidePath();
+            routeManager.playerHidePath();
     }
 
     // public List<int> searchRoad(int beginStartVid, int beginEndVid, Vector3 deliverymanPosition, List<int> targetwaypoints) {

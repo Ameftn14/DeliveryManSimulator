@@ -9,15 +9,31 @@ public class RouteManagerBehaviour : MonoBehaviour {
     public Vector3 pos;
     public SearchRoad searchRoad;
 
+    enum TargetFrom {
+        none,
+        player,
+        list
+    }
+
+    private TargetFrom targetFrom = TargetFrom.player;
+
     public void setRouteBegin(int startVid, int endVid, Vector3 position) {
         beginStartVid = startVid;
         beginEndVid = endVid;
         pos = position;
     }
 
-    public void setRouteEnd(int waypoint) {
-        if (targetwaypoint == -1)
+
+    public void playerSetRouteEnd(int waypoint) {
+        if (targetFrom != TargetFrom.list) {
             targetwaypoint = waypoint;
+            targetFrom = TargetFrom.player;
+        }
+    }
+
+    public void listSetRouteEnd(int waypoint) {
+        targetwaypoint = waypoint;
+        targetFrom = TargetFrom.list;
     }
 
 
@@ -32,11 +48,30 @@ public class RouteManagerBehaviour : MonoBehaviour {
     }
 
     public void hidePath() {
+        targetFrom = TargetFrom.none;
         targetwaypoint = -1;
     }
 
-    void eventHandler(OrderInfo orderinfo) {
-        //...
+    public void mouseHidePath() {
+        if (targetFrom == TargetFrom.list) {
+            hidePath();
+        }
+    }
+
+    public void playerHidePath() {
+        if (targetFrom == TargetFrom.player) {
+            hidePath();
+        }
+    }
+
+    void checkMouseList(OrderInfo orderinfo) {
+        if (orderinfo == null) {
+            if (targetFrom == TargetFrom.list) {
+                hidePath();
+            }
+            return;
+        }
+        listSetRouteEnd(orderinfo.pid);
     }
 
 
@@ -55,7 +90,7 @@ public class RouteManagerBehaviour : MonoBehaviour {
             searchRoad = GameObject.Find("Deliveryman").GetComponent<SearchRoad>();
             Debug.Assert(searchRoad != null);
         }
-        // OrderMenuListBehaviour.Instance.OnMouseHoverOrderChanged += eventHandler;
+        OrderMenuListBehaviour.Instance.OnMouseHoverOrderChanged += checkMouseList;
     }
 
     // Update is called once per frame
