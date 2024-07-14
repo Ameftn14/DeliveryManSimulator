@@ -305,8 +305,9 @@ public class PairOrder : MonoBehaviour {
     }
     public void playMusic(string musicName) {
         Debug.Log("playMusic: " + musicName);
-        GameObject music = Instantiate(Resources.Load("Prefabs/Music/" + musicName)) as GameObject;
+        GameObject music = GameObject.Find(musicName);
         Debug.Assert(music != null);
+        music.GetComponent<AudioSource>().PlayOneShot(music.GetComponent<AudioSource>().clip);
     }
 
     public void MouseEnter() {

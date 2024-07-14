@@ -93,15 +93,15 @@ public class SearchRoad : MonoBehaviour {
         }
         // 控制时间流速
         if (Input.GetKey(KeyCode.LeftControl) && realTimeSlow > 0) {
-            if (audio.pitch > 0.5f)
-                audio.pitch *= 0.995f;
+            if (audio.pitch > 0.747f)
+                audio.pitch *= 0.99f;
             else
                 audio.pitch = 0.5f;
             Time.timeScale = 0.2f;
             realTimeSlow = Mathf.Max(0, realTimeSlow - 5 * decreaseSpeedPerSecond * Time.deltaTime);
         } else {
             if (audio.pitch < 1)
-                audio.pitch *= 1.005f;
+                audio.pitch *= 1.01f;
             else
                 audio.pitch = 1;
             Time.timeScale = 1;

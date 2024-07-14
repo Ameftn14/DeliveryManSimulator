@@ -132,6 +132,8 @@ MonoBehaviour:
   pid: -1
   startVid: -1
   endVid: -1
+  isBusy: 0
   isResturant: 0
   mapManager: {fileID: 0}
+  wayPointName: WayPoint
   ratio: 0.5

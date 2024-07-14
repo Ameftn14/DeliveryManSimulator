@@ -42,14 +42,14 @@ public class GeneralManagerBehaviour : MonoBehaviour {
 
     public void LateOrder(int OrderID)
     {
-        PairOrder theOrder = theOrderDB.orderDict[OrderID];
-        if (theOrder.state == PairOrder.State.Accept)
-            theProperty.money -= theOrder.GetPrice() / 2;
-        else if (theOrder.state == PairOrder.State.PickUp) {
-            // displayManager.removeOrder(OrderID, LocationType.Customer);
-            theProperty.money -= theOrder.GetPrice() / 2;
-            // theProperty.nowCapacity += 1;
-        }
+        // PairOrder theOrder = theOrderDB.orderDict[OrderID];
+        // if (theOrder.state == PairOrder.State.Accept)
+        //     theProperty.money -= theOrder.GetPrice() / 2;
+        // else if (theOrder.state == PairOrder.State.PickUp) {
+        //     // displayManager.removeOrder(OrderID, LocationType.Customer);
+        //     theProperty.money -= theOrder.GetPrice() / 2;
+        //     // theProperty.nowCapacity += 1;
+        // }
     }
     public void DistroyOrder(int OrderID) {
         PairOrder theOrder = theOrderDB.orderDict[OrderID];
