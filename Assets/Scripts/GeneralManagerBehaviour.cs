@@ -42,6 +42,8 @@ public class GeneralManagerBehaviour : MonoBehaviour {
 
     public void LateOrder(int OrderID)
     {
+        AudioSource audioSource = GameObject.Find("LateVoice").GetComponent<AudioSource>();
+        audioSource.Play();
         // PairOrder theOrder = theOrderDB.orderDict[OrderID];
         // if (theOrder.state == PairOrder.State.Accept)
         //     theProperty.money -= theOrder.GetPrice() / 2;

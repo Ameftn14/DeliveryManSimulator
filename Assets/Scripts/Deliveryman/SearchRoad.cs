@@ -85,7 +85,11 @@ public class SearchRoad : MonoBehaviour {
         float realMoveSpeed;
         AudioSource audio = GameObject.Find("Camera").GetComponent<AudioSource>();
 
-        if (Input.GetKey(KeyCode.LeftShift) && realSpeedUp > 0) {
+        if (isMoving && Input.GetKeyDown(KeyCode.LeftShift) && realSpeedUp > 0) {
+            AudioSource audioSource = GameObject.Find("SpeedUpVoice").GetComponent<AudioSource>();
+            audioSource.Play();
+        }
+        if (isMoving && Input.GetKey(KeyCode.LeftShift) && realSpeedUp > 0) {
             realMoveSpeed = moveSpeed * 2;
             realSpeedUp = Mathf.Max(0, realSpeedUp - decreaseSpeedPerSecond * Time.deltaTime);
         } else {
