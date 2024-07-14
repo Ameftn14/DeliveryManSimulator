@@ -42,7 +42,7 @@ public class PurchaseMenuBehaviour : MonoBehaviour {
     // }
 
     void Start() {
-        shopping = GameObject.Find("DeliverymanManager").GetComponent<Shopping>();
+        shopping = GameObject.Find("Shopping").GetComponent<Shopping>();
         purchaseButtons = GetComponentsInChildren<PurchaseButtonBehaviour>();
         upgradeOptions = new UpgradeOption[purchaseButtons.Length];
         // bool isAvailable = true;

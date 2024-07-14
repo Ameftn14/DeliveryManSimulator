@@ -28,7 +28,7 @@ public class Shopping : MonoBehaviour {
 
     public List<UpgradeOption> options = new List<UpgradeOption>();
 
-    void Start() {
+    void Awake() {
 
         // PermanentSpeedBoost,
         // BiggerStorage,
@@ -126,11 +126,10 @@ public class Shopping : MonoBehaviour {
 
         }
         if (shoppingCount == 0) {
-            Debug.Log("No shoppingCount");
+            GameObject Canvas = GameObject.Find("Canvas");
+            GameObject nextDayPanel = Canvas.transform.Find("NextDayPanel").gameObject;
+            nextDayPanel.SetActive(true);
         }
-        GameObject Canvas = GameObject.Find("Canvas");
-        GameObject nextDayPanel = Canvas.transform.Find("NextDayPanel").gameObject;
-        nextDayPanel.SetActive(true);
         Debug.Log("Now shoppingCount: " + shoppingCount + " Money: " + DeliverymanManager.money);
     }
     

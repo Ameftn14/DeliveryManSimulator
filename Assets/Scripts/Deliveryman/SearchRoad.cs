@@ -98,7 +98,7 @@ public class SearchRoad : MonoBehaviour {
         // 控制时间流速
 
         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.M) && Input.GetKey(KeyCode.E)) {
-            Time.timeScale = 10f;
+            Time.timeScale = 50f;
         } else if (Input.GetKey(KeyCode.LeftControl) && realTimeSlow > 0) {
             if (audio.pitch > 0.747f)
                 audio.pitch *= 0.99f;
