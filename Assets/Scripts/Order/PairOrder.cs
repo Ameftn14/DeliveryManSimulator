@@ -47,6 +47,9 @@ public class PairOrder : MonoBehaviour {
         WayPointBehaviour from_wp = null;
         WayPointBehaviour to_wp = null;
         bool isSameEdge = false;
+        float mindistance = 10f;
+        float maxdistance = 60f;
+        float tempDistance = 0f; 
         //随机获取两个pid
         do {
             from_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
@@ -56,8 +59,9 @@ public class PairOrder : MonoBehaviour {
         do {
             to_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
             to_wp = mapManager.GetWayPoints()[to_pid].GetComponent<WayPointBehaviour>();
-            isSameEdge = (from_wp.startVid == to_wp.startVid && from_wp.endVid == to_wp.endVid);
-        } while (to_wp.isBusy || to_wp.isResturant == 1 || to_pid == from_pid || isSameEdge);
+            isSameEdge = from_wp.startVid == to_wp.startVid && from_wp.endVid == to_wp.endVid;
+            tempDistance = Vector2.Distance(from_wp.transform.position, to_wp.transform.position);
+        } while (to_wp.isBusy || to_wp.isResturant == 1 || to_pid == from_pid || isSameEdge || tempDistance < mindistance || tempDistance > maxdistance);
 
         mapManager.GetWayPoints()[from_pid].GetComponent<WayPointBehaviour>().BecomeBusy();
         mapManager.GetWayPoints()[to_pid].GetComponent<WayPointBehaviour>().BecomeBusy();
