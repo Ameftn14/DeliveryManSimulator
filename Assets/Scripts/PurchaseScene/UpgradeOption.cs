@@ -6,8 +6,8 @@ public enum UpgradeType {
 };
 
 public class UpgradeOption {
-    public  UpgradeType type;
-    public  bool isAvailable;
+    public UpgradeType type;
+    public bool isAvailable;
     public UpgradeOption(UpgradeType type, bool isAvailable = true) {
         this.type = type;
         this.isAvailable = isAvailable;

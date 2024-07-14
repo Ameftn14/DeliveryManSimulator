@@ -13,7 +13,7 @@ public class FilledInventorySlotBehaviour : MonoBehaviour {
             image.color = new Color(1, 1, 1, 0);
         }
     }
-    void Start() {
+    void Awake() {
         image = GetComponent<Image>();
         syncDisplay();
     }
