@@ -165,7 +165,7 @@ public static class OrderRefreshRate {
     private static readonly System.Random random = new();
 
     public static (float TimeInterval, int Quantity) GetOrderRefreshRate(int hour, int minute) {
-        float baseInterval = 5.5f; 
+        float baseInterval = 5f; 
         int quantity; // 基准订单数量为 1
 
         TimeSpan lunchStart = new(11, 30, 0);
@@ -180,7 +180,7 @@ public static class OrderRefreshRate {
         // 判断是否在高峰期
         if ((currentTime >= lunchStart && currentTime <= lunchEnd) ||
             (currentTime >= dinnerStart && currentTime <= dinnerEnd)) {
-            baseInterval = 4f; 
+            baseInterval = 3.5f; 
 
             // 根据概率决定 quality 的值
             int probability = random.Next(100);
@@ -210,7 +210,7 @@ public static class OrderRefreshRate {
         }
 
         // 添加随机浮动性
-        float timeInterval = baseInterval + UnityEngine.Random.Range(-1f, 1f); // 浮动范围在±1秒
+        float timeInterval = baseInterval + UnityEngine.Random.Range(-0.7f, 0.7f); // 浮动范围在±1秒
 
         return (timeInterval, quantity);
     }
