@@ -21,7 +21,4 @@ public class FilledInventorySlotBehaviour : MonoBehaviour {
         this.isOccupied = isOccupied;
         syncDisplay();
     }
-    void Update() {
-
-    }
 }
