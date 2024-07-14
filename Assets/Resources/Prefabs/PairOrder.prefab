@@ -55,6 +55,7 @@ MonoBehaviour:
   fromScript: {fileID: 0}
   toScript: {fileID: 0}
   from_pid: 0
+  level: 0
   to_pid: 0
   isLate: 0
   state: 0

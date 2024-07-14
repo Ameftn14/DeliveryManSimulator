@@ -152,10 +152,6 @@ public static class OrderRefreshRate {
         float baseInterval = 8f; // 基准刷新间隔为 10 秒
         int quantity; // 基准订单数量为 1
 
-        // 定义高峰期时间段
-        TimeSpan breakfastStart = new(7, 20, 0);
-        TimeSpan breakfastEnd = new(9, 20, 0);
-
         TimeSpan lunchStart = new(11, 30, 0);
         TimeSpan lunchEnd = new(13, 20, 0);
 
@@ -166,8 +162,7 @@ public static class OrderRefreshRate {
         TimeSpan currentTime = new(hour, minute, 0);
 
         // 判断是否在高峰期
-        if ((currentTime >= breakfastStart && currentTime <= breakfastEnd) ||
-            (currentTime >= lunchStart && currentTime <= lunchEnd) ||
+        if ((currentTime >= lunchStart && currentTime <= lunchEnd) ||
             (currentTime >= dinnerStart && currentTime <= dinnerEnd)) {
             baseInterval = 6f; // 高峰期刷新间隔缩短到 7秒
 
@@ -176,9 +171,11 @@ public static class OrderRefreshRate {
 
             if (probability < 25) {
                 quantity = 2; // 40% 的概率 quality 为 2
-            } else if (probability < 30) {
-                quantity = 3; // 15% 的概率 quality 为 3
-            } else {
+            } 
+            // else if (probability < 30) {
+            //     quantity = 3; // 15% 的概率 quality 为 3
+            // } 
+            else {
                 quantity = 1; // 60% 的概率 quality 为 1
             }
         } else {
@@ -187,9 +184,11 @@ public static class OrderRefreshRate {
 
             if (probability < 10) {
                 quantity = 2; // 15% 的概率 quality 为 2
-            } else if (probability < 15) {
-                quantity = 3; // 5% 的概率 quality 为 3
-            } else {
+            } 
+            // else if (probability < 15) {
+            //     quantity = 3; // 5% 的概率 quality 为 3
+            // } 
+            else {
                 quantity = 1; // 80% 的概率 quality 为 1
             }
         }

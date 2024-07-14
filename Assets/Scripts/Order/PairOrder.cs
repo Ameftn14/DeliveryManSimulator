@@ -106,6 +106,7 @@ public class PairOrder : MonoBehaviour {
         state = State.NotAccept;
         isLate = false;
         OrderMenuListBehaviour.Instance.OnMouseHoverOrderChanged += HighLight;
+        OrderMenuListBehaviour.Instance.OnMouseOutOrder += Unhighlight;
     }
 
     public void Update() {
@@ -248,6 +249,11 @@ public class PairOrder : MonoBehaviour {
         StartCoroutine(fromScript.SizeUpAndDown());
         StartCoroutine(toScript.SizeUpAndDown());
     }
+
+    public void BackToOriginalSize() {
+        StartCoroutine(fromScript.BackToOriginalSize());
+        StartCoroutine(toScript.BackToOriginalSize());
+    }
     public bool GetIsLate() {
         return isLate;
     }
@@ -286,12 +292,29 @@ public class PairOrder : MonoBehaviour {
         if (orderinfo == null) {
             return;
         } else if (orderinfo.orderID == OrderID) {
-            OrderSizeUpAndDown();
+            OrderSizeUp();
+        }
+    }
+
+    public void Unhighlight(OrderInfo orderinfo) {
+        if (orderinfo == null) {
+            return;
+        } else if (orderinfo.orderID == OrderID) {
+            BackToOriginalSize();
         }
     }
     public void playMusic(string musicName) {
         Debug.Log("playMusic: " + musicName);
-        GameObject music = Instantiate(Resources.Load("Prefabs/Music/" + musicName)) as GameObject;
+        GameObject music = GameObject.Find(musicName);
         Debug.Assert(music != null);
+        music.GetComponent<AudioSource>().PlayOneShot(music.GetComponent<AudioSource>().clip);
+    }
+
+    public void MouseEnter() {
+        //TODO:接口
+    }
+
+    public void MouseExit() {
+        //TODO:接口
     }
 }

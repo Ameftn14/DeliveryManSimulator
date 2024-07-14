@@ -136,7 +136,8 @@ MonoBehaviour:
   generalManager: {fileID: 0}
   mapManager: {fileID: 0}
   ringProgress: {fileID: 0}
-  TheICON: {fileID: 0}
+  TheStar:
+  - {fileID: 0}
   parentPairOrder: {fileID: 0}
   brotherSingleOrder: {fileID: 0}
   visible: 0
