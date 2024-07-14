@@ -8,6 +8,17 @@ public class ListModel : MonoBehaviour {
     public int getSize() {
         return items.Count;
     }
+
+    public void drop(int dropId, int targetId) {
+        if (dropId == targetId) return;
+        else if (dropId < targetId) {
+            swap(dropId, dropId + 1);
+            drop(dropId + 1, targetId);
+        } else {
+            swap(dropId, dropId - 1);
+            drop(dropId - 1, targetId);
+        }
+    }
     public void swap(int id1, int id2) {
         // swap them as a gameobject
         items[id1].setSiblingIndex(id2);

@@ -70,7 +70,7 @@ public class OrderMenuListBehaviour : ListModel {
         //     backToNormal();
         //     return;
         // }
-        if (swapIsAllowed(draggingItem.getIndex(), hoveringItem.getIndex())) {
+        if (dropIsAllowed(draggingItem.getIndex(), hoveringItem.getIndex())) {
             isInSpecialMode = false;
             backToNormal();
             return;
