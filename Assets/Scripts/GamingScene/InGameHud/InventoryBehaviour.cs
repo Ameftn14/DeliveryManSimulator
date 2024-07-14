@@ -47,7 +47,7 @@ public class InventoryBehaviour : MonoBehaviour {
     }
 
     // Update is called once per frame
-    // void Update() {
-    //     syncDisplay();
-    // }
+    void Update() {
+        syncDisplay();
+    }
 }

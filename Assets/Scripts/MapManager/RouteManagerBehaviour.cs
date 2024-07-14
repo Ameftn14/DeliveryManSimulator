@@ -42,7 +42,9 @@ public class RouteManagerBehaviour : MonoBehaviour {
         lineRenderer.endColor = color;
         lineRenderer.positionCount = nodes.Count;
         for (int i = 0; i < nodes.Count; i++) {
-            lineRenderer.SetPosition(i, nodes[i]);
+            Vector3 node = nodes[i];
+            node.z = -1.9f;
+            lineRenderer.SetPosition(i, node);
             // lineRenderer.SetPosition(nodes.Count * 2 - 1 - i, nodes[i]);
         }
     }
