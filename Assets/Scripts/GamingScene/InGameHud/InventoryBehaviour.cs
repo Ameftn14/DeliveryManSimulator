@@ -10,6 +10,14 @@ public class InventoryBehaviour : MonoBehaviour {
     [SerializeField] private GameObject panelForFilled;
     [SerializeField] private int occupiedCnt;
     [SerializeField] private int capacity;
+
+    public void SetCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public void SetOccupiedCnt(int occupiedCnt) {
+        this.occupiedCnt = occupiedCnt;
+    }
     void Start() {
         Debug.Assert(panelForEmpty != null);
         Debug.Assert(panelForFilled != null);

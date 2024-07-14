@@ -25,7 +25,6 @@ public class DeliverymanManager : MonoBehaviour {
     public static float addTimeSlow = 25.0f;
 
 
-    private Property property;
     // Start is called before the first frame update
     private void Awake() {
         if (Instance != null && Instance != this) {
@@ -45,7 +44,7 @@ public class DeliverymanManager : MonoBehaviour {
         if (deliveryman == null) {
             return;
         }
-        property = deliveryman.GetComponent<Property>();
+        Property property = deliveryman.GetComponent<Property>();
         if (property == null) {
             return;
         }
@@ -63,5 +62,8 @@ public class DeliverymanManager : MonoBehaviour {
         speedSkillBar.setPercentage(searchRoad.realSpeedUp / 25.0f);
         SkillBarBehaviour timeSlowSkillBar = GameObject.Find("time slow down skill").GetComponent<SkillBarBehaviour>();
         timeSlowSkillBar.setPercentage(searchRoad.realTimeSlow / 25.0f);
+        InventoryBehaviour inventoryBehaviour = GameObject.Find("inventory").GetComponent<InventoryBehaviour>();
+        inventoryBehaviour.SetCapacity(property.allCapacity);
+        inventoryBehaviour.SetOccupiedCnt(property.allCapacity - property.nowCapacity);
     }
 }
