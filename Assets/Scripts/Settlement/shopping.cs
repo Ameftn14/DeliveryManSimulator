@@ -116,7 +116,7 @@ public class Shopping : MonoBehaviour {
             case UpgradeType.TempararySpeedBoost:
                 if (shoppingCount > 0) {
                     DeliverymanManager.speedUp += addSpeedUp;
-                    DeliverymanManager.speedAvailable--;
+                    DeliverymanManager.speedUpAvailable--;
                     shoppingCount--;
                 }
                 break;
