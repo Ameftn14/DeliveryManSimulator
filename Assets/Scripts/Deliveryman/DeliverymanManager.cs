@@ -60,10 +60,6 @@ public class DeliverymanManager : MonoBehaviour {
         SearchRoad searchRoad = GameObject.Find("Deliveryman").GetComponent<SearchRoad>();
         BalanceDiplayBehaviour balanceDiplayBehaviour = GameObject.Find("balance bar").GetComponent<BalanceDiplayBehaviour>();
         balanceDiplayBehaviour.setBalance(money);
-        SkillBarBehaviour speedSkillBar = GameObject.Find("temp speed up skill").GetComponent<SkillBarBehaviour>();
-        speedSkillBar.setPercentage(searchRoad.realSpeedUp / 25.0f);
-        SkillBarBehaviour timeSlowSkillBar = GameObject.Find("time slow down skill").GetComponent<SkillBarBehaviour>();
-        timeSlowSkillBar.setPercentage(searchRoad.realTimeSlow / 25.0f);
         InventoryBehaviour inventoryBehaviour = GameObject.Find("inventory").GetComponent<InventoryBehaviour>();
         inventoryBehaviour.SetCapacity(property.allCapacity);
         inventoryBehaviour.SetOccupiedCnt(property.allCapacity - property.nowCapacity);
