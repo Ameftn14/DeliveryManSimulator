@@ -47,12 +47,12 @@ public class RouteManagerBehaviour : MonoBehaviour {
         }
     }
 
-    public void hidePath() {
+    private void hidePath() {
         targetFrom = TargetFrom.none;
         targetwaypoint = -1;
     }
 
-    public void mouseHidePath() {
+    public void listHidePath() {
         if (targetFrom == TargetFrom.list) {
             hidePath();
         }
@@ -67,7 +67,7 @@ public class RouteManagerBehaviour : MonoBehaviour {
     void checkMouseList(OrderInfo orderinfo) {
         if (orderinfo == null) {
             if (targetFrom == TargetFrom.list) {
-                hidePath();
+                listHidePath();
             }
             return;
         }
