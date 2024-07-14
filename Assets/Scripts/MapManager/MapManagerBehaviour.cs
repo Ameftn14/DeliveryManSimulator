@@ -175,8 +175,7 @@ public class MapManagerBehaviour : MonoBehaviour {
         return 0;
     }
 
-    // Start is called before the first frame update
-    void Start() {
+    void Awake() {
         foreach (Transform child in transform) {
             VertexBehaviour vertexBehaviour = child.GetComponent<VertexBehaviour>();
             if (vertexBehaviour != null) {
@@ -193,6 +192,9 @@ public class MapManagerBehaviour : MonoBehaviour {
                 AddEdge(roadBehaviour.startVid, roadBehaviour.endVid, roadBehaviour.gameObject);
             }
         }
+    }
+
+    void Start() {
     }
 
     // Update is called once per frame
