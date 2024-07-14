@@ -10,72 +10,65 @@ public class Shopping : MonoBehaviour {
     private int addCapacity = 1;
     private float addSpeedUp = 25.0f;
     private float addTimeSlow = 25.0f;
-    private int shoppingCount = 2;
+    public int shoppingCount = 2;
     // private float speed = DeliverymanManager.speed;
     // private int allCapacity = DeliverymanManager.allCapacity;
     // private int money = DeliverymanManager.money;
     // Start is called before the first frame update
 
-    public enum UpgradeType {
-        Speed, Capacity, TimeSlow, TemporarySpeedUp
-    };
+    // public enum UpgradeType {
+    //     Speed, Capacity, TimeSlow, TemporarySpeedUp
+    // };
 
 
-    public class UpgradeOption {
-        public UpgradeType type;
-        public bool available;
-    }
+    // public class UpgradeOption {
+    //     public UpgradeType type;
+    //     public bool available;
+    // }
 
     public List<UpgradeOption> options = new List<UpgradeOption>();
 
     void Start() {
 
-        // foreach (UpgradeType type in Enum.GetValues(typeof(UpgradeType))) {
-        //     UpgradeOption upgrade = new UpgradeOption();
-        //     upgrade.type = type;
-        //     if(DeliverymanManager.)
-        //     options.Add(new UpgradeOption { type = type, available = true });
-        // }
-        UpgradeOption upgradeSpeed = new UpgradeOption();
-        upgradeSpeed.type = UpgradeType.Speed;
+        // PermanentSpeedBoost,
+        // BiggerStorage,
+        // TempararySpeedBoost,
+        // TempararyTimeSlow
+        bool tempSpeedIsAvailable;
         if (DeliverymanManager.speedAvailable > 0) {
-            upgradeSpeed.available = true;
+            tempSpeedIsAvailable = true;
         } else {
-            upgradeSpeed.available = false;
+            tempSpeedIsAvailable = false;
         }
+        options.Add(new UpgradeOption(UpgradeType.PermanentSpeedBoost,tempSpeedIsAvailable));
 
 
-        UpgradeOption upgradeCapacity = new UpgradeOption();
-        upgradeCapacity.type = UpgradeType.Capacity;
+        
+        bool tempCapacityIsAvailable;
         if (DeliverymanManager.capacityAvailable > 0) {
-            upgradeCapacity.available = true;
+            tempCapacityIsAvailable = true;
         } else {
-            upgradeCapacity.available = false;
+            tempCapacityIsAvailable = false;
         }
+        options.Add(new UpgradeOption(UpgradeType.BiggerStorage,tempCapacityIsAvailable));
 
 
-        UpgradeOption upgradeSpeedUp = new UpgradeOption();
-        upgradeSpeedUp.type = UpgradeType.TemporarySpeedUp;
+        
+        bool tempSpeedUpIsAvailable;
         if (DeliverymanManager.speedUpAvailable > 0) {
-            upgradeSpeedUp.available = true;
+            tempSpeedUpIsAvailable = true;
         } else {
-            upgradeSpeedUp.available = false;
+            tempSpeedUpIsAvailable = false;
         }
+        options.Add(new UpgradeOption(UpgradeType.TempararySpeedBoost,tempSpeedUpIsAvailable));
 
-
-        UpgradeOption upgradeTimeSlow = new UpgradeOption();
-        upgradeTimeSlow.type = UpgradeType.TimeSlow;
+        bool tempTimeSlowIsAvailable;
         if (DeliverymanManager.timeSlowAvailable > 0) {
-            upgradeTimeSlow.available = true;
+            tempTimeSlowIsAvailable = true;
         } else {
-            upgradeTimeSlow.available = false;
+            tempTimeSlowIsAvailable = false;
         }
-
-        options.Add(upgradeSpeed);
-        options.Add(upgradeCapacity);
-        options.Add(upgradeSpeedUp);
-        options.Add(upgradeTimeSlow);
-
+        options.Add(new UpgradeOption(UpgradeType.TempararyTimeSlow,tempTimeSlowIsAvailable));
 
 
         //initOptions(options);
@@ -87,37 +80,40 @@ public class Shopping : MonoBehaviour {
         //     DeliverymanManager.money += 100;
         // }
 
-        if (Input.GetKeyDown(KeyCode.Q)) {
-            Debug.Log("In shopping: speed:" + DeliverymanManager.speed + "allCapacity:" + DeliverymanManager.allCapacity + "speedup:" + DeliverymanManager.speedUp + "timeSlow:" + DeliverymanManager.timeSlow + "money:" + DeliverymanManager.money);
-        }
+        // if (Input.GetKeyDown(KeyCode.Q)) {
+        //     Debug.Log("In shopping: speed:" + DeliverymanManager.speed + "allCapacity:" + DeliverymanManager.allCapacity + "speedup:" + DeliverymanManager.speedUp + "timeSlow:" + DeliverymanManager.timeSlow + "money:" + DeliverymanManager.money);
+        // }
     }
 
-    void doPurchace(UpgradeOption option) {
-        //Speed, Capacity, TimeSlow, TemporarySpeedUp
+    public void doPurchace(UpgradeOption option) {
+        // PermanentSpeedBoost,
+        // BiggerStorage,
+        // TempararySpeedBoost,
+        // TempararyTimeSlow
         UpgradeType type = option.type;
         switch (type) {
-            case UpgradeType.Speed:
+            case UpgradeType.PermanentSpeedBoost:
                 if (shoppingCount > 0) {
                     DeliverymanManager.speed *= addSpeed;
                     DeliverymanManager.speedAvailable--;
                     shoppingCount--;
                 }
                 break;
-            case UpgradeType.Capacity:
+            case UpgradeType.BiggerStorage:
                 if (shoppingCount > 0) {
                     DeliverymanManager.allCapacity += addCapacity;
                     DeliverymanManager.capacityAvailable--;
                     shoppingCount--;
                 }
                 break;
-            case UpgradeType.TimeSlow:
+            case UpgradeType.TempararyTimeSlow:
                 if (shoppingCount > 0) {
                     DeliverymanManager.timeSlow += addTimeSlow;
                     DeliverymanManager.timeSlowAvailable--;
                     shoppingCount--;
                 }
                 break;
-            case UpgradeType.TemporarySpeedUp:
+            case UpgradeType.TempararySpeedBoost:
                 if (shoppingCount > 0) {
                     DeliverymanManager.speedUp += addSpeedUp;
                     DeliverymanManager.speedAvailable--;
@@ -129,13 +125,14 @@ public class Shopping : MonoBehaviour {
                 break;
 
         }
-
-        Debug.Log("Now shoppingCount: " + shoppingCount + " Money: " + DeliverymanManager.money);
-        if (shoppingCount <= 0) {
-            foreach (var tempoption in options) {
-                tempoption.available = false;
-            }
+        if (shoppingCount == 0) {
+            Debug.Log("No shoppingCount");
         }
+        GameObject Canvas = GameObject.Find("Canvas");
+        GameObject nextDayPanel = Canvas.transform.Find("NextDayPanel").gameObject;
+        nextDayPanel.SetActive(true);
+        Debug.Log("Now shoppingCount: " + shoppingCount + " Money: " + DeliverymanManager.money);
     }
+    
 
 }

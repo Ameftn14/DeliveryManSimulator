@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PurchaseMenuBehaviour : MonoBehaviour {
     // Start is called before the first frame update
-    [SerializeField] private UpgradeOption[] upgradeOptions;
-    [SerializeField] private PurchaseButtonBehaviour[] purchaseButtons;
+    [SerializeField] public UpgradeOption[] upgradeOptions;
+    [SerializeField] public PurchaseButtonBehaviour[] purchaseButtons;
+
+    public Shopping shopping;
     public void OnButtonClicked(UpgradeOption upgradeOption) {
         UpgradeOption option = upgradeOption;
         switch (option.type) {
@@ -25,20 +27,42 @@ public class PurchaseMenuBehaviour : MonoBehaviour {
                 Debug.Log("Unknown UpgradeType");
                 break;
         }
+
+        shopping.doPurchace(option);
+        for (int i = 0; i < purchaseButtons.Length; i++) {
+            if (upgradeOptions[i] == option) {
+                purchaseButtons[i].setAvailability(false);
+            }
+        }
+
     }
-    void example() {
-        purchaseButtons[0].setAvailability(false);
-        // purchaseButtons[0].GetType();
-    }
+    // void example() {
+    //     purchaseButtons[0].setAvailability(false);
+    //     // purchaseButtons[0].GetType();
+    // }
 
     void Start() {
+        shopping = GameObject.Find("DeliverymanManager").GetComponent<Shopping>();
         purchaseButtons = GetComponentsInChildren<PurchaseButtonBehaviour>();
         upgradeOptions = new UpgradeOption[purchaseButtons.Length];
-        bool isAvailable = true;
+        // bool isAvailable = true;
         //TODO 填入真正的isAvailable值
         for (int i = 0; i < purchaseButtons.Length; i++) {
-            upgradeOptions[i] = new UpgradeOption((UpgradeType)i, isAvailable);
+            upgradeOptions[i] = new UpgradeOption((UpgradeType)i, shopping.options[i].isAvailable);
             purchaseButtons[i].init(upgradeOptions[i]);
+        }
+        for (int i = 0; i < purchaseButtons.Length; i++) {
+            if (!upgradeOptions[i].isAvailable) {
+                purchaseButtons[i].setAvailability(false);
+            }
+        }
+    }
+
+    void Update() {
+        if (shopping.shoppingCount <= 0) {
+            for (int i = 0; i < purchaseButtons.Length; i++) {
+                purchaseButtons[i].setAvailability(false);
+            }
         }
     }
 }
