@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class EndBehaviour : MonoBehaviour {
@@ -15,7 +16,7 @@ public class EndBehaviour : MonoBehaviour {
         } else if (Input.GetKeyDown(KeyCode.R)) {
             if (GameObject.Find("DeliverymanManager") != null)
                 Destroy(GameObject.Find("DeliverymanManager"));
-            UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("SampleScene");
         }
     }
 }

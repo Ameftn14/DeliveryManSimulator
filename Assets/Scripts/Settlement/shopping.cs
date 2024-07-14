@@ -6,7 +6,7 @@ using UnityEngine;
 using System;
 
 public class Shopping : MonoBehaviour {
-    private float addSpeed = 1.5f;
+    private float addSpeed = 10.0f;
     private int addCapacity = 1;
     private float addSpeedUp = 15.0f;
     private float addTimeSlow = 10.0f;
@@ -94,7 +94,7 @@ public class Shopping : MonoBehaviour {
         switch (type) {
             case UpgradeType.PermanentSpeedBoost:
                 if (shoppingCount > 0) {
-                    DeliverymanManager.speed *= addSpeed;
+                    DeliverymanManager.speed += addSpeed;
                     DeliverymanManager.speedAvailable--;
                     shoppingCount--;
                 }

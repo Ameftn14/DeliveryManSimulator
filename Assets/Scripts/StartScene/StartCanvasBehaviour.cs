@@ -14,7 +14,7 @@ public class StartCanvasBehaviour : MonoBehaviour
 
     public void ClickStart()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("SampleScene");
     }
 
     public void ClickExit()

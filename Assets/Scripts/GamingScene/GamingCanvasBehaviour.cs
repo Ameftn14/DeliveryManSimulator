@@ -33,11 +33,11 @@ public class GamingCanvasBehaviour : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.Space) || timespan.Hours >= 21) {
                 DeliverymanManager.Instance.round++;
                 if (DeliverymanManager.Instance.round <= 4) {
-                    UnityEngine.SceneManagement.SceneManager.LoadScene("Settlement");
+                    SceneManager.LoadScene("Settlement");
                 } else if (DeliverymanManager.Instance.round == 5) {
-                    UnityEngine.SceneManagement.SceneManager.LoadScene("EndScene");
+                    SceneManager.LoadScene("EndScene");
                 } else {
-                    UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
+                    SceneManager.LoadScene("SampleScene");
                 }
             }
         }
