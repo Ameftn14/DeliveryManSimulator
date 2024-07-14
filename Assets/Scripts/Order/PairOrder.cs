@@ -308,4 +308,12 @@ public class PairOrder : MonoBehaviour {
         GameObject music = Instantiate(Resources.Load("Prefabs/Music/" + musicName)) as GameObject;
         Debug.Assert(music != null);
     }
+
+    public void MouseEnter() {
+        //TODO:接口
+    }
+
+    public void MouseExit() {
+        //TODO:接口
+    }
 }
