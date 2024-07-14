@@ -252,6 +252,10 @@ public class SearchRoad : MonoBehaviour {
         // 目标地点所在边的起点与终点
         int targetStartVid = wayPoints[targetwaypoint].startVid;
         int targetEndVid = wayPoints[targetwaypoint].endVid;
+        if (targetEndVid == beginEndVid && targetStartVid == beginStartVid)
+            return new List<int>();
+        if (targetEndVid == beginStartVid && targetStartVid == beginEndVid)
+            return new List<int>();
         // 到startVertex的距离与整条边长度的比例
         float ratio = wayPoints[targetwaypoint].ratio;
 
