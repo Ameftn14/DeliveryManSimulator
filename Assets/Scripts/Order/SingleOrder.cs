@@ -10,7 +10,7 @@ public class SingleOrder : MonoBehaviour {
     public GeneralManagerBehaviour generalManager;
     public MapManagerBehaviour mapManager;
     public RingProgress ringProgress;
-    public SpriteRenderer TheICON;
+    public GameObject[] TheStar;
     public PairOrder parentPairOrder;
     public SingleOrder brotherSingleOrder;
     public TimeSpan acceptTime;
@@ -30,12 +30,13 @@ public class SingleOrder : MonoBehaviour {
 
     public void Start() {
         ringProgress = transform.Find("Ring").GetComponent<RingProgress>();
-        
+
         mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
         virtualClockUI = GameObject.Find("Time").GetComponent<VirtualClockUI>();
         parentPairOrder = transform.parent.GetComponent<PairOrder>();
         colorDictionary = new ColorDictionary();
         generalManager = GameObject.Find("GeneralManager").GetComponent<GeneralManagerBehaviour>();
+        TheStar = new GameObject[3];
 
         originalScale = transform.localScale;
 
@@ -45,6 +46,51 @@ public class SingleOrder : MonoBehaviour {
         }
         Debug.Log("mapManager found");
         state = PairOrder.State.NotAccept;
+
+        ringProgress.ddl = Deadline;
+        acceptTime = new TimeSpan(0, 0, 0);
+
+        visible = true;
+        ringProgress.state = PairOrder.State.NotAccept;
+        ringProgress.isFrom = isFrom;
+
+        if(isFrom){
+            if(level == 1){
+                TheStar[0] = Instantiate(Resources.Load("PreFabs/1star")) as GameObject;
+                TheStar[0].transform.parent = transform;
+                TheStar[0].transform.localPosition = new Vector3(-0.8f, 7.6f, -1);
+                TheStar[0].transform.localScale = new Vector3(6f, 6f, 1f);
+            }
+            else if(level == 2){
+                //-5.6 5.1   3.9 5.1
+                TheStar[0] = Instantiate(Resources.Load("PreFabs/1star")) as GameObject;
+                TheStar[0].transform.parent = transform;
+                TheStar[0].transform.localPosition = new Vector3(-5.6f, 4.3f, -1);
+                TheStar[0].transform.localScale = new Vector3(6f, 6f, 1f);
+
+                TheStar[1] = Instantiate(Resources.Load("PreFabs/1star")) as GameObject;
+                TheStar[1].transform.parent = transform;
+                TheStar[1].transform.localPosition = new Vector3(4f, 4.3f, -1);
+                TheStar[1].transform.localScale = new Vector3(6f, 6f, 1f);
+            }
+            else if(level == 3){
+                TheStar[0] = Instantiate(Resources.Load("PreFabs/1star")) as GameObject;
+                TheStar[0].transform.parent = transform;
+                TheStar[0].transform.localPosition = new Vector3(-0.8f, 7.6f, -1);
+                TheStar[0].transform.localScale = new Vector3(6f, 6f, 1f);
+
+                TheStar[1] = Instantiate(Resources.Load("PreFabs/1star")) as GameObject;
+                TheStar[1].transform.parent = transform;
+                TheStar[1].transform.localPosition = new Vector3(-5f, -1.2f, -1);
+                TheStar[1].transform.localScale = new Vector3(6f, 6f, 1f);
+
+                TheStar[2] = Instantiate(Resources.Load("PreFabs/1star")) as GameObject;
+                TheStar[2].transform.parent = transform;
+                TheStar[2].transform.localPosition = new Vector3(3.4f, -1.2f, -1);
+                TheStar[2].transform.localScale = new Vector3(6f, 6f, 1f);
+
+            }
+        }
 
         //改颜色
         foreach (Transform child in transform) {
@@ -59,15 +105,17 @@ public class SingleOrder : MonoBehaviour {
                 Debug.LogError("SpriteRenderer is not assigned!");
             }
         }
-        ringProgress.ddl = Deadline;
-        acceptTime = new TimeSpan(0, 0, 0);
-
-        visible = true;
-        ringProgress.state = PairOrder.State.NotAccept;
-        ringProgress.isFrom = isFrom;
     }
 
     public void Update() {
+        if (state > PairOrder.State.NotAccept) {
+            //隐藏所有star
+            foreach (GameObject star in TheStar) {
+                if (star != null) {
+                    star.SetActive(false);
+                }
+            }
+        }
     }
 
     public void OnMouseDown() {
@@ -238,5 +286,12 @@ public class SingleOrder : MonoBehaviour {
         }
         TimeToDeadline = time;
         ringProgress.TimeToDeadline = time;
+    }
+
+    public void AddOneStar(){
+        //在Texture文件夹中加载一个叫“1star”的图片
+        Sprite star = Resources.Load<Sprite>("Texture/1star");
+        //在指定位置添加这个图片
+
     }
 }

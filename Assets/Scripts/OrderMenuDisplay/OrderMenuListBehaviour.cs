@@ -70,7 +70,7 @@ public class OrderMenuListBehaviour : ListModel {
         //     backToNormal();
         //     return;
         // }
-        if (swapIsAllowed(draggingItem.getIndex(), hoveringItem.getIndex())) {
+        if (dropIsAllowed(draggingItem.getIndex(), hoveringItem.getIndex())) {
             isInSpecialMode = false;
             backToNormal();
             return;
@@ -91,6 +91,7 @@ public class OrderMenuListBehaviour : ListModel {
         if (isInSpecialMode) return;
         hoveringItem = item;
         if (item != null) OnMouseHoverOrderChanged?.Invoke(item.getOrderInfo());
+        else OnMouseHoverOrderChanged?.Invoke(null);
         checkBlockingCondition(targetItem: hoveringItem, droppedItem: draggingItem);
     }
     public void setMouseDragItem(OrderItemBehaviour item) {
@@ -167,5 +168,4 @@ public class OrderMenuListBehaviour : ListModel {
     public event MouseHoverOrderChangedHandler OnMouseHoverOrderChanged;
     public delegate void MouseDragOrderChangedHandler(OrderInfo orderInfo);
     public event MouseDragOrderChangedHandler OnMouseDragOrderChanged;
-
 }

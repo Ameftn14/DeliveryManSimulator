@@ -90,6 +90,6 @@ public class ItemModel : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHa
         int droppedIndex = droppedItemModel.getIndex();
         Debug.Log("item " + droppedIndex + "->" + index);
 
-        listModel.swap(index, droppedIndex);
+        listModel.drop(index, droppedIndex);
     }
 }
