@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DeliverymanManager : MonoBehaviour {
@@ -23,6 +24,7 @@ public class DeliverymanManager : MonoBehaviour {
 
     public static float addSpeedUp = 15.0f;
     public static float addTimeSlow = 10.0f;
+    public int round = 0;
 
 
     // Start is called before the first frame update
