@@ -23,11 +23,11 @@ public class EmptyInventorySlotBehaviour : MonoBehaviour {
         position = rectTransform.anchoredPosition;
         syncDisplay();
     }
-    public void setOccupied(bool isUnlocked) {
+    public void setUnlocked(bool isUnlocked) {
         this.isUnlocked = isUnlocked;
         syncDisplay();
     }
-    public void getPosition() {
-        position = rectTransform.anchoredPosition;
+    public Vector2 getPosition() {
+        return position = rectTransform.anchoredPosition;
     }
 }
