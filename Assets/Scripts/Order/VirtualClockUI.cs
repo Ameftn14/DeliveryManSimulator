@@ -82,6 +82,7 @@ public class VirtualClockUI : MonoBehaviour {
         }
     }
 
+
     void UpdateVirtualTime() {
         // 增加虚拟时间
         currentMinute += 1;
@@ -125,7 +126,7 @@ public class VirtualClockUI : MonoBehaviour {
     public TimeSpan GetTime() {
         return new TimeSpan(currentHour, currentMinute, 0);
     }
-    
+
     //换算真实时间间隔到虚拟时间间隔
     public TimeSpan GetVirtualTime(float RealSeconds) {
         float virtualMinuts = RealSeconds * VMinInSeconds;
@@ -143,7 +144,13 @@ public class VirtualClockUI : MonoBehaviour {
     public float GetRealTime(int virtualMinuts) {
         return virtualMinuts * VMinInSeconds;
     }
-
+    public TimeSpan GetDayStart() {
+        return new TimeSpan(startHour, startMinute, 0);
+    }
+    public TimeSpan GetDayEnd() {
+        // TODO 获取一天强制计算时间
+        return new TimeSpan(22, 0, 0);
+    }
     public TimeSpan GetLunchStart() {
         return new TimeSpan(11, 30, 0);
     }
@@ -165,7 +172,8 @@ public static class OrderRefreshRate {
     private static readonly System.Random random = new();
 
     public static (float TimeInterval, int Quantity) GetOrderRefreshRate(int hour, int minute) {
-        float baseInterval = 5f; 
+        float baseInterval = 5f;
+
         int quantity; // 基准订单数量为 1
 
         TimeSpan lunchStart = new(11, 30, 0);
@@ -180,14 +188,14 @@ public static class OrderRefreshRate {
         // 判断是否在高峰期
         if ((currentTime >= lunchStart && currentTime <= lunchEnd) ||
             (currentTime >= dinnerStart && currentTime <= dinnerEnd)) {
-            baseInterval = 3.5f; 
+            baseInterval = 3.5f;
 
             // 根据概率决定 quality 的值
             int probability = random.Next(100);
 
             if (probability < 40) {
                 quantity = 2; // 40% 的概率 quality 为 2
-            } 
+            }
             // else if (probability < 30) {
             //     quantity = 3; // 15% 的概率 quality 为 3
             // } 
@@ -200,7 +208,7 @@ public static class OrderRefreshRate {
 
             if (probability < 25) {
                 quantity = 2; // 15% 的概率 quality 为 2
-            } 
+            }
             // else if (probability < 15) {
             //     quantity = 3; // 5% 的概率 quality 为 3
             // } 

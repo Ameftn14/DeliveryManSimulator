@@ -1695,6 +1695,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: time bar
       objectReference: {fileID: 0}
+    - target: {fileID: 8309764667223296161, guid: d42a7ec62497bec4cbddc239093a47b1, type: 3}
+      propertyPath: container
+      value: 
+      objectReference: {fileID: 1106909993}
+    - target: {fileID: 8310875609265574068, guid: d42a7ec62497bec4cbddc239093a47b1, type: 3}
+      propertyPath: container
+      value: 
+      objectReference: {fileID: 1106909993}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1883,6 +1891,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb05266360d2e8743abe692c6ea63a9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1106909993 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5881573856231514271, guid: d42a7ec62497bec4cbddc239093a47b1, type: 3}
+  m_PrefabInstance: {fileID: 847405741}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1119205042
 GameObject:
   m_ObjectHideFlags: 0
