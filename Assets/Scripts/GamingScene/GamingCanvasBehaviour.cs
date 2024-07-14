@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class GamingCanvasBehaviour : MonoBehaviour {
     public OrderDB orderDB;
@@ -30,7 +31,14 @@ public class GamingCanvasBehaviour : MonoBehaviour {
             GameObject nextDayPanel = Canvas.transform.Find("NextDayPanel").gameObject;
             nextDayPanel.SetActive(true);
             if (Input.GetKeyDown(KeyCode.Space) || timespan.Hours >= 21) {
-                UnityEngine.SceneManagement.SceneManager.LoadScene("Settlement");
+                DeliverymanManager.Instance.round++;
+                if (DeliverymanManager.Instance.round <= 4) {
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("Settlement");
+                } else if (DeliverymanManager.Instance.round == 5) {
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("EndScene");
+                } else {
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
+                }
             }
         }
     }
