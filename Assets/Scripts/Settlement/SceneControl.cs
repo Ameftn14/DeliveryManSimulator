@@ -9,10 +9,10 @@ public class SceneControl : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
-    }
-
-    public void finishedPurchace() {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            //Destroy(instance);
+            // 加载指定的场景
+            UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
+        }
     }
 }
