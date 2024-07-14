@@ -37,6 +37,8 @@ public class SearchRoad : MonoBehaviour {
 
     public float realSpeedUp;
     public float realTimeSlow;
+    public float speedUpPercentage;
+    public float timeSlowPercentage;
     private float decreaseSpeedPerSecond = 5.0f; // 每秒减少速度
 
     // Start is called before the first frame update
@@ -52,16 +54,6 @@ public class SearchRoad : MonoBehaviour {
         mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
         property = GameObject.Find("Deliveryman").GetComponent<Property>();
         routeManager = GameObject.Find("RouteManager").GetComponent<RouteManagerBehaviour>();
-
-        // GameObject COM = GameObject.Find("COM");
-        // if (COM != null) {
-        //     // 获取游戏对象的位置
-        //     Vector3 COMPosition = COM.transform.position;
-        //     Debug.Log("The position of COM is: " + COMPosition);
-        //     transform.position = COM.transform.position;
-        // } else {
-        //     Debug.Log("COM not found!");
-        // }
 
         // 检查是否找到了正确的GameObject
         if (mapManager == null) {
@@ -114,6 +106,9 @@ public class SearchRoad : MonoBehaviour {
                 audio.pitch = 1;
             Time.timeScale = 1;
         }
+
+        speedUpPercentage = realSpeedUp / DeliverymanManager.addSpeedUp;
+        timeSlowPercentage = realTimeSlow / DeliverymanManager.addTimeSlow;
 
         int switcher = 0;
         if (wayPoints.ContainsKey(targetwaypoint)) switcher += 4;
