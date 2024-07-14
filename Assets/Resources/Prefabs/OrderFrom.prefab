@@ -131,7 +131,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82edaeea29a6f5e48b57e0d82fc1864e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalScale: {x: 0, y: 0, z: 0}
+  virtualClockUI: {fileID: 0}
+  generalManager: {fileID: 0}
+  mapManager: {fileID: 0}
+  ringProgress: {fileID: 0}
+  TheICON: {fileID: 0}
+  parentPairOrder: {fileID: 0}
+  brotherSingleOrder: {fileID: 0}
+  visible: 0
   OrderID: 0
+  level: 0
+  state: 0
   LifeTime: 5
 --- !u!61 &8647325530381333757
 BoxCollider2D:
@@ -168,10 +179,10 @@ BoxCollider2D:
   m_Offset: {x: -0.62, y: 1.96}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.96, y: 0.96}
+    newSize: {x: 0.96, y: 0.96}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
@@ -275,5 +286,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3888a4ddbc484341a100652b4e6e6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  virtualClockUI: {fileID: 0}
   sp_render: {fileID: 0}
-  transitionDuration: 6
+  lifetime: 5
+  state: 0
+  isFrom: 0
+  shouldDestroy: 0
