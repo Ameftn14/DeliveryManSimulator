@@ -570,12 +570,20 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 655072599954152297, guid: 9ab7fd2a02392d74499503a99f75b8e1, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.0000076293945
+      objectReference: {fileID: 0}
     - target: {fileID: 1424794252103195632, guid: 9ab7fd2a02392d74499503a99f75b8e1, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1424794252103195632, guid: 9ab7fd2a02392d74499503a99f75b8e1, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1424794252103195632, guid: 9ab7fd2a02392d74499503a99f75b8e1, type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3885558630732333057, guid: 9ab7fd2a02392d74499503a99f75b8e1, type: 3}
@@ -13468,7 +13476,7 @@ GameObject:
   - component: {fileID: 2865592787766612439}
   - component: {fileID: 4862120635621255631}
   m_Layer: 5
-  m_Name: Money
+  m_Name: Balance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,5 +1,4 @@
 public enum UpgradeType {
-
     PermanentSpeedBoost,
     BiggerStorage,
     TempararySpeedBoost,

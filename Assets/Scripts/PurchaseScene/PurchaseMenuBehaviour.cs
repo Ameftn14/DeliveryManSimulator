@@ -26,12 +26,16 @@ public class PurchaseMenuBehaviour : MonoBehaviour {
                 break;
         }
     }
-
+    void example() {
+        purchaseButtons[0].setAvailability(false);
+        // purchaseButtons[0].GetType();
+    }
 
     void Start() {
         purchaseButtons = GetComponentsInChildren<PurchaseButtonBehaviour>();
         upgradeOptions = new UpgradeOption[purchaseButtons.Length];
         bool isAvailable = true;
+        //TODO 填入真正的isAvailable值
         for (int i = 0; i < purchaseButtons.Length; i++) {
             upgradeOptions[i] = new UpgradeOption((UpgradeType)i, isAvailable);
             purchaseButtons[i].init(upgradeOptions[i]);
