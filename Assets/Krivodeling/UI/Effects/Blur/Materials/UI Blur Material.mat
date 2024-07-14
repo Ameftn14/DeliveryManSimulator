@@ -31,8 +31,8 @@ Material:
     m_Floats:
     - _FlipX: 0
     - _FlipY: 0
-    - _Intensity: 0.085
-    - _Multiplier: 0.214
+    - _Intensity: 0.432
+    - _Multiplier: 0.676
     - _blurSizeXY: 1
     - _intensity: 0
     m_Colors:
