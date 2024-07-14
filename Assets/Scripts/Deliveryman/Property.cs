@@ -33,6 +33,14 @@ public class Property : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Q)) {
             Debug.Log("In Property: speed:" + speed + "allCapacity:" + allCapacity + "speedup:" + speedUp + "timeSlow:" + timeSlow + "money:" + money);
         }
+
+        SearchRoad searchRoad = GameObject.Find("Deliveryman").GetComponent<SearchRoad>();
+        BalanceDiplayBehaviour balanceDiplayBehaviour = GameObject.Find("balance bar").GetComponent<BalanceDiplayBehaviour>();
+        balanceDiplayBehaviour.setBalance(money);
+        SkillBarBehaviour speedSkillBar = GameObject.Find("temp speed up skill").GetComponent<SkillBarBehaviour>();
+        speedSkillBar.setPercentage(searchRoad.speedUpPercentage);
+        SkillBarBehaviour timeSlowSkillBar = GameObject.Find("time slow down skill").GetComponent<SkillBarBehaviour>();
+        timeSlowSkillBar.setPercentage(searchRoad.timeSlowPercentage);
     }
 
 }
