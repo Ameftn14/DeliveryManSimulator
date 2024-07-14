@@ -35,6 +35,7 @@ public class GeneralManagerBehaviour : MonoBehaviour {
             displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Restaurant, theFrom.Getpid(), theOrder.OrderID));
             displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Customer, theTo.Getpid(), theOrder.OrderID));
             theProperty.nowCapacity -= 1;
+            theOrder.playMusic("AcceptVoice");
         } else
             theOrder.OrderNotAccept();
     }
@@ -81,6 +82,7 @@ public class GeneralManagerBehaviour : MonoBehaviour {
                     Debug.Assert(thePairOrder.state == PairOrder.State.Accept);
                     return;
                 }
+                thePairOrder.playMusic("FinishVoice");
                 thePairOrder.OrderFinished();
                 theProperty.nowCapacity += 1;
                 theProperty.money += thePairOrder.GetPrice();
