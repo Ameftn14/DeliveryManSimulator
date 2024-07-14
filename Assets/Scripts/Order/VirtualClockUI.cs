@@ -172,11 +172,8 @@ public static class OrderRefreshRate {
     private static readonly System.Random random = new();
 
     public static (float TimeInterval, int Quantity) GetOrderRefreshRate(int hour, int minute) {
-<<<<<<< Updated upstream
-        float baseInterval = 5f; 
-=======
-        float baseInterval = 5.5f;
->>>>>>> Stashed changes
+        float baseInterval = 5f;
+
         int quantity; // 基准订单数量为 1
 
         TimeSpan lunchStart = new(11, 30, 0);
@@ -191,11 +188,7 @@ public static class OrderRefreshRate {
         // 判断是否在高峰期
         if ((currentTime >= lunchStart && currentTime <= lunchEnd) ||
             (currentTime >= dinnerStart && currentTime <= dinnerEnd)) {
-<<<<<<< Updated upstream
-            baseInterval = 3.5f; 
-=======
-            baseInterval = 4f;
->>>>>>> Stashed changes
+            baseInterval = 3.5f;
 
             // 根据概率决定 quality 的值
             int probability = random.Next(100);
