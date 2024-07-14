@@ -89,9 +89,15 @@ public class OrderMenuListBehaviour : ListModel {
 
     public void setMouseHoverItem(OrderItemBehaviour item) {
         if (isInSpecialMode) return;
-        hoveringItem = item;
-        if (item != null) OnMouseHoverOrderChanged?.Invoke(item.getOrderInfo());
-        else OnMouseHoverOrderChanged?.Invoke(null);
+        if (item != null) {
+            OnMouseHoverOrderChanged?.Invoke(item.getOrderInfo());
+            hoveringItem = item;
+        }
+        else{
+            OnMouseOutOrder?.Invoke(hoveringItem.getOrderInfo());
+            hoveringItem = null;
+            OnMouseHoverOrderChanged?.Invoke(null);
+        }
         checkBlockingCondition(targetItem: hoveringItem, droppedItem: draggingItem);
     }
     public void setMouseDragItem(OrderItemBehaviour item) {
@@ -168,4 +174,6 @@ public class OrderMenuListBehaviour : ListModel {
     public event MouseHoverOrderChangedHandler OnMouseHoverOrderChanged;
     public delegate void MouseDragOrderChangedHandler(OrderInfo orderInfo);
     public event MouseDragOrderChangedHandler OnMouseDragOrderChanged;
+    public delegate void MouseOutOrderHandler(OrderInfo orderInfo);
+    public event MouseOutOrderHandler OnMouseOutOrder;
 }

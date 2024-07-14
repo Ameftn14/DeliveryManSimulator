@@ -19,6 +19,7 @@ public class SingleOrder : MonoBehaviour {
     public int OrderID;
     private bool isLate;
     public int level;
+    private bool isBig;
     public TimeSpan Deadline;
     public PairOrder.State state;
     private int pid;
@@ -51,6 +52,7 @@ public class SingleOrder : MonoBehaviour {
         acceptTime = new TimeSpan(0, 0, 0);
 
         visible = true;
+        isBig = false;
         ringProgress.state = PairOrder.State.NotAccept;
         ringProgress.isFrom = isFrom;
 
@@ -216,9 +218,12 @@ public class SingleOrder : MonoBehaviour {
     }
 
     public IEnumerator SizeUp() {
-        Vector3 targetScale = originalScale * 2f;
+        while(isBig){
+            yield return null;
+        }
+        Vector3 targetScale = originalScale * 1.75f;    
 
-        float duration = 0.5f; // 增大和消失的时间
+        float duration = 0.1f; // 增大和消失的时间
         float elapsed = 0f;
 
         while (elapsed < duration)
@@ -227,6 +232,8 @@ public class SingleOrder : MonoBehaviour {
             elapsed += Time.deltaTime;
             yield return null;
         }
+
+        isBig = true;
     }
 
     public IEnumerator SizeDown() {
@@ -268,9 +275,14 @@ public class SingleOrder : MonoBehaviour {
     }
 
     public IEnumerator BackToOriginalSize() {
+        while(!isBig){
+            yield return null;
+        }
         Vector3 currentScale = transform.localScale;
-        float duration = 0.3f; // 增大和消失的时间
+        float duration = 0.1f; // 增大和消失的时间
         float elapsed = 0f;
+
+
 
         while (elapsed < duration)
         {
@@ -278,6 +290,8 @@ public class SingleOrder : MonoBehaviour {
             elapsed += Time.deltaTime;
             yield return null;
         }
+
+        isBig = false;
     }
 
     public void SetTimeToDeadline(TimeSpan time) {
