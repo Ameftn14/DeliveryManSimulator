@@ -1,15 +1,26 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class OrderDB: MonoBehaviour
 {
     // PairOrder根据OrderID来索引建立字典
-    public Dictionary<int, PairOrder> orderDict = new();
+    public Dictionary<int, PairOrder> orderDict;
 
     // 声明委托，通过OrderID用于在订单状态发生变化时通知其他对象
     public delegate void OrderStateChangeHandler(int OrderID);
     public event OrderStateChangeHandler OrderStateChanged;
+
+    public void Start()
+    {
+        // 初始化字典
+        orderDict = new Dictionary<int, PairOrder>();
+    }
+    public void Update()
+    {
+        Debug.Log("OrderDB"+IsClear());
+    }
 
     // 触发事件
     protected virtual void OnOrderStateChanged(int OrderID)
@@ -47,6 +58,19 @@ public class OrderDB: MonoBehaviour
     public bool IfOrderExist(int OrderID)
     {
         return orderDict.ContainsKey(OrderID);
+    }
+
+    public bool IsClear()
+    {
+        //判断字典中是否还有活跃订单
+        if (orderDict.Count == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void UpdateOrder(PairOrder order)

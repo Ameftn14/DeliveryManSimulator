@@ -195,16 +195,21 @@ public class SingleOrder : MonoBehaviour {
     }
 
     public IEnumerator SizeUp() {
+        float duration = 0.1f; // 增大和消失的时间
+        float elapsed = 0f;
         while(isBig){
             yield return null;
         }
-        Vector3 targetScale = originalScale * 1.75f;    
-
-        float duration = 0.1f; // 增大和消失的时间
-        float elapsed = 0f;
+        Vector3 targetScale = originalScale * 1.3f;
+        if(isFrom){
+            targetScale = originalScale * 1.7f;
+        }
 
         while (elapsed < duration)
         {
+            if(transform.localScale == targetScale){
+                break;
+            }
             transform.localScale = Vector3.Lerp(originalScale, targetScale, elapsed / duration);
             elapsed += Time.deltaTime;
             yield return null;
@@ -221,6 +226,9 @@ public class SingleOrder : MonoBehaviour {
 
         while (elapsed < duration)
         {
+            if(transform.localScale == targetScale){
+                break;
+            }
             transform.localScale = Vector3.Lerp(originalScale, targetScale, elapsed / duration);
             elapsed += Time.deltaTime;
             yield return null;
@@ -258,8 +266,6 @@ public class SingleOrder : MonoBehaviour {
         Vector3 currentScale = transform.localScale;
         float duration = 0.1f; // 增大和消失的时间
         float elapsed = 0f;
-
-
 
         while (elapsed < duration)
         {

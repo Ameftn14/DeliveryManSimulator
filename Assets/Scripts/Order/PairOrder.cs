@@ -135,7 +135,6 @@ public class PairOrder : MonoBehaviour {
                 orderDB.RemoveOrder(OrderID);
                 DistroyEverything();
             }
-            currentTime = virtualClock.GetTime();
             if (currentTime > Deadline && isLate == false) {//超时
                 generalManager.LateOrder(OrderID);
                 OrderLated();
@@ -235,24 +234,30 @@ public class PairOrder : MonoBehaviour {
     }
 
     //提供一个接口，调用这个接口时，两个singleoreder对象的大小逐渐变大成原来的两倍
-    public void OrderSizeUp() {
-        StartCoroutine(fromScript.SizeUp());
-        StartCoroutine(toScript.SizeUp());
+    public void OrderSizeUp(bool isfrom){
+        if (isfrom) {
+            StartCoroutine(fromScript.SizeUp());
+        } else {
+            StartCoroutine(toScript.SizeUp());
+        }
     }
 
-    public void OrderSizeDown() {
-        StartCoroutine(fromScript.SizeDown());
-        StartCoroutine(toScript.SizeDown());
-    }
+    // public void OrderSizeDown() {
+    //     StartCoroutine(fromScript.SizeDown());
+    //     StartCoroutine(toScript.SizeDown());
+    // }
 
-    public void OrderSizeUpAndDown() {
-        StartCoroutine(fromScript.SizeUpAndDown());
-        StartCoroutine(toScript.SizeUpAndDown());
-    }
+    // public void OrderSizeUpAndDown() {
+    //     StartCoroutine(fromScript.SizeUpAndDown());
+    //     StartCoroutine(toScript.SizeUpAndDown());
+    // }
 
-    public void BackToOriginalSize() {
-        StartCoroutine(fromScript.BackToOriginalSize());
-        StartCoroutine(toScript.BackToOriginalSize());
+    public void BackToOriginalSize(bool isfrom) {
+        if (isfrom) {
+            StartCoroutine(fromScript.BackToOriginalSize());
+        } else {
+            StartCoroutine(toScript.BackToOriginalSize());
+        }
     }
     public bool GetIsLate() {
         return isLate;
@@ -292,7 +297,7 @@ public class PairOrder : MonoBehaviour {
         if (orderinfo == null) {
             return;
         } else if (orderinfo.orderID == OrderID) {
-            OrderSizeUp();
+            OrderSizeUp(orderinfo.pid == from_pid);
         }
     }
 
@@ -300,7 +305,7 @@ public class PairOrder : MonoBehaviour {
         if (orderinfo == null) {
             return;
         } else if (orderinfo.orderID == OrderID) {
-            BackToOriginalSize();
+            BackToOriginalSize(orderinfo.pid == from_pid);
         }
     }
     public void playMusic(string musicName) {
