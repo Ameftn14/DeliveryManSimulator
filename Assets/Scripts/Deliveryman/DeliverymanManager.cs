@@ -5,18 +5,25 @@ using UnityEngine;
 public class DeliverymanManager : MonoBehaviour {
     public static DeliverymanManager Instance { get; private set; }
 
-    private float maxSpeed = 20.0f;
-    private int maxCapacity = 5;
-
     public static float speed = 10.0f;
 
     public static int allCapacity = 3;
 
-    public static int nowCapacity;
-
     public static int money = 100;
 
     public static int finishedcount = 0;
+
+    public static float speedUp = 25.0f;
+    public static float timeSlow = 25.0f;
+
+    public static int speedAvailable = 2;
+    public static int capacityAvailable = 2;
+    public static int speedUpAvailable = 2;
+    public static int timeSlowAvailable = 2;
+
+    public static float addSpeedUp = 25.0f;
+    public static float addTimeSlow = 25.0f;
+
 
     private Property property;
     // Start is called before the first frame update
@@ -39,23 +46,10 @@ public class DeliverymanManager : MonoBehaviour {
             return;
         }
         property = deliveryman.GetComponent<Property>();
-        nowCapacity = allCapacity;
         if (property == null) {
             return;
         }
-        if (Input.GetKeyDown(KeyCode.P)) {
-            Debug.Log("In SampleScene money is" + money);
-        }
 
-        if (speed != property.speed) {
-            speed = property.speed;
-        }
-        if (allCapacity != property.allCapacity) {
-            allCapacity = property.allCapacity;
-        }
-        if (nowCapacity != property.nowCapacity) {
-            nowCapacity = property.nowCapacity;
-        }
         if (money != property.money) {
             money = property.money;
         }

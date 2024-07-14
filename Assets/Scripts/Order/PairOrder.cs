@@ -265,10 +265,10 @@ public class PairOrder : MonoBehaviour {
         toScript.level = level;
     }
 
-    public void SetLevel(int level){
+    public void SetLevel(int level) {
         this.level = level;
         fromScript.level = level;
-        toScript.level = level;    
+        toScript.level = level;
     }
 
     public void SetPrice() {
@@ -279,15 +279,19 @@ public class PairOrder : MonoBehaviour {
             _ => 30,
         };
 
-        price = priceOnlevel + (int)(distance*0.1);
+        price = priceOnlevel + (int)(distance * 0.1);
     }
 
     public void HighLight(OrderInfo orderinfo) {
-        if(orderinfo == null){
+        if (orderinfo == null) {
             return;
-        }
-        else if(orderinfo.orderID == OrderID){
+        } else if (orderinfo.orderID == OrderID) {
             OrderSizeUpAndDown();
         }
+    }
+    public void playMusic(string musicName) {
+        Debug.Log("playMusic: " + musicName);
+        GameObject music = Instantiate(Resources.Load("Prefabs/Music/" + musicName)) as GameObject;
+        Debug.Assert(music != null);
     }
 }
