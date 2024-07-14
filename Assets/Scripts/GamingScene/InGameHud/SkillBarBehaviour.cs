@@ -5,31 +5,30 @@ using UnityEngine;
 
 public class SkillBarBehaviour : MonoBehaviour {
     // Start is called before the first frame update
-    [SerializeField] private ProgressBarBehaviour bar1;
-    [SerializeField] private ProgressBarBehaviour bar2;
+    [SerializeField] private ProgressBarBehaviour[] bars;
     public float fillAmount;
 
     void Start() {
-        Debug.Assert(bar1 != null);
-        Debug.Assert(bar2 != null);
+        bars = GetComponentsInChildren<ProgressBarBehaviour>();
+    }
+    void syncDisplay() {
+        float percentage = fillAmount;
+        for (int i = 0; i < bars.Length; i++) {
+            if (percentage > 1) {
+                bars[i].setPercentage(1);
+                percentage -= 1;
+            } else {
+                bars[i].setPercentage(percentage);
+                percentage = 0;
+            }
+        }
     }
     public void setPercentage(float percentage) {
         fillAmount = percentage;
-        if (fillAmount > 2) {
-            fillAmount = 2;
-        }
-        if (fillAmount < 0) {
-            fillAmount = 0;
-        }
+        syncDisplay();
     }
 
     void Update() {
-        if (fillAmount > 1) {
-            bar1.setPercentage(1);
-            bar2.setPercentage(fillAmount - 1);
-        } else {
-            bar1.setPercentage(fillAmount);
-            bar2.setPercentage(0);
-        }
+        syncDisplay();
     }
 }
