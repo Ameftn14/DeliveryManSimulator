@@ -7,6 +7,10 @@ public class BalanceDiplayBehaviour : MonoBehaviour {
     [SerializeField] private int balance;
     public TMP_Text textDisplay;
 
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
+
     void Start() {
         Debug.Assert(textDisplay != null);
     }
