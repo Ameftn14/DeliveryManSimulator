@@ -17,7 +17,7 @@ public class SingleOrder : MonoBehaviour {
     public bool visible;
     public int OrderID;
     public int ColorIndex;
-    private bool isLate;
+    // private bool isLate;
     public int level;
     private bool isBig;
     public TimeSpan Deadline;
@@ -186,9 +186,9 @@ public class SingleOrder : MonoBehaviour {
         }
     }
 
-    public void OrderLated() {
-        isLate = true;
-    }
+    // public void OrderLated() {
+    //     isLate = true;
+    // }
 
     public void OrderFinished() {
         state = PairOrder.State.Finished;

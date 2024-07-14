@@ -237,8 +237,8 @@ public class PairOrder : MonoBehaviour {
 
     public void OrderLated() {
         isLate = true;
-        fromScript.OrderLated();
-        toScript.OrderLated();
+        // fromScript.OrderLated();
+        // toScript.OrderLated();
     }
 
     //提供一个接口，调用这个接口时，两个singleoreder对象的大小逐渐变大成原来的两倍

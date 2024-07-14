@@ -16,7 +16,7 @@ public class EndBehaviour : MonoBehaviour {
         } else if (Input.GetKeyDown(KeyCode.R)) {
             if (GameObject.Find("DeliverymanManager") != null)
                 Destroy(GameObject.Find("DeliverymanManager"));
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadSceneAsync("SampleScene");
         }
     }
 }

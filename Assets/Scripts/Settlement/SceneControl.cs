@@ -13,7 +13,7 @@ public class SceneControl : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)) {
             //Destroy(instance);
             // 加载指定的场景
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadSceneAsync("SampleScene");
         }
     }
 }

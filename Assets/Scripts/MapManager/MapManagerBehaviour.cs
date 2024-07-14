@@ -17,7 +17,7 @@ public class MapManagerBehaviour : MonoBehaviour {
 
     private Dictionary<int, GameObject> vertexObjects = new Dictionary<int, GameObject>();
     private Dictionary<int, Dictionary<int, GameObject>> edgeObjects = new Dictionary<int, Dictionary<int, GameObject>>();
-    private int backgroundId = 1;
+    // private int backgroundId = 1;
 
     // public MapManagerBehaviour()
     // {
