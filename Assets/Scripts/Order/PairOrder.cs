@@ -8,6 +8,7 @@ public class PairOrder : MonoBehaviour {
     public VirtualClockUI virtualClock;
     public GeneralManagerBehaviour generalManager;
     public int OrderID;
+    public int ColorIndex;
     public SingleOrder fromScript;//单个订单:起点
     public SingleOrder toScript;//单个订单:终点
     public int from_pid;
@@ -47,7 +48,7 @@ public class PairOrder : MonoBehaviour {
         WayPointBehaviour from_wp = null;
         WayPointBehaviour to_wp = null;
         bool isSameEdge = false;
-        float mindistance = 10f;
+        float mindistance = 15f;
         float maxdistance = 60f;
         float tempDistance = 0f; 
         //随机获取两个pid
@@ -103,6 +104,8 @@ public class PairOrder : MonoBehaviour {
         SetLevel();
         //设置价格
         SetPrice();
+        //设置颜色
+        SetColorIndex();
         //获取距离
         distance = Vector2.Distance(fromScript.GetPosition(), toScript.GetPosition());
 
@@ -149,6 +152,7 @@ public class PairOrder : MonoBehaviour {
 
     public void DistroyEverything() {
         orderDB.RemoveOrder(OrderID);
+        ColorDictionary.ReleaseColor(ColorIndex);
         Destroy(transform.Find("OrderFrom").gameObject);
         Destroy(transform.Find("OrderTo").gameObject);
         Destroy(gameObject);
@@ -284,6 +288,12 @@ public class PairOrder : MonoBehaviour {
         this.level = level;
         fromScript.level = level;
         toScript.level = level;
+    }
+
+    public void SetColorIndex() {
+        ColorIndex = ColorDictionary.GetColorIndex(OrderID);
+        fromScript.ColorIndex = ColorIndex;
+        toScript.ColorIndex = ColorIndex;
     }
 
     public void SetPrice() {

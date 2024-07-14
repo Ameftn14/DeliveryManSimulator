@@ -31,7 +31,7 @@ public class GeneralManagerBehaviour : MonoBehaviour {
             SingleOrder theTo = theOrder.toScript;
             TimeSpan dueTime = theOrder.GetDeadline();
             Debug.Log("dueTime: " + dueTime);
-            Color color = ColorDictionary.GetColor(theOrder.OrderID);
+            Color color = ColorDictionary.PeekColor(theOrder.ColorIndex);
             displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Restaurant, theFrom.Getpid(), theOrder.OrderID));
             displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Customer, theTo.Getpid(), theOrder.OrderID));
             theProperty.nowCapacity -= 1;
