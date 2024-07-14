@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class OrderDB: MonoBehaviour
 {
     // PairOrder根据OrderID来索引建立字典
-    public Dictionary<int, PairOrder> orderDict = new Dictionary<int, PairOrder>();
+    public Dictionary<int, PairOrder> orderDict = new();
 
     // 声明委托，通过OrderID用于在订单状态发生变化时通知其他对象
     public delegate void OrderStateChangeHandler(int OrderID);
@@ -14,10 +14,7 @@ public class OrderDB: MonoBehaviour
     // 触发事件
     protected virtual void OnOrderStateChanged(int OrderID)
     {
-        if (OrderStateChanged != null)
-        {
-            OrderStateChanged(OrderID);
-        }
+        OrderStateChanged?.Invoke(OrderID);
     }
 
     // 字典的增删查改操作接口
@@ -45,6 +42,11 @@ public class OrderDB: MonoBehaviour
             return orderDict[OrderID];
         }
         return null;
+    }
+
+    public bool IfOrderExist(int OrderID)
+    {
+        return orderDict.ContainsKey(OrderID);
     }
 
     public void UpdateOrder(PairOrder order)

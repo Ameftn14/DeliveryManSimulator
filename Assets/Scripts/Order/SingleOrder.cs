@@ -9,16 +9,16 @@ public class SingleOrder : MonoBehaviour {
     public VirtualClockUI virtualClockUI;
     public GeneralManagerBehaviour generalManager;
     public MapManagerBehaviour mapManager;
-
+    public RingProgress ringProgress;
+    public SpriteRenderer TheICON;
+    public PairOrder parentPairOrder;
+    public SingleOrder brotherSingleOrder;
     public TimeSpan acceptTime;
     public TimeSpan TimeToDeadline;
     public bool visible;
-    public RingProgress ringProgress;
-    //public RingProgress ringProgress; 
-    public PairOrder parentPairOrder;
-    public SingleOrder brotherSingleOrder;
     public int OrderID;
     private bool isLate;
+    public int level;
     public TimeSpan Deadline;
     public PairOrder.State state;
     private int pid;
@@ -30,6 +30,7 @@ public class SingleOrder : MonoBehaviour {
 
     public void Start() {
         ringProgress = transform.Find("Ring").GetComponent<RingProgress>();
+        
         mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
         virtualClockUI = GameObject.Find("Time").GetComponent<VirtualClockUI>();
         parentPairOrder = transform.parent.GetComponent<PairOrder>();

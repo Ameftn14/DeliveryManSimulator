@@ -35,6 +35,7 @@ public class GeneralManagerBehaviour : MonoBehaviour {
             displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Restaurant, theFrom.Getpid(), theOrder.OrderID));
             displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Customer, theTo.Getpid(), theOrder.OrderID));
             theProperty.nowCapacity -= 1;
+            theOrder.playMusic("AcceptVoice");
         } else
             theOrder.OrderNotAccept();
     }
@@ -43,18 +44,17 @@ public class GeneralManagerBehaviour : MonoBehaviour {
     {
         PairOrder theOrder = theOrderDB.orderDict[OrderID];
         if (theOrder.state == PairOrder.State.Accept)
-            theProperty.money -= theOrder.GetPrice();
-        else
-        if (theOrder.state == PairOrder.State.PickUp)
-        {
+            theProperty.money -= theOrder.GetPrice() / 2;
+        else if (theOrder.state == PairOrder.State.PickUp) {
             // displayManager.removeOrder(OrderID, LocationType.Customer);
-            theProperty.money -= theOrder.GetPrice();
+            theProperty.money -= theOrder.GetPrice() / 2;
             // theProperty.nowCapacity += 1;
         }
     }
     public void DistroyOrder(int OrderID) {
         PairOrder theOrder = theOrderDB.orderDict[OrderID];
         theProperty.nowCapacity += 1;
+        theProperty.money -= theOrder.GetPrice();
         if (theOrder.state == PairOrder.State.Accept) {
             SingleOrder theFrom = theOrder.fromScript;
             displayManager.removeOrder(OrderID, LocationType.Restaurant);
@@ -67,23 +67,30 @@ public class GeneralManagerBehaviour : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (theSearchRoad.orderFinished && theSearchRoad.isMoving) {
-            theSearchRoad.isMoving = false;
             SingleOrder theOrder = null;
             PairOrder thePairOrder = theOrderDB.orderDict[theSearchRoad.targetOrderID];
             if (theSearchRoad.targetIsFrom)
                 theOrder = thePairOrder.fromScript;
             else
                 theOrder = thePairOrder.toScript;
-            displayManager.removeOrder(theSearchRoad.targetOrderID, theSearchRoad.targetIsFrom ? LocationType.Restaurant : LocationType.Customer);
+            // change the order's state
             if (theOrder.GetIsFrom()){
                 thePairOrder.OrderPickUp();
             }
             else {
+                if (thePairOrder.state != PairOrder.State.PickUp) {
+                    Debug.Assert(thePairOrder.state == PairOrder.State.Accept);
+                    return;
+                }
+                thePairOrder.playMusic("FinishVoice");
                 thePairOrder.OrderFinished();
                 theProperty.nowCapacity += 1;
-                if (virtualClock.GetTime() < thePairOrder.GetDeadline())
-                    theProperty.money += thePairOrder.GetPrice();
+                theProperty.money += thePairOrder.GetPrice();
             }
+            // update the display
+            displayManager.removeOrder(theSearchRoad.targetOrderID, theSearchRoad.targetIsFrom ? LocationType.Restaurant : LocationType.Customer);
+            // change the player's state
+            theSearchRoad.isMoving = false;
         }
         else {
             OrderInfo theFirstOrder = displayManager.getFirstOrder();
