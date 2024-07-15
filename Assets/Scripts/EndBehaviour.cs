@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEditor;
 
 public class EndBehaviour : MonoBehaviour {
     // Start is called before the first frame update
@@ -14,8 +15,7 @@ public class EndBehaviour : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Q)) {
             Application.Quit();
         } else if (Input.GetKeyDown(KeyCode.R)) {
-            if (GameObject.Find("DeliverymanManager") != null)
-                Destroy(GameObject.Find("DeliverymanManager"));
+            DeliverymanManager.Instance.Reset();
             SceneManager.LoadSceneAsync("SampleScene");
         }
     }

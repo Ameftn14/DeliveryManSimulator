@@ -64,4 +64,20 @@ public class DeliverymanManager : MonoBehaviour {
         inventoryBehaviour.SetCapacity(property.allCapacity);
         inventoryBehaviour.SetOccupiedCnt(property.allCapacity - property.nowCapacity);
     }
+
+    public void Reset() {
+        speed = 10.0f;
+        allCapacity = 3;
+        money = 100;
+        finishedcount = 0;
+        speedUp = 15.0f;
+        timeSlow = 10.0f;
+        speedAvailable = 2;
+        capacityAvailable = 2;
+        speedUpAvailable = 2;
+        timeSlowAvailable = 2;
+        addSpeedUp = 15.0f;
+        addTimeSlow = 10.0f;
+        round = 0;
+    }
 }
