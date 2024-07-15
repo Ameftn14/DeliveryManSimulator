@@ -78,13 +78,15 @@ public class GeneralManagerBehaviour : MonoBehaviour {
             // change the order's state
             if (theOrder.GetIsFrom()){
                 thePairOrder.OrderPickUp();
+                RandomEventManager.Instance.WhenPickUp(thePairOrder.OrderID);
             }
             else {
                 if (thePairOrder.state != PairOrder.State.PickUp) {
                     Debug.Assert(thePairOrder.state == PairOrder.State.Accept);
                     return;
                 }
-                thePairOrder.playMusic("FinishVoice");
+                thePairOrder.playMusic("FinishVoice");              
+                RandomEventManager.Instance.WhenArrive(thePairOrder.OrderID);
                 thePairOrder.OrderFinished();
                 theProperty.nowCapacity += 1;
                 theProperty.money += thePairOrder.GetPrice();
