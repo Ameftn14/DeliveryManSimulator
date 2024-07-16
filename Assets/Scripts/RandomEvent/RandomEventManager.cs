@@ -4,10 +4,11 @@ public class RandomEventManager : MonoBehaviour{
     public static RandomEventManager Instance { get; set; }
 
     public static OrderDB orderDB = null;
+    public static Property property = null;
 
     private void Awake() {
         if (Instance != null && Instance != this) {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         } else {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
@@ -19,6 +20,7 @@ public class RandomEventManager : MonoBehaviour{
 
     void Start() {
         orderDB = GameObject.Find("OrderDB").GetComponent<OrderDB>();
+        property = GameObject.Find("Deliveryman").GetComponent<Property>();
     }
 
     void Update() {
@@ -30,6 +32,7 @@ public class RandomEventManager : MonoBehaviour{
 
     private void LateArriveTo() {
         //扣钱
+        
     }
     private void OnTimeArriveTo() {
         //加钱
