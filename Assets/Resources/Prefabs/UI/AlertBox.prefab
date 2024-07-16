@@ -234,6 +234,8 @@ MonoBehaviour:
   secondsToLive: 0
   canvasGroup: {fileID: 6921852600936829129}
   fadeOutTime: 0.3
+  x: 0
+  y: 0
 --- !u!114 &6894348923292789367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,8 +323,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 214.758, y: 0}
-  m_SizeDelta: {x: 329.516, y: 0}
+  m_AnchoredPosition: {x: 201.445, y: 0}
+  m_SizeDelta: {x: 302.89, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2001511661215062190
 CanvasRenderer:
@@ -473,8 +475,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 214.758, y: 0}
-  m_SizeDelta: {x: 429.516, y: 0}
+  m_AnchoredPosition: {x: 201.445, y: 0}
+  m_SizeDelta: {x: 402.89, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4428841102298898278
 CanvasRenderer:
