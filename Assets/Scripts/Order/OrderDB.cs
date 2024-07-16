@@ -19,7 +19,6 @@ public class OrderDB: MonoBehaviour
     }
     public void Update()
     {
-        Debug.Log("OrderDB"+IsClear());
     }
 
     // 触发事件

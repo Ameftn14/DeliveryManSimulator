@@ -62,9 +62,6 @@ public class PurchaseMenuBehaviour : MonoBehaviour {
     }
 
     void Update() {
-        if(Input.GetKeyDown(KeyCode.P)){
-            Debug.Log("now shopping.shoppingCount in PMB: " + shopping.shoppingCount);
-        }
         if (shopping.shoppingCount <= 0) {
             for (int i = 0; i < purchaseButtons.Length; i++) {
                 purchaseButtons[i].setAvailability(false);

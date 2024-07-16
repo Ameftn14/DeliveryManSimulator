@@ -14,7 +14,7 @@ public class StartCanvasBehaviour : MonoBehaviour
 
     public void ClickStart()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadSceneAsync("SampleScene");
     }
 
     public void ClickExit()
@@ -25,6 +25,10 @@ public class StartCanvasBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            SceneManager.LoadSceneAsync("SampleScene");
+        } else if (Input.GetKeyDown(KeyCode.Q)) {
+            Application.Quit();
+        }
     }
 }

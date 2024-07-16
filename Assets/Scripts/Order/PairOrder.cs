@@ -8,6 +8,7 @@ public class PairOrder : MonoBehaviour {
     public VirtualClockUI virtualClock;
     public GeneralManagerBehaviour generalManager;
     public int OrderID;
+    public int ColorIndex;
     public SingleOrder fromScript;//单个订单:起点
     public SingleOrder toScript;//单个订单:终点
     public int from_pid;
@@ -47,6 +48,9 @@ public class PairOrder : MonoBehaviour {
         WayPointBehaviour from_wp = null;
         WayPointBehaviour to_wp = null;
         bool isSameEdge = false;
+        float mindistance = 15f;
+        float maxdistance = 60f;
+        float tempDistance = 0f; 
         //随机获取两个pid
         do {
             from_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
@@ -56,8 +60,9 @@ public class PairOrder : MonoBehaviour {
         do {
             to_pid = UnityEngine.Random.Range(0, mapManager.GetWayPoints().Count);
             to_wp = mapManager.GetWayPoints()[to_pid].GetComponent<WayPointBehaviour>();
-            isSameEdge = (from_wp.startVid == to_wp.startVid && from_wp.endVid == to_wp.endVid);
-        } while (to_wp.isBusy || to_wp.isResturant == 1 || to_pid == from_pid || isSameEdge);
+            isSameEdge = from_wp.startVid == to_wp.startVid && from_wp.endVid == to_wp.endVid;
+            tempDistance = Vector2.Distance(from_wp.transform.position, to_wp.transform.position);
+        } while (to_wp.isBusy || to_wp.isResturant == 1 || to_pid == from_pid || isSameEdge || tempDistance < mindistance || tempDistance > maxdistance);
 
         mapManager.GetWayPoints()[from_pid].GetComponent<WayPointBehaviour>().BecomeBusy();
         mapManager.GetWayPoints()[to_pid].GetComponent<WayPointBehaviour>().BecomeBusy();
@@ -99,6 +104,8 @@ public class PairOrder : MonoBehaviour {
         SetLevel();
         //设置价格
         SetPrice();
+        //设置颜色
+        SetColorIndex();
         //获取距离
         distance = Vector2.Distance(fromScript.GetPosition(), toScript.GetPosition());
 
@@ -145,6 +152,7 @@ public class PairOrder : MonoBehaviour {
 
     public void DistroyEverything() {
         orderDB.RemoveOrder(OrderID);
+        ColorDictionary.ReleaseColor(ColorIndex);
         Destroy(transform.Find("OrderFrom").gameObject);
         Destroy(transform.Find("OrderTo").gameObject);
         Destroy(gameObject);
@@ -229,8 +237,8 @@ public class PairOrder : MonoBehaviour {
 
     public void OrderLated() {
         isLate = true;
-        fromScript.OrderLated();
-        toScript.OrderLated();
+        // fromScript.OrderLated();
+        // toScript.OrderLated();
     }
 
     //提供一个接口，调用这个接口时，两个singleoreder对象的大小逐渐变大成原来的两倍
@@ -280,6 +288,12 @@ public class PairOrder : MonoBehaviour {
         this.level = level;
         fromScript.level = level;
         toScript.level = level;
+    }
+
+    public void SetColorIndex() {
+        ColorIndex = ColorDictionary.GetColorIndex(OrderID);
+        fromScript.ColorIndex = ColorIndex;
+        toScript.ColorIndex = ColorIndex;
     }
 
     public void SetPrice() {

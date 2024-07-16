@@ -24,7 +24,7 @@ public class PurchaseButtonBehaviour : MonoBehaviour {
         stillAvailable = isAvailable;
         syncDisplay();
     }
-    void Start() {
+    void Awake() {
         button = GetComponent<Button>();
         canvasGroup = GetComponent<CanvasGroup>();
         Debug.Assert(purchaseMenuBehaviour != null);

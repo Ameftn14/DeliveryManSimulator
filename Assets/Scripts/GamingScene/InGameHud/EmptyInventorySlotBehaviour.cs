@@ -17,7 +17,7 @@ public class EmptyInventorySlotBehaviour : MonoBehaviour {
             image.color = new Color(1, 1, 1, 0);
         }
     }
-    void Start() {
+    void Awake() {
         rectTransform = GetComponent<RectTransform>();
         image = GetComponent<Image>();
         position = rectTransform.anchoredPosition;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DeliverymanManager : MonoBehaviour {
@@ -13,19 +14,19 @@ public class DeliverymanManager : MonoBehaviour {
 
     public static int finishedcount = 0;
 
-    public static float speedUp = 25.0f;
-    public static float timeSlow = 25.0f;
+    public static float speedUp = 15.0f;
+    public static float timeSlow = 10.0f;
 
     public static int speedAvailable = 2;
     public static int capacityAvailable = 2;
     public static int speedUpAvailable = 2;
     public static int timeSlowAvailable = 2;
 
-    public static float addSpeedUp = 25.0f;
-    public static float addTimeSlow = 25.0f;
+    public static float addSpeedUp = 15.0f;
+    public static float addTimeSlow = 10.0f;
+    public int round = 0;
 
 
-    private Property property;
     // Start is called before the first frame update
     private void Awake() {
         if (Instance != null && Instance != this) {
@@ -45,7 +46,7 @@ public class DeliverymanManager : MonoBehaviour {
         if (deliveryman == null) {
             return;
         }
-        property = deliveryman.GetComponent<Property>();
+        Property property = deliveryman.GetComponent<Property>();
         if (property == null) {
             return;
         }
@@ -56,6 +57,27 @@ public class DeliverymanManager : MonoBehaviour {
         if (finishedcount != property.finishedcount) {
             finishedcount = property.finishedcount;
         }
-        
+        SearchRoad searchRoad = GameObject.Find("Deliveryman").GetComponent<SearchRoad>();
+        BalanceDiplayBehaviour balanceDiplayBehaviour = GameObject.Find("balance bar").GetComponent<BalanceDiplayBehaviour>();
+        balanceDiplayBehaviour.setBalance(money);
+        InventoryBehaviour inventoryBehaviour = GameObject.Find("inventory").GetComponent<InventoryBehaviour>();
+        inventoryBehaviour.SetCapacity(property.allCapacity);
+        inventoryBehaviour.SetOccupiedCnt(property.allCapacity - property.nowCapacity);
+    }
+
+    public void Reset() {
+        speed = 10.0f;
+        allCapacity = 3;
+        money = 100;
+        finishedcount = 0;
+        speedUp = 15.0f;
+        timeSlow = 10.0f;
+        speedAvailable = 2;
+        capacityAvailable = 2;
+        speedUpAvailable = 2;
+        timeSlowAvailable = 2;
+        addSpeedUp = 15.0f;
+        addTimeSlow = 10.0f;
+        round = 0;
     }
 }

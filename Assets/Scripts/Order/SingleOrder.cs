@@ -16,7 +16,8 @@ public class SingleOrder : MonoBehaviour {
     public TimeSpan TimeToDeadline;
     public bool visible;
     public int OrderID;
-    private bool isLate;
+    public int ColorIndex;
+    // private bool isLate;
     public int level;
     private bool isBig;
     public TimeSpan Deadline;
@@ -64,7 +65,7 @@ public class SingleOrder : MonoBehaviour {
 
             // 如果子对象有 SpriteRenderer 组件，则设置其颜色
             if (spriteRenderer != null) {
-                Color TargetColor = ColorDictionary.GetColor(OrderID);
+                Color TargetColor = ColorDictionary.PeekColor(ColorIndex);
                 spriteRenderer.color = TargetColor;
             } else {
                 Debug.LogError("SpriteRenderer is not assigned!");
@@ -185,9 +186,9 @@ public class SingleOrder : MonoBehaviour {
         }
     }
 
-    public void OrderLated() {
-        isLate = true;
-    }
+    // public void OrderLated() {
+    //     isLate = true;
+    // }
 
     public void OrderFinished() {
         state = PairOrder.State.Finished;

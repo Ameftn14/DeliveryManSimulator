@@ -17,7 +17,7 @@ public class MapManagerBehaviour : MonoBehaviour {
 
     private Dictionary<int, GameObject> vertexObjects = new Dictionary<int, GameObject>();
     private Dictionary<int, Dictionary<int, GameObject>> edgeObjects = new Dictionary<int, Dictionary<int, GameObject>>();
-    private int backgroundId = 1;
+    // private int backgroundId = 1;
 
     // public MapManagerBehaviour()
     // {
@@ -206,20 +206,21 @@ public class MapManagerBehaviour : MonoBehaviour {
         //         Debug.Log("WayPoint: " + pid + " : " + wayPoints[pid].startVid + " -> " + wayPoints[pid].endVid);
         //     }
         // }
-        if (Input.GetKeyDown(KeyCode.M)) {
-            int backgroundCnt = 0;
-            foreach (Transform child in transform) {
-                string name = child.name;
-                if (name.Contains("Background")) {
-                    backgroundCnt++;
-                    if ("Background" + backgroundId == child.name)
-                        child.gameObject.SetActive(true);
-                    else
-                        child.gameObject.SetActive(false);
-                }
-            }
-            backgroundId = (backgroundId + 1) % (backgroundCnt + 1);
-        }
+
+        // if (Input.GetKeyDown(KeyCode.M)) {
+        //     int backgroundCnt = 0;
+        //     foreach (Transform child in transform) {
+        //         string name = child.name;
+        //         if (name.Contains("Background")) {
+        //             backgroundCnt++;
+        //             if ("Background" + backgroundId == child.name)
+        //                 child.gameObject.SetActive(true);
+        //             else
+        //                 child.gameObject.SetActive(false);
+        //         }
+        //     }
+        //     backgroundId = (backgroundId + 1) % (backgroundCnt + 1);
+        // }
     }
     public void LogtoDebug(int index) {
         Debug.Log("MapManagerBehaviour: " + wayPoints[index].pid);

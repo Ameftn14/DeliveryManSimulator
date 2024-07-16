@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class GamingCanvasBehaviour : MonoBehaviour {
     public OrderDB orderDB;
@@ -23,10 +24,22 @@ public class GamingCanvasBehaviour : MonoBehaviour {
     void Update() {
         TimeSpan timespan = virtualClockUI.GetTime();
         // 检测空格键是否被按下
-        if ((orderDB.IsClear() && timespan.Hours >= 10)||Input.GetKeyDown(KeyCode.Space)) {
+        if (orderDB.IsClear() && timespan.Hours >= 19) {
             //Destroy(instance);
             // 加载指定的场景
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Settlement");
+            GameObject Canvas = GameObject.Find("Canvas");
+            GameObject nextDayPanel = Canvas.transform.Find("NextDayPanel").gameObject;
+            nextDayPanel.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.Space) || timespan.Hours >= 21) {
+                DeliverymanManager.Instance.round++;
+                if (DeliverymanManager.Instance.round <= 4) {
+                    SceneManager.LoadSceneAsync("Settlement");
+                } else if (DeliverymanManager.Instance.round == 5) {
+                    SceneManager.LoadSceneAsync("EndScene");
+                } else {
+                    SceneManager.LoadSceneAsync("SampleScene");
+                }
+            }
         }
     }
 }

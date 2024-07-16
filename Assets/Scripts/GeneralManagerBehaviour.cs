@@ -31,7 +31,7 @@ public class GeneralManagerBehaviour : MonoBehaviour {
             SingleOrder theTo = theOrder.toScript;
             TimeSpan dueTime = theOrder.GetDeadline();
             Debug.Log("dueTime: " + dueTime);
-            Color color = ColorDictionary.GetColor(theOrder.OrderID);
+            Color color = ColorDictionary.PeekColor(theOrder.ColorIndex);
             displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Restaurant, theFrom.Getpid(), theOrder.OrderID));
             displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Customer, theTo.Getpid(), theOrder.OrderID));
             theProperty.nowCapacity -= 1;
@@ -44,14 +44,14 @@ public class GeneralManagerBehaviour : MonoBehaviour {
     {
         AudioSource audioSource = GameObject.Find("LateVoice").GetComponent<AudioSource>();
         audioSource.Play();
-        // PairOrder theOrder = theOrderDB.orderDict[OrderID];
-        // if (theOrder.state == PairOrder.State.Accept)
-        //     theProperty.money -= theOrder.GetPrice() / 2;
-        // else if (theOrder.state == PairOrder.State.PickUp) {
-        //     // displayManager.removeOrder(OrderID, LocationType.Customer);
-        //     theProperty.money -= theOrder.GetPrice() / 2;
-        //     // theProperty.nowCapacity += 1;
-        // }
+        PairOrder theOrder = theOrderDB.orderDict[OrderID];
+        if (theOrder.state == PairOrder.State.Accept)
+            theProperty.money -= theOrder.GetPrice() / 2;
+        else if (theOrder.state == PairOrder.State.PickUp) {
+            // displayManager.removeOrder(OrderID, LocationType.Customer);
+            theProperty.money -= theOrder.GetPrice() / 2;
+            // theProperty.nowCapacity += 1;
+        }
     }
     public void DistroyOrder(int OrderID) {
         PairOrder theOrder = theOrderDB.orderDict[OrderID];
@@ -78,13 +78,15 @@ public class GeneralManagerBehaviour : MonoBehaviour {
             // change the order's state
             if (theOrder.GetIsFrom()){
                 thePairOrder.OrderPickUp();
+                RandomEventManager.Instance.WhenPickUp(thePairOrder.OrderID);
             }
             else {
                 if (thePairOrder.state != PairOrder.State.PickUp) {
                     Debug.Assert(thePairOrder.state == PairOrder.State.Accept);
                     return;
                 }
-                thePairOrder.playMusic("FinishVoice");
+                thePairOrder.playMusic("FinishVoice");              
+                RandomEventManager.Instance.WhenArrive(thePairOrder.OrderID);
                 thePairOrder.OrderFinished();
                 theProperty.nowCapacity += 1;
                 theProperty.money += thePairOrder.GetPrice();

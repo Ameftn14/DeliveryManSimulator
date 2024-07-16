@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
@@ -16,8 +17,7 @@ public class SceneControl : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)) {
             //Destroy(instance);
             // 加载指定的场景
-            UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadSceneAsync("SampleScene");
         }
     }
-
 }
