@@ -185,7 +185,7 @@ public class SingleOrder : MonoBehaviour {
     public void OrderPickUp() {
         state = PairOrder.State.PickUp;
         ringProgress.state = PairOrder.State.PickUp;
-        if(isFrom){
+        if(isFrom && !parentPairOrder.isStop){
             SetUnvisible();
         }
     }

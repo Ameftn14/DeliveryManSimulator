@@ -1,9 +1,11 @@
 using UnityEngine;
 using System;
+using System.Xml.Schema;
 
 public class RingProgress : MonoBehaviour
 {
     public TimeSpan ddl;
+    public TimeSpan eventTime;
     public TimeSpan TimeToDeadline;
     public VirtualClockUI virtualClockUI;
     public SpriteRenderer sp_render; // 环形进度条的 SpriteRenderer 组件
@@ -13,9 +15,13 @@ public class RingProgress : MonoBehaviour
     public bool isFrom;
     private float timer = 5f; // 计时器
     public bool shouldDestroy = false;
+    public bool isStop = false;
+    public TimeSpan recoveryTime ;
 
     void Start()
     {
+        isStop = false;
+        TimeSpan eventTime = new(0, 0, 0);
         ddl = transform.parent.GetComponent<SingleOrder>().Deadline;
         virtualClockUI = GameObject.Find("Time").GetComponent<VirtualClockUI>();
         sp_render = GetComponent<SpriteRenderer>();
@@ -33,16 +39,23 @@ public class RingProgress : MonoBehaviour
         shouldDestroy = false;
 
         state = PairOrder.State.NotAccept;
+        recoveryTime = new TimeSpan(0, 0, 0);
     }
 
     void Update()
     {
+
+        SingleOrder parent = transform.parent.GetComponent<SingleOrder>();
         if(isFrom){
             UpdateFrom();
         }
         else{
             UpdateTo();
-        }        
+        }
+        if(isStop && isFrom){
+            recoveryTime = RandomEventManager.Instance.searchRoad.recoveryTime;
+            RingForNotPrepared();
+        }
     }
 
     
@@ -118,5 +131,18 @@ public class RingProgress : MonoBehaviour
             shouldDestroy = true;
         }
     }
-    
+
+    public void RingForNotPrepared(){
+        if(isStop){
+            //变红色
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            spriteRenderer.color = new Color(1f, 0f, 0f);
+            //计算当前进度比例
+            float total = (float)(recoveryTime - RandomEventManager.Instance.NPeventTime).TotalSeconds;
+            float part = (float)(recoveryTime - virtualClockUI.GetTime()).TotalSeconds;
+            float progress = Mathf.Clamp01(part / total);
+            //设置填充比例
+            sp_render.material.SetFloat("_Fill", progress);
+        }
+    }   
 }

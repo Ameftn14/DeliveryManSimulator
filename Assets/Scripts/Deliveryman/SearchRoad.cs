@@ -20,7 +20,7 @@ public class SearchRoad : MonoBehaviour {
     private int currentPathIndex = 0; // 当前路径索引
     public bool isMoving = false;    //when true, start to move
     private bool isStop = false; //event
-    private TimeSpan recoveryTime; //event
+    public TimeSpan recoveryTime; //event
 
     private bool firstBegin = true;
 
@@ -422,10 +422,11 @@ public class SearchRoad : MonoBehaviour {
         return isStop;
     }
 
-    public void FallintoStop(TimeSpan interval) {
+    public int FallintoStop(TimeSpan interval, int OrderID) {
         recoveryTime = VirtualClockUI.Instance.GetTime() + interval;
         realMoveSpeed = 0;
         isStop = true;
+        return OrderID;
     }
 
     public void RecoverFromStop() {

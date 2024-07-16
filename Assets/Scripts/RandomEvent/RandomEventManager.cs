@@ -5,6 +5,10 @@ public class RandomEventManager : MonoBehaviour{
     public static RandomEventManager Instance { get; set; }
     public  Property property = null;
     public SearchRoad searchRoad = null;
+    public TimeSpan NPeventTime;
+    public TimeSpan NPrecoveryTime;
+    public bool Prepared ;
+    public int NotPreID = -1;
 
     private void Awake() {
         if (Instance != null && Instance != this) {
@@ -18,17 +22,43 @@ public class RandomEventManager : MonoBehaviour{
     //改变钱
 
     void Start() {
+        Prepared = true;
+        NPrecoveryTime = new TimeSpan(0, 0, 0);
         property = GameObject.Find("Deliveryman").GetComponent<Property>();
         searchRoad = GameObject.Find("Deliveryman").GetComponent<SearchRoad>();
     }
 
     void Update() {
+        if(!Prepared) {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                OrderDB.Instance.orderDict[NotPreID].NotPreparedTime -= new TimeSpan(0, 1, 0);
+                searchRoad.recoveryTime -= new TimeSpan(0, 1, 0);
+            }
+            if (searchRoad.recoveryTime <= VirtualClockUI.Instance.GetTime()) {
+                FromPrepared(NotPreID);
+            }
+        }
     }
 
-    private void FromNotPrepared() {
+    private void FromNotPrepared(int orderID) {
         //停一会
-        searchRoad.FallintoStop(new TimeSpan(0, 10, 0));
+        Prepared = false;
+        NotPreID = orderID;
+        NPeventTime = VirtualClockUI.Instance.GetTime();
+        NPrecoveryTime = new TimeSpan(0, 20, 0) + VirtualClockUI.Instance.GetTime();
+        searchRoad.FallintoStop(new TimeSpan(0, 20, 0), orderID);
+        OrderDB.Instance.orderDict[orderID].NotPreparedTime = NPrecoveryTime;
+        OrderDB.Instance.orderDict[orderID].SetEventTime(VirtualClockUI.Instance.GetTime());
+        OrderDB.Instance.orderDict[orderID].SetIsStop(true);
         Debug.Log("Fall into stop");
+    }
+
+    public void FromPrepared(int orderID) {
+        NPrecoveryTime = new TimeSpan(0, 0, 0);
+        Prepared = true;
+        OrderDB.Instance.orderDict[orderID].SetIsStop(false);
+        NotPreID = -1;
     }
 
     private void LateArriveTo(int orderID) {
@@ -51,17 +81,17 @@ public class RandomEventManager : MonoBehaviour{
         int random = UnityEngine.Random.Range(0, 100); 
         int threshold;
         if (theOrder.level == 1) {
-            threshold = 15;
+            threshold = 20;
         } 
         else if (theOrder.level == 2) {
-            threshold = 10;
+            threshold = 13;
         } 
         else{
-            threshold = 3;
+            threshold = 7;
         }
 
         if (random < threshold) {
-            FromNotPrepared();
+            FromNotPrepared(orderID);
         }
 
     }

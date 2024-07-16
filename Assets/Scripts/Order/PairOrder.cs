@@ -12,6 +12,7 @@ public class PairOrder : MonoBehaviour {
     public SingleOrder fromScript;//单个订单:起点
     public SingleOrder toScript;//单个订单:终点
     public int from_pid;
+    public TimeSpan NotPreparedTime;
     public int level;
     private int price;
     public int to_pid;
@@ -19,6 +20,8 @@ public class PairOrder : MonoBehaviour {
     public bool isLate;
     public TimeSpan Deadline;
     public TimeSpan AcceptTime;
+    public TimeSpan EventTime;
+    public bool isStop;
     //private TimeSpan PickUpTime;
     public TimeSpan TimeToDeadline;
     private float LifeTime = 5f;//TODO:以下所有liftime都没有提供做修改的接口，待优化
@@ -42,6 +45,8 @@ public class PairOrder : MonoBehaviour {
         state = State.NotAccept;
         TimeToDeadline = new TimeSpan(1, UnityEngine.Random.Range(40, 61), 0);
         AcceptTime = new(0, 0, 0);
+        NotPreparedTime = new(0, 0, 0);
+        isStop = false;
 
         //TODO:这个逻辑待优化
         Deadline = virtualClock.GetTime().Add(TimeToDeadline);
@@ -148,6 +153,10 @@ public class PairOrder : MonoBehaviour {
                 OrderLated();
                 isLate = true;
             }
+        }
+
+        if(isStop){ 
+            RingForNotPrepared();
         }
     }
 
@@ -329,6 +338,23 @@ public class PairOrder : MonoBehaviour {
         Debug.Assert(music != null);
         music.GetComponent<AudioSource>().PlayOneShot(music.GetComponent<AudioSource>().clip);
     }
+
+    public void RingForNotPrepared() {
+        fromScript.ringProgress.recoveryTime = NotPreparedTime;        
+    }
+
+    public void SetEventTime(TimeSpan time) {
+        EventTime = time;
+        fromScript.ringProgress.eventTime = time;
+    }
+
+    public void SetIsStop(bool isStop){
+        this.isStop = isStop;
+        fromScript.ringProgress.isStop = isStop;
+        if(!isStop){
+            fromScript.SetUnvisible();
+        }
+    } 
 
     public void MouseEnter() {
         //TODO:接口
