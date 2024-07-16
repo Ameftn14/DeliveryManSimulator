@@ -44,7 +44,7 @@ public class EndBehaviour : MonoBehaviour {
                 score = "SSS";
             }
         }
-        StatBoardBehaviour.Instance.AppendStatEntry("Money: ", DeliverymanManager.money.ToString());
+        StatBoardBehaviour.Instance.AppendStatEntry("You Have Earned: ", "$" + DeliverymanManager.money.ToString());
         StatBoardBehaviour.Instance.AppendStatEntry("Finished Order: ", DeliverymanManager.finishedcount.ToString());
         StatBoardBehaviour.Instance.AppendStatEntry("Late Order: ", DeliverymanManager.latecount.ToString());
         StatBoardBehaviour.Instance.AppendStatEntry("Bad Order: ", DeliverymanManager.badcount.ToString());
