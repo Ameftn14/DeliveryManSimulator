@@ -32,8 +32,8 @@ public class GeneralManagerBehaviour : MonoBehaviour {
             TimeSpan dueTime = theOrder.GetDeadline();
             //Debug.Log("dueTime: " + dueTime);
             Color color = ColorDictionary.PeekColor(theOrder.ColorIndex);
-            displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Restaurant, theFrom.Getpid(), theOrder.OrderID));
-            displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Customer, theTo.Getpid(), theOrder.OrderID));
+            displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Restaurant, theFrom.Getpid(), theOrder.OrderID, theOrder.GetPrice()));
+            displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Customer, theTo.Getpid(), theOrder.OrderID, theOrder.GetPrice()));
             theProperty.nowCapacity -= 1;
             theOrder.playMusic("AcceptVoice");
         } else

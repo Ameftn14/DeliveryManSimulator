@@ -70,12 +70,15 @@ public class OrderInfo {
     public readonly LocationType locationType;
     public readonly int pid;
     public readonly int orderID;
-    public OrderInfo(TimeSpan dueTime, Color color, LocationType locationType, int pid, int orderID) {
+
+    public readonly int price;
+    public OrderInfo(TimeSpan dueTime, Color color, LocationType locationType, int pid, int orderID, int price) {
         this.dueTime = dueTime;
         this.color = color;
         this.locationType = locationType;
         this.pid = pid;
         this.orderID = orderID;
+        this.price = price;
     }
 }
 

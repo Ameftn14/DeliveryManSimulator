@@ -13,8 +13,8 @@ public class MenuViewTest : MonoBehaviour {
     public void add() {
         Color color = ColorDictionary.GetColor(n);
         TimeSpan dueTime = VirtualClockUI.Instance.GetTime().Add(new TimeSpan(2, 0, 0));
-        OrderInfo restInfo = new OrderInfo(dueTime, color, LocationType.Restaurant, n, n);
-        OrderInfo custInfo = new OrderInfo(dueTime, color, LocationType.Customer, n, n);
+        OrderInfo restInfo = new OrderInfo(dueTime, color, LocationType.Restaurant, n, n, 0);
+        OrderInfo custInfo = new OrderInfo(dueTime, color, LocationType.Customer, n, n, 0);
         ItemModel restItem = OrderItemBehaviour.spawnNewRestaurantOrderItem(restInfo);
         ItemModel custItem = OrderItemBehaviour.spawnNewCustomerOrderItem(custInfo);
         restItem.gameObject.name = "Item " + n++;
