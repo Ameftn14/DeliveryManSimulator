@@ -49,7 +49,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _amount: 0.336
+    - _amount: 0.298
     - _trans: 2.52
     m_Colors: []
   m_BuildTextureStacks: []
