@@ -6,11 +6,13 @@ using UnityEngine;
 using System;
 
 public class Shopping : MonoBehaviour {
-    private float addSpeed = 10.0f;
+    private float addSpeed = 5.0f;
     private int addCapacity = 1;
     private float addSpeedUp = 15.0f;
-    private float addTimeSlow = 10.0f;
+    private float addTimeSlow = 25.0f;
     public int shoppingCount = 2;
+
+    public int cost = 50;
     // private float speed = DeliverymanManager.speed;
     // private int allCapacity = DeliverymanManager.allCapacity;
     // private int money = DeliverymanManager.money;
@@ -35,40 +37,40 @@ public class Shopping : MonoBehaviour {
         // TempararySpeedBoost,
         // TempararyTimeSlow
         bool tempSpeedIsAvailable;
-        if (DeliverymanManager.speedAvailable > 0) {
+        if (DeliverymanManager.speedAvailable > 0 && DeliverymanManager.money > cost) {
             tempSpeedIsAvailable = true;
         } else {
             tempSpeedIsAvailable = false;
         }
-        options.Add(new UpgradeOption(UpgradeType.PermanentSpeedBoost,tempSpeedIsAvailable));
+        options.Add(new UpgradeOption(UpgradeType.PermanentSpeedBoost, tempSpeedIsAvailable));
 
 
-        
+
         bool tempCapacityIsAvailable;
-        if (DeliverymanManager.capacityAvailable > 0) {
+        if (DeliverymanManager.capacityAvailable > 0 && DeliverymanManager.money > cost) {
             tempCapacityIsAvailable = true;
         } else {
             tempCapacityIsAvailable = false;
         }
-        options.Add(new UpgradeOption(UpgradeType.BiggerStorage,tempCapacityIsAvailable));
+        options.Add(new UpgradeOption(UpgradeType.BiggerStorage, tempCapacityIsAvailable));
 
 
-        
+
         bool tempSpeedUpIsAvailable;
-        if (DeliverymanManager.speedUpAvailable > 0) {
+        if (DeliverymanManager.speedUpAvailable > 0 && DeliverymanManager.money > cost) {
             tempSpeedUpIsAvailable = true;
         } else {
             tempSpeedUpIsAvailable = false;
         }
-        options.Add(new UpgradeOption(UpgradeType.TempararySpeedBoost,tempSpeedUpIsAvailable));
+        options.Add(new UpgradeOption(UpgradeType.TempararySpeedBoost, tempSpeedUpIsAvailable));
 
         bool tempTimeSlowIsAvailable;
-        if (DeliverymanManager.timeSlowAvailable > 0) {
+        if (DeliverymanManager.timeSlowAvailable > 0 && DeliverymanManager.money > cost) {
             tempTimeSlowIsAvailable = true;
         } else {
             tempTimeSlowIsAvailable = false;
         }
-        options.Add(new UpgradeOption(UpgradeType.TempararyTimeSlow,tempTimeSlowIsAvailable));
+        options.Add(new UpgradeOption(UpgradeType.TempararyTimeSlow, tempTimeSlowIsAvailable));
 
 
         //initOptions(options);
@@ -93,31 +95,35 @@ public class Shopping : MonoBehaviour {
         UpgradeType type = option.type;
         switch (type) {
             case UpgradeType.PermanentSpeedBoost:
-                if (shoppingCount > 0) {
+                if (shoppingCount > 0 && DeliverymanManager.money > 0) {
                     DeliverymanManager.speed += addSpeed;
                     DeliverymanManager.speedAvailable--;
                     shoppingCount--;
+                    DeliverymanManager.money -= cost;
                 }
                 break;
             case UpgradeType.BiggerStorage:
-                if (shoppingCount > 0) {
+                if (shoppingCount > 0 && DeliverymanManager.money > 0) {
                     DeliverymanManager.allCapacity += addCapacity;
                     DeliverymanManager.capacityAvailable--;
                     shoppingCount--;
+                    DeliverymanManager.money -= cost;
                 }
                 break;
             case UpgradeType.TempararyTimeSlow:
-                if (shoppingCount > 0) {
+                if (shoppingCount > 0 && DeliverymanManager.money > 0) {
                     DeliverymanManager.timeSlow += addTimeSlow;
                     DeliverymanManager.timeSlowAvailable--;
                     shoppingCount--;
+                    DeliverymanManager.money -= cost;
                 }
                 break;
             case UpgradeType.TempararySpeedBoost:
-                if (shoppingCount > 0) {
+                if (shoppingCount > 0 && DeliverymanManager.money > 0) {
                     DeliverymanManager.speedUp += addSpeedUp;
                     DeliverymanManager.speedUpAvailable--;
                     shoppingCount--;
+                    DeliverymanManager.money -= cost;
                 }
                 break;
             default:
@@ -132,6 +138,6 @@ public class Shopping : MonoBehaviour {
         }
         Debug.Log("Now shoppingCount: " + shoppingCount + " Money: " + DeliverymanManager.money);
     }
-    
+
 
 }

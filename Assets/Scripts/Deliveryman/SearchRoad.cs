@@ -106,7 +106,7 @@ public class SearchRoad : MonoBehaviour {
             else
                 audio.pitch = 0.5f;
             Time.timeScale = 0.2f;
-            realTimeSlow = Mathf.Max(0, realTimeSlow - 5 * decreaseSpeedPerSecond * Time.deltaTime);
+            realTimeSlow = Mathf.Max(0, realTimeSlow - 2 * decreaseSpeedPerSecond * Time.deltaTime);
         } else {
             if (audio.pitch < 1)
                 audio.pitch *= 1.01f;
@@ -205,6 +205,7 @@ public class SearchRoad : MonoBehaviour {
                         //Debug.Log("Reach the final wayPoint");
                         //property.increaseFinishedCount();
                         orderFinished = true;
+                        DeliverymanManager.finishedcount ++;
                     }
                     routeManager.playerHidePath();
                 } else {
