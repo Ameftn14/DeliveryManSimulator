@@ -8,9 +8,9 @@ public class FilledInventorySlotBehaviour : MonoBehaviour {
     [SerializeField] private Image image;
     void syncDisplay() {
         if (isOccupied) {
-            image.color = new Color(1, 1, 1, 1);
+            image.color = new Color(image.color.r, image.color.g, image.color.b, 1);
         } else {
-            image.color = new Color(1, 1, 1, 0);
+            image.color = new Color(image.color.r, image.color.g, image.color.b, 0);
         }
     }
     void Awake() {
