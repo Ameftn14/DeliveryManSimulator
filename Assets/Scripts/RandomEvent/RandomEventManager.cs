@@ -3,9 +3,7 @@ using System;
 
 public class RandomEventManager : MonoBehaviour{
     public static RandomEventManager Instance { get; set; }
-
-    public static OrderDB orderDB = null;
-    public static Property property = null;
+    public  Property property = null;
     public SearchRoad searchRoad = null;
 
     private void Awake() {
@@ -13,7 +11,7 @@ public class RandomEventManager : MonoBehaviour{
             Destroy(gameObject);
         } else {
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(gameObject);
         }
     }
     //需要接口：pickup, finish状态变化
@@ -21,7 +19,6 @@ public class RandomEventManager : MonoBehaviour{
     //改变钱
 
     void Start() {
-        orderDB = GameObject.Find("OrderDB").GetComponent<OrderDB>();
         property = GameObject.Find("Deliveryman").GetComponent<Property>();
         searchRoad = GameObject.Find("Deliveryman").GetComponent<SearchRoad>();
     }
@@ -37,20 +34,20 @@ public class RandomEventManager : MonoBehaviour{
 
     private void LateArriveTo(int orderID) {
         //扣钱
-        PairOrder theOrder = orderDB.orderDict[orderID];
+        PairOrder theOrder = OrderDB.Instance.orderDict[orderID];
         theOrder.SetPrice(theOrder.GetPrice() * 2 / 3);
         Debug.Log("Late arrive to");
     }
     private void OnTimeArriveTo(int orderID) {
         //加钱
-        PairOrder theOrder = orderDB.orderDict[orderID];
+        PairOrder theOrder = OrderDB.Instance.orderDict[orderID];
         theOrder.SetPrice(theOrder.GetPrice() * 4 / 3);
         Debug.Log("On time arrive to");
     }
 
     public void WhenPickUp(int orderID) {
         //看这个订单的level
-        PairOrder theOrder = orderDB.orderDict[orderID];
+        PairOrder theOrder = OrderDB.Instance.orderDict[orderID];
         //随机生成1-100的数
         int random = UnityEngine.Random.Range(0, 100); 
         int threshold;
@@ -71,7 +68,7 @@ public class RandomEventManager : MonoBehaviour{
     }
 
     public void WhenArrive(int orderID) {
-        PairOrder theOrder = orderDB.orderDict[orderID];
+        PairOrder theOrder = OrderDB.Instance.orderDict[orderID];
         int random = UnityEngine.Random.Range(0, 100);
         int threshold;
         if (theOrder.GetIsLate()) {
