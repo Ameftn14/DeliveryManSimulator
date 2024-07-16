@@ -96,6 +96,10 @@ public class SingleOrder : MonoBehaviour {
             SetAcceptTime(virtualClockUI.GetTime());
             brotherSingleOrder.SetAcceptTime(virtualClockUI.GetTime());
             generalManager.DBConfirmOrder(OrderID);
+        } else if (state == PairOrder.State.Accept && isFrom) {
+            generalManager.SetFirstOrder(OrderID, isFrom);
+        } else if (state == PairOrder.State.PickUp && !isFrom) {
+            generalManager.SetFirstOrder(OrderID, isFrom);
         }
         //StartCoroutine(SizeUpAndDown());
     }

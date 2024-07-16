@@ -55,8 +55,16 @@ public class AcceptedUnfinishedOrderDisplayManager : MonoBehaviour {
             }
         }
     }
-
-
+    public void SetFirstOrder(int orderID, bool isFrom) {
+        int size = menuView.getSize();
+        for (int i = 0; i < size; i++) {
+            OrderItemBehaviour itemModel = (OrderItemBehaviour)menuView.getItemAt(i);
+            if (itemModel.getOrderInfo().orderID == orderID && itemModel.getOrderInfo().locationType == (isFrom ? LocationType.Restaurant : LocationType.Customer)) {
+                menuView.setItemAsFirst(i);
+                return;
+            }
+        }
+    }
 }
 
 public enum LocationType {

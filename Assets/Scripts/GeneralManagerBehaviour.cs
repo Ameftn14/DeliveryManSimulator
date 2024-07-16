@@ -66,6 +66,10 @@ public class GeneralManagerBehaviour : MonoBehaviour {
         return;
     }
 
+    public void SetFirstOrder(int OrderID, bool isFrom) {
+        displayManager.SetFirstOrder(OrderID, isFrom);
+    }
+
     // Update is called once per frame
     void Update() {
         if (theSearchRoad.orderFinished && theSearchRoad.isMoving) {

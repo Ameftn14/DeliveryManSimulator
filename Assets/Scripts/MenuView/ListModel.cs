@@ -60,4 +60,9 @@ public class ListModel : MonoBehaviour {
         if (index < 0 || index >= items.Count) return null;
         return items[index];
     }
+    public void setItemToTop(int index) {
+        for (int i = index; i > 0; i--) {
+            swap(i, i - 1);
+        }
+    }
 }

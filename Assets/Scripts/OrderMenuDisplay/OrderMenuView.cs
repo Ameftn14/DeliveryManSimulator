@@ -24,4 +24,8 @@ public class OrderMenuView : MonoBehaviour {
     public ItemModel getItemAt(int index) {
         return listModel.getItemAt(index);
     }
+
+    public void setItemAsFirst(int index) {
+        listModel.setItemToTop(index);
+    }
 }
