@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 8650547892333670407}
   - component: {fileID: 6894348923292789367}
   - component: {fileID: 9024882028849600651}
+  - component: {fileID: 6921852600936829129}
   m_Layer: 5
   m_Name: AlertBox
   m_TagString: Untagged
@@ -200,7 +201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 2403db289fe13dd4292aba1341a1e778, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -231,6 +232,8 @@ MonoBehaviour:
   title: {fileID: 4916087537321728978}
   content: {fileID: 6939674267489363627}
   secondsToLive: 0
+  canvasGroup: {fileID: 6921852600936829129}
+  fadeOutTime: 0.3
 --- !u!114 &6894348923292789367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,6 +274,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!225 &6921852600936829129
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7411084917537767376}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7877213130173014214
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,8 +321,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 255.4375, y: 0}
-  m_SizeDelta: {x: 410.875, y: 0}
+  m_AnchoredPosition: {x: 214.758, y: 0}
+  m_SizeDelta: {x: 329.516, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2001511661215062190
 CanvasRenderer:
@@ -347,8 +362,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4291743438
-  m_fontColor: {r: 0.8066038, g: 0.8066038, b: 0.8066038, a: 1}
+    rgba: 4293125091
+  m_fontColor: {r: 0.8915094, g: 0.8915094, b: 0.8915094, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -435,7 +450,7 @@ GameObject:
   - component: {fileID: 6161440688359466896}
   - component: {fileID: 4867928076067458155}
   m_Layer: 5
-  m_Name: pannel
+  m_Name: panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -458,8 +473,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 255.4375, y: 0}
-  m_SizeDelta: {x: 510.875, y: 0}
+  m_AnchoredPosition: {x: 214.758, y: 0}
+  m_SizeDelta: {x: 429.516, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4428841102298898278
 CanvasRenderer:

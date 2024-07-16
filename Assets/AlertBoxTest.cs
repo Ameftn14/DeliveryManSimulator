@@ -9,6 +9,7 @@ public class AlertBoxTest : MonoBehaviour {
         string title = "Title";
         string content = "Content";
         float secondsToLive = 5;
-        AlertBoxBehaviour.ShowAlert(title, content, secondsToLive);
+        AlertBoxBehaviour.ShowAlertAtMiddle(title, content, secondsToLive);
+        AlertBoxBehaviour.ShowAlertAtBottomRight(title, content, secondsToLive);
     }
 }

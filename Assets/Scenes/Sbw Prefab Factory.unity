@@ -17722,10 +17722,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AlertBox
       objectReference: {fileID: 0}
-    - target: {fileID: 7543967741795334689, guid: 2684346330e91b345a5e70aadf036609, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 9072558142867242445, guid: 2684346330e91b345a5e70aadf036609, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
