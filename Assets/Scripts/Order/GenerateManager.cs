@@ -6,7 +6,7 @@ public class GeneratorManager : MonoBehaviour
     public MapManagerBehaviour mapManager; // 地图管理器
     public VirtualClockUI virtualClock; // 虚拟时钟
     public OrderDB orderDB; // 订单数据库
-    public float interval = 8f; // 计时器持续时间，单位秒
+    public float interval = 6.0f; // 计时器持续时间，单位秒
     public int quantity = 1; // 订单数量
     private float timer; // 计时器
     public TimeSpan cutoffTime; // 结算时间

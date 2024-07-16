@@ -194,15 +194,15 @@ public static class OrderRefreshRate {
                     probabilityBound = 30;
                     break;
                 case 1:
-                case 2:
                     baseInterval = 3.0f;
                     probabilityBound = 35;
                     break;
+                case 2:
                 case 3:
-                case 4:
                     baseInterval = 2.5f;
                     probabilityBound = 40;
                     break;
+                case 4:
                 default:
                     baseInterval = 2.0f;
                     probabilityBound = 45;
@@ -223,18 +223,18 @@ public static class OrderRefreshRate {
         } else {
             switch (DeliverymanManager.Instance.round) {
                 case 0:
-                    baseInterval = 5.0f;
-                    break;
-                case 1:
-                case 2:
                     baseInterval = 4.5f;
                     break;
-                case 3:
-                case 4:
+                case 1:
                     baseInterval = 4.0f;
                     break;
-                default:
+                case 2:
+                case 3:
                     baseInterval = 3.5f;
+                    break;
+                case 4:
+                default:
+                    baseInterval = 3.0f;
                     break;
             }
             // 非高峰期，根据概率决定 quality 的值

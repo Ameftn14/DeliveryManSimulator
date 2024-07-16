@@ -30,9 +30,6 @@ public class Property : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Q)) {
-            //Debug.Log("In Property: speed:" + speed + "allCapacity:" + allCapacity + "speedup:" + speedUp + "timeSlow:" + timeSlow + "money:" + money);
-        }
 
         SearchRoad searchRoad = GameObject.Find("Deliveryman").GetComponent<SearchRoad>();
         BalanceDiplayBehaviour balanceDiplayBehaviour = GameObject.Find("balance bar").GetComponent<BalanceDiplayBehaviour>();

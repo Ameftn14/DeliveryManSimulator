@@ -27,9 +27,11 @@ public class GamingCanvasBehaviour : MonoBehaviour {
         if (orderDB.IsClear() && timespan.Hours >= 19) {
             //Destroy(instance);
             // 加载指定的场景
-            TutorialManagerBehaviour.Skip();
+            if (TutorialManagerBehaviour.skip == false)
+                TutorialManagerBehaviour.Skip();
             if (Input.GetKeyDown(KeyCode.Space) || timespan.Hours >= 21) {
                 DeliverymanManager.Instance.round++;
+                TutorialManagerBehaviour.skip = false;
                 if (DeliverymanManager.Instance.round <= 4) {
                     SceneManager.LoadSceneAsync("Settlement");
                 } else if (DeliverymanManager.Instance.round == 5) {

@@ -10,32 +10,34 @@ public class TutorialManagerBehaviour : MonoBehaviour {
     public static bool sortlist = false;
     public static bool speedup = false;
     public static bool timeslow = false;
+    public static bool skip = false;
 
     public static void AddList() {
         addlist = true;
-        AlertBoxBehaviour.ShowAlertAtBottomLeft2("Tutorial: Accept", "Click icon on the map", 5);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Tutorial: Accept", "Click icon on the map", 5);
     }
 
     public static void SortList() {
         sortlist = true;
-        AlertBoxBehaviour.ShowAlertAtBottomLeft("Sort", "Click icon to go there or drag to sort in the list", 5);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft2("Sort", "Click icon to go there or drag to sort in the list", 5);
     }
 
     public static void SpeedUp() {
         speedup = true;
-        AlertBoxBehaviour.ShowAlertAtBottomLeft("Speed Up", "Hold LShift to speed up", 5);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft3("Speed Up", "Hold LShift to speed up", 5);
     }
 
     public static void TimeSlow() {
         timeslow = true;
-        AlertBoxBehaviour.ShowAlertAtBottomLeft("Time Slow", "Hold LCtrl to slow down time and choose", 5);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft3("Time Slow", "Hold LCtrl to slow down time and choose", 5);
     }
 
     public static void NotAccept() {
-        AlertBoxBehaviour.ShowAlertAtBottomLeft2("Full Bag", "Remember to upgrade your bag size", 5);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Full Bag", "Remember to upgrade your bag size", 5);
     }
 
     public static void Skip() {
+        skip = true;
         AlertBoxBehaviour.ShowAlertAtMiddle("PRESS SPACE", "Go to the next level", 20);
     }
 
