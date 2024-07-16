@@ -6,10 +6,10 @@ using UnityEngine;
 using System;
 
 public class Shopping : MonoBehaviour {
-    private float addSpeed = 10.0f;
+    private float addSpeed = 5.0f;
     private int addCapacity = 1;
     private float addSpeedUp = 15.0f;
-    private float addTimeSlow = 10.0f;
+    private float addTimeSlow = 25.0f;
     public int shoppingCount = 2;
     // private float speed = DeliverymanManager.speed;
     // private int allCapacity = DeliverymanManager.allCapacity;
@@ -97,6 +97,7 @@ public class Shopping : MonoBehaviour {
                     DeliverymanManager.speed += addSpeed;
                     DeliverymanManager.speedAvailable--;
                     shoppingCount--;
+                    DeliverymanManager.money -=100;
                 }
                 break;
             case UpgradeType.BiggerStorage:
@@ -104,6 +105,7 @@ public class Shopping : MonoBehaviour {
                     DeliverymanManager.allCapacity += addCapacity;
                     DeliverymanManager.capacityAvailable--;
                     shoppingCount--;
+                    DeliverymanManager.money -=100;
                 }
                 break;
             case UpgradeType.TempararyTimeSlow:
@@ -111,6 +113,7 @@ public class Shopping : MonoBehaviour {
                     DeliverymanManager.timeSlow += addTimeSlow;
                     DeliverymanManager.timeSlowAvailable--;
                     shoppingCount--;
+                    DeliverymanManager.money -=100;
                 }
                 break;
             case UpgradeType.TempararySpeedBoost:
@@ -118,6 +121,7 @@ public class Shopping : MonoBehaviour {
                     DeliverymanManager.speedUp += addSpeedUp;
                     DeliverymanManager.speedUpAvailable--;
                     shoppingCount--;
+                    DeliverymanManager.money -=100;
                 }
                 break;
             default:

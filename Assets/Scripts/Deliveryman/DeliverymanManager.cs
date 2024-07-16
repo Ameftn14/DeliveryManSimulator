@@ -15,7 +15,7 @@ public class DeliverymanManager : MonoBehaviour {
     public static int finishedcount = 0;
 
     public static float speedUp = 15.0f;
-    public static float timeSlow = 10.0f;
+    public static float timeSlow = 25.0f;
 
     public static int speedAvailable = 2;
     public static int capacityAvailable = 2;
@@ -23,7 +23,7 @@ public class DeliverymanManager : MonoBehaviour {
     public static int timeSlowAvailable = 2;
 
     public static float addSpeedUp = 15.0f;
-    public static float addTimeSlow = 10.0f;
+    public static float addTimeSlow = 25.0f;
     public int round = 0;
 
 
@@ -71,13 +71,13 @@ public class DeliverymanManager : MonoBehaviour {
         money = 100;
         finishedcount = 0;
         speedUp = 15.0f;
-        timeSlow = 10.0f;
+        timeSlow = 25.0f;
         speedAvailable = 2;
         capacityAvailable = 2;
         speedUpAvailable = 2;
         timeSlowAvailable = 2;
         addSpeedUp = 15.0f;
-        addTimeSlow = 10.0f;
+        addTimeSlow = 25.0f;
         round = 0;
     }
 }
