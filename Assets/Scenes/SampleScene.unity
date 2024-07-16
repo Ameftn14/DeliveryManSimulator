@@ -5752,6 +5752,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TmpTutorialText
       objectReference: {fileID: 0}
+    - target: {fileID: 7126974413960584926, guid: eebd6066e00522d46951807a4ba61cea, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

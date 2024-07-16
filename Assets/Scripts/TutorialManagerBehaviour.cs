@@ -13,36 +13,26 @@ public class TutorialManagerBehaviour : MonoBehaviour {
 
     public static void AddList() {
         addlist = true;
-        GameObject Text = GameObject.Find("TmpTutorialText");
-        Debug.Assert(Text != null);
-        Text.GetComponent<TMP_Text>().text = "Click icon on the map to accept order";
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Tutorial:Accept", "Click icon on the map", 5);
     }
 
     public static void SortList() {
         sortlist = true;
-        GameObject Text = GameObject.Find("TmpTutorialText");
-        Debug.Assert(Text != null);
-        Text.GetComponent<TMP_Text>().text = "Click the icon on the map to go somewhere first\n Or drag item in the list to sort";
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Tutorial:Sort", "Click icon to go there, or drag to sort in the list", 5);
     }
 
     public static void SpeedUp() {
         speedup = true;
-        GameObject Text = GameObject.Find("TmpTutorialText");
-        Debug.Assert(Text != null);
-        Text.GetComponent<TMP_Text>().text = "You are late! hold LShift to use SpeedUp skill!";
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Tutorial:Speed Up", "Hold LShift to speed up", 5);
     }
 
     public static void TimeSlow() {
         timeslow = true;
-        GameObject Text = GameObject.Find("TmpTutorialText");
-        Debug.Assert(Text != null);
-        Text.GetComponent<TMP_Text>().text = "Hold LCtrl to slowdown time and choose carefully!";
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Tutorial:Time Slow", "Hold LCtrl to slow down time, and then choose wisely", 5);
     }
 
     public static void Skip() {
-        GameObject Text = GameObject.Find("TmpTutorialText");
-        Debug.Assert(Text != null);
-        Text.GetComponent<TMP_Text>().text = "Press Space to Go to Next Level";
+        AlertBoxBehaviour.ShowAlertAtMiddle("Press Space", "Go to the next level", 20);
     }
 
     // Start is called before the first frame update
