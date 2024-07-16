@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Data.Common;
 using UnityEngine;
 
 public class PurchaseMenuBehaviour : MonoBehaviour {
@@ -48,8 +47,6 @@ public class PurchaseMenuBehaviour : MonoBehaviour {
         upgradeOptions = new UpgradeOption[purchaseButtons.Length];
         // bool isAvailable = true;
         //TODO 填入真正的isAvailable值
-        Debug.Log("purchaseButtons.Length"+purchaseButtons.Length);
-        Debug.Log("shopping.options.Length"+shopping.options.Count);
         for (int i = 0; i < purchaseButtons.Length; i++) {
             upgradeOptions[i] = new UpgradeOption((UpgradeType)i, shopping.options[i].isAvailable);
             purchaseButtons[i].init(upgradeOptions[i]);

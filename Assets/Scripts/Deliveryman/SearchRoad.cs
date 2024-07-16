@@ -44,9 +44,6 @@ public class SearchRoad : MonoBehaviour {
     public float timeSlowPercentage;
     private float decreaseSpeedPerSecond = 5.0f; // 每秒减少速度
 
-
-    //public float realMoveSpeed;
-
     // Start is called before the first frame update
     void Start() {
         if (lineRenderer == null) {
@@ -88,7 +85,6 @@ public class SearchRoad : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        float realMoveSpeed = 0;
         AudioSource audio = GameObject.Find("Camera").GetComponent<AudioSource>();
 
         if(recoveryTime != new TimeSpan(0, 0, 0)) {
@@ -110,14 +106,13 @@ public class SearchRoad : MonoBehaviour {
             else
                 audio.pitch = 0.5f;
             Time.timeScale = 0.2f;
-            realTimeSlow = Mathf.Max(0, realTimeSlow - 2 * decreaseSpeedPerSecond * Time.deltaTime);
+            realTimeSlow = Mathf.Max(0, realTimeSlow - 5 * decreaseSpeedPerSecond * Time.deltaTime);
         } else {
             if (audio.pitch < 1)
                 audio.pitch *= 1.01f;
             else
                 audio.pitch = 1;
             Time.timeScale = 1;
-            //realTimeSlow = Mathf.Max(property.speedUp, realTimeSlow + 5 * decreaseSpeedPerSecond * Time.deltaTime);
         }
 
 
@@ -137,8 +132,6 @@ public class SearchRoad : MonoBehaviour {
 
         speedUpPercentage = realSpeedUp / DeliverymanManager.addSpeedUp;
         timeSlowPercentage = realTimeSlow / DeliverymanManager.addTimeSlow;
-
-
 
         int switcher = 0;
         if (wayPoints.ContainsKey(targetwaypoint)) switcher += 4;
@@ -212,7 +205,6 @@ public class SearchRoad : MonoBehaviour {
                         //Debug.Log("Reach the final wayPoint");
                         //property.increaseFinishedCount();
                         orderFinished = true;
-                        DeliverymanManager.finishedcount ++;
                     }
                     routeManager.playerHidePath();
                 } else {
