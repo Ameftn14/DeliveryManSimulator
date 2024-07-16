@@ -16,16 +16,16 @@ public class DeliverymanManager : MonoBehaviour {
     public static int latecount = 0;
     public static int badcount = 0;
 
-    public static float speedUp = 10.0f;
-    public static float timeSlow = 15.0f;
+    public static float speedUp = 15.0f;
+    public static float timeSlow = 10.0f;
 
     public static int speedAvailable = 2;
     public static int capacityAvailable = 2;
     public static int speedUpAvailable = 2;
     public static int timeSlowAvailable = 2;
 
-    public static float addSpeedUp = 10.0f;
-    public static float addTimeSlow = 15.0f;
+    public static float addSpeedUp = 15.0f;
+    public static float addTimeSlow = 10.0f;
     public int round = 0;
 
 
@@ -86,8 +86,8 @@ public class DeliverymanManager : MonoBehaviour {
         capacityAvailable = 2;
         speedUpAvailable = 2;
         timeSlowAvailable = 2;
-        addSpeedUp = 10.0f;
-        addTimeSlow = 15.0f;
+        addSpeedUp = 15.0f;
+        addTimeSlow = 10.0f;
         round = 0;
     }
 }

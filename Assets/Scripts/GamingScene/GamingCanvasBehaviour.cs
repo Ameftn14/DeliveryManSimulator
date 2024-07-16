@@ -10,6 +10,7 @@ using Unity.VisualScripting;
 public class GamingCanvasBehaviour : MonoBehaviour {
     public OrderDB orderDB;
     public VirtualClockUI virtualClockUI;
+    public bool isChanging = false;
 
     //public GameObject PurchaseMenu;
     //private bool isMenuVisible = false; // 用于追踪菜单是否可见
@@ -24,13 +25,14 @@ public class GamingCanvasBehaviour : MonoBehaviour {
     void Update() {
         TimeSpan timespan = virtualClockUI.GetTime();
         // 检测空格键是否被按下
-        if (orderDB.IsClear() && timespan.Hours >= 19) {
+        if (orderDB.IsClear() && timespan.Hours >= 19 && !isChanging) {
             //Destroy(instance);
             // 加载指定的场景
             if (TutorialManagerBehaviour.skip == false)
                 TutorialManagerBehaviour.Skip();
             if (Input.GetKeyDown(KeyCode.Space) || timespan.Hours >= 21) {
                 DeliverymanManager.Instance.round++;
+                isChanging = true;
                 TutorialManagerBehaviour.skip = false;
                 if (DeliverymanManager.Instance.round <= 4) {
                     SceneManager.LoadSceneAsync("Settlement");

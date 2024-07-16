@@ -9,8 +9,8 @@ using UnityEngine.SceneManagement;
 public class Shopping : MonoBehaviour {
     private float addSpeed = 3.0f;
     private int addCapacity = 1;
-    private float addSpeedUp = 10.0f;
-    private float addTimeSlow = 15.0f;
+    private float addSpeedUp = 15.0f;
+    private float addTimeSlow = 10.0f;
     public int shoppingCount = 2;
 
     public int cost = 200;
@@ -87,6 +87,7 @@ public class Shopping : MonoBehaviour {
         //     Debug.Log("In shopping: speed:" + DeliverymanManager.speed + "allCapacity:" + DeliverymanManager.allCapacity + "speedup:" + DeliverymanManager.speedUp + "timeSlow:" + DeliverymanManager.timeSlow + "money:" + DeliverymanManager.money);
         // }
         GameObject.Find("balance bar").GetComponent<BalanceDiplayBehaviour>().setBalance(DeliverymanManager.money);
+        GameObject.Find("inventory").GetComponent<InventoryBehaviour>().SetCapacity(DeliverymanManager.allCapacity);
     }
 
     public void doPurchace(UpgradeOption option) {
