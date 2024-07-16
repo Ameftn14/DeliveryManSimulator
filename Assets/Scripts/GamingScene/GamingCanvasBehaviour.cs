@@ -27,9 +27,7 @@ public class GamingCanvasBehaviour : MonoBehaviour {
         if (orderDB.IsClear() && timespan.Hours >= 19) {
             //Destroy(instance);
             // 加载指定的场景
-            GameObject Canvas = GameObject.Find("Canvas");
-            GameObject nextDayPanel = Canvas.transform.Find("NextDayPanel").gameObject;
-            nextDayPanel.SetActive(true);
+            TutorialManagerBehaviour.Skip();
             if (Input.GetKeyDown(KeyCode.Space) || timespan.Hours >= 21) {
                 DeliverymanManager.Instance.round++;
                 if (DeliverymanManager.Instance.round <= 4) {

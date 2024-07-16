@@ -24,6 +24,7 @@ public class GeneralManagerBehaviour : MonoBehaviour {
 
     public void DBConfirmOrder(int OrderID)
     {
+
         //Debug.Log("DBConfirmOrder");
         PairOrder theOrder = theOrderDB.orderDict[OrderID];
         if (theProperty.nowCapacity - 1 >= 0) {
@@ -38,6 +39,11 @@ public class GeneralManagerBehaviour : MonoBehaviour {
             theOrder.playMusic("AcceptVoice");
         } else
             theOrder.OrderNotAccept();
+        if (theProperty.allCapacity - theProperty.nowCapacity == 2) {
+            if (TutorialManagerBehaviour.sortlist == false) {
+                TutorialManagerBehaviour.SortList();
+            }
+        }
     }
 
     public void LateOrder(int OrderID)
@@ -51,6 +57,9 @@ public class GeneralManagerBehaviour : MonoBehaviour {
             // displayManager.removeOrder(OrderID, LocationType.Customer);
             theProperty.money -= theOrder.GetPrice() / 2;
             // theProperty.nowCapacity += 1;
+        }
+        if (TutorialManagerBehaviour.speedup == false) {
+            TutorialManagerBehaviour.SpeedUp();
         }
     }
     public void DistroyOrder(int OrderID) {

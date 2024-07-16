@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using System.Collections.Specialized;
 
 public class OrderDB: MonoBehaviour
 {
@@ -21,13 +22,19 @@ public class OrderDB: MonoBehaviour
     public delegate void OrderStateChangeHandler(int OrderID);
     public  event OrderStateChangeHandler OrderStateChanged;
 
-    public  void Start()
-    {
+    public Property theProperty = null;
+
+    public void Start() {
         // 初始化字典
         orderDict = new Dictionary<int, PairOrder>();
+        theProperty = GameObject.Find("Deliveryman").GetComponent<Property>();
     }
-    public static void Update()
-    {
+    public void Update() {
+        if (orderDict.Count - (theProperty.allCapacity - theProperty.nowCapacity) == 2) {
+            if (TutorialManagerBehaviour.timeslow == false) {
+                TutorialManagerBehaviour.TimeSlow();
+            }
+        }
     }
 
     // 触发事件

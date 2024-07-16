@@ -82,6 +82,9 @@ public class GeneratorManager : MonoBehaviour
         {
             GeneratePair();
         }
+        if (TutorialManagerBehaviour.addlist == false) {
+            TutorialManagerBehaviour.AddList();
+        }
     }
 
     void GeneratePair(){
