@@ -59,7 +59,7 @@ public class PurchaseMenuBehaviour : MonoBehaviour {
     }
 
     void Update() {
-        if (shopping.shoppingCount <= 0) {
+        if (shopping.shoppingCount <= 0 || DeliverymanManager.money < shopping.cost) {
             for (int i = 0; i < purchaseButtons.Length; i++) {
                 purchaseButtons[i].setAvailability(false);
             }
