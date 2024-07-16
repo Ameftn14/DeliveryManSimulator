@@ -84,7 +84,7 @@ public class AlertBoxBehaviour : MonoBehaviour {
         rectTransform.anchorMin = new Vector2(1, 0);
         rectTransform.anchorMax = new Vector2(1, 0);
         rectTransform.pivot = new Vector2(1, 0);
-        rectTransform.anchoredPosition = new Vector2(-10, 10); // 右下角，向左和向上各有10单位的边距
+        rectTransform.anchoredPosition = new Vector2(-10, 50); // 右下角，向左和向上各有10单位的边距
 
         alertBoxBehaviour.increaseOffset();
         Debug.Log("bottomRightAlertOffset: " + bottomRightAlertOffset);
@@ -103,6 +103,21 @@ public class AlertBoxBehaviour : MonoBehaviour {
         rectTransform.anchorMin = new Vector2(0, 0);
         rectTransform.anchorMax = new Vector2(0, 0);
         rectTransform.pivot = new Vector2(0, 0);
-        rectTransform.anchoredPosition = new Vector2(10, 10); // 左下角，向右和向上各有10单位的边距
+        rectTransform.anchoredPosition = new Vector2(10, 50); // 左下角，向右和向上各有10单位的边距
+    }
+
+    public static void ShowAlertAtBottomLeft2(string title, string content, float secondsToLive) {
+        GameObject alertBox = Instantiate(Resources.Load("Prefabs/UI/AlertBox")) as GameObject;
+        alertBox.GetComponent<AlertBoxBehaviour>().title.text = title;
+        alertBox.GetComponent<AlertBoxBehaviour>().content.text = content;
+        alertBox.GetComponent<AlertBoxBehaviour>().secondsToLive = secondsToLive;
+        GameObject parent = GameObject.Find("Canvas");
+        alertBox.transform.SetParent(parent.transform, false);
+        // move the box to the bottom left of the screen
+        RectTransform rectTransform = alertBox.GetComponent<RectTransform>();
+        rectTransform.anchorMin = new Vector2(0, 0);
+        rectTransform.anchorMax = new Vector2(0, 0);
+        rectTransform.pivot = new Vector2(0, 0);
+        rectTransform.anchoredPosition = new Vector2(10, 200); // 左下角，向右和向上各有10单位的边距
     }
 }
