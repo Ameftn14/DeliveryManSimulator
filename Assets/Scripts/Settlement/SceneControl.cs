@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System;
+using UnityEngine.UI;
+using TMPro;
 
 public class SceneControl : MonoBehaviour {
     // Start is called before the first frame update
@@ -15,4 +19,5 @@ public class SceneControl : MonoBehaviour {
             UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
         }
     }
+
 }

@@ -28,12 +28,15 @@ public class Shopping : MonoBehaviour {
 
     public List<UpgradeOption> options = new List<UpgradeOption>();
 
-    void Start() {
+    void Awake(){
 
         // PermanentSpeedBoost,
         // BiggerStorage,
         // TempararySpeedBoost,
         // TempararyTimeSlow
+        shoppingCount = 2;
+        Debug.Log("Start shoppingcount in shopping:"+shoppingCount);
+
         bool tempSpeedIsAvailable;
         if (DeliverymanManager.speedAvailable > 0) {
             tempSpeedIsAvailable = true;
@@ -71,7 +74,11 @@ public class Shopping : MonoBehaviour {
         options.Add(new UpgradeOption(UpgradeType.TempararyTimeSlow,tempTimeSlowIsAvailable));
 
 
-        //initOptions(options);
+
+    }
+
+    void Start() {
+
     }
 
     // Update is called once per frame
@@ -82,6 +89,10 @@ public class Shopping : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Q)) {
             Debug.Log("In shopping: speed:" + DeliverymanManager.speed + "allCapacity:" + DeliverymanManager.allCapacity + "speedup:" + DeliverymanManager.speedUp + "timeSlow:" + DeliverymanManager.timeSlow + "money:" + DeliverymanManager.money);
+        }
+
+        if(Input.GetKeyDown(KeyCode.O)){
+            Debug.Log("now =shoppingCount in shopping: " + shoppingCount);
         }
     }
 
@@ -116,7 +127,7 @@ public class Shopping : MonoBehaviour {
             case UpgradeType.TempararySpeedBoost:
                 if (shoppingCount > 0) {
                     DeliverymanManager.speedUp += addSpeedUp;
-                    DeliverymanManager.speedAvailable--;
+                    DeliverymanManager.speedUpAvailable--;
                     shoppingCount--;
                 }
                 break;
