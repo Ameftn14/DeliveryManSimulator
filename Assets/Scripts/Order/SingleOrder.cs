@@ -146,6 +146,7 @@ public class SingleOrder : MonoBehaviour {
     public void SetAcceptTime(TimeSpan time) {
         acceptTime = time;
         ringProgress.acceptTime = time;
+        parentPairOrder.AcceptTime = time;
     }
 
     // position operation

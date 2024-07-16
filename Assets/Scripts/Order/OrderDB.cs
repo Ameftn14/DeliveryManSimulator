@@ -5,19 +5,29 @@ using Unity.VisualScripting;
 
 public class OrderDB: MonoBehaviour
 {
+    public static OrderDB Instance { get; set; }
+
+    void Awake() {
+        if (Instance != null && Instance != this) {
+            Destroy(gameObject);
+        } else {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
     // PairOrder根据OrderID来索引建立字典
     public Dictionary<int, PairOrder> orderDict;
 
     // 声明委托，通过OrderID用于在订单状态发生变化时通知其他对象
     public delegate void OrderStateChangeHandler(int OrderID);
-    public event OrderStateChangeHandler OrderStateChanged;
+    public  event OrderStateChangeHandler OrderStateChanged;
 
-    public void Start()
+    public  void Start()
     {
         // 初始化字典
         orderDict = new Dictionary<int, PairOrder>();
     }
-    public void Update()
+    public static void Update()
     {
     }
 
