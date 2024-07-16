@@ -14,41 +14,53 @@ public class EndBehaviour : MonoBehaviour {
         } else if (DeliverymanManager.money < 3000) {
             score = "D";
         } else if (DeliverymanManager.money < 4000) {
-            if (DeliverymanManager.latecount > 5 && DeliverymanManager.badcount > 0) {
+            if (DeliverymanManager.latecount > 10 && DeliverymanManager.badcount > 0) {
                 score = "D";
             } else {
                 score = "C";
             }
         } else if (DeliverymanManager.money < 5000) {
-            if (DeliverymanManager.latecount > 5 && DeliverymanManager.badcount > 0) {
+            if (DeliverymanManager.latecount > 10 && DeliverymanManager.badcount > 0) {
                 score = "C";
             } else {
                 score = "B";
             }
         } else if (DeliverymanManager.money < 6000) {
-            if (DeliverymanManager.latecount > 5 && DeliverymanManager.badcount > 0) {
+            if (DeliverymanManager.latecount > 10 && DeliverymanManager.badcount > 0) {
                 score = "B";
             } else {
                 score = "A";
             }
-        } else {
+        } else if (DeliverymanManager.money < 7000) {
             if (DeliverymanManager.badcount > 5) {
                 score = "B";
-            } else if (DeliverymanManager.latecount > 5) {
+            } else if (DeliverymanManager.latecount > 10) {
                 score = "A";
-            } else if (DeliverymanManager.badcount > 0) {
+            } else if (DeliverymanManager.latecount > 5 || DeliverymanManager.badcount > 1) {
                 score = "S";
             } else if (DeliverymanManager.latecount > 0) {
                 score = "SS";
             } else {
                 score = "SSS";
             }
+        } else {
+            if (DeliverymanManager.badcount > 5) {
+                score = "A";
+            } else if (DeliverymanManager.latecount > 10) {
+                score = "S";
+            } else if (DeliverymanManager.latecount > 5 || DeliverymanManager.badcount > 1) {
+                score = "SS";
+            } else if (DeliverymanManager.latecount > 0) {
+                score = "SSS";
+            } else {
+                score = "SSSS";
+            }
         }
         StatBoardBehaviour.Instance.AppendStatEntry("You Have Earned: ", "$" + DeliverymanManager.money.ToString());
         StatBoardBehaviour.Instance.AppendStatEntry("Finished Order: ", DeliverymanManager.finishedcount.ToString());
         StatBoardBehaviour.Instance.AppendStatEntry("Late Order: ", DeliverymanManager.latecount.ToString());
         StatBoardBehaviour.Instance.AppendStatEntry("Bad Order: ", DeliverymanManager.badcount.ToString());
-        StatBoardBehaviour.Instance.AppendStatEntry("Score: ", score);
+        StatBoardBehaviour.Instance.AppendStatEntry("Rank: ", score);
     }
 
     // Update is called once per frame
