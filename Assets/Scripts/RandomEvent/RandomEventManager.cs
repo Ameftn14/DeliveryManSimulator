@@ -43,6 +43,7 @@ public class RandomEventManager : MonoBehaviour{
 
     private void FromNotPrepared(int orderID) {
         //停一会
+        TutorialManagerBehaviour.FromNotPrepared();
         Prepared = false;
         NotPreID = orderID;
         NPeventTime = VirtualClockUI.Instance.GetTime();
@@ -63,12 +64,14 @@ public class RandomEventManager : MonoBehaviour{
 
     private void LateArriveTo(int orderID) {
         //扣钱
+        TutorialManagerBehaviour.LateArriveTo();
         PairOrder theOrder = OrderDB.Instance.orderDict[orderID];
         theOrder.SetPrice(theOrder.GetPrice() * 2 / 3);
         Debug.Log("Late arrive to");
     }
     private void OnTimeArriveTo(int orderID) {
         //加钱
+        TutorialManagerBehaviour.OnTimeArriveTo();
         PairOrder theOrder = OrderDB.Instance.orderDict[orderID];
         theOrder.SetPrice(theOrder.GetPrice() * 4 / 3);
         Debug.Log("On time arrive to");
@@ -81,13 +84,13 @@ public class RandomEventManager : MonoBehaviour{
         int random = UnityEngine.Random.Range(0, 100); 
         int threshold;
         if (theOrder.level == 1) {
-            threshold = 20;
+            threshold = 10;
         } 
         else if (theOrder.level == 2) {
-            threshold = 13;
+            threshold = 8;
         } 
         else{
-            threshold = 7;
+            threshold = 4;
         }
 
         if (random < threshold) {

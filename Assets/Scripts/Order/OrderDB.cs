@@ -30,7 +30,7 @@ public class OrderDB: MonoBehaviour
         theProperty = GameObject.Find("Deliveryman").GetComponent<Property>();
     }
     public void Update() {
-        if (orderDict.Count - (theProperty.allCapacity - theProperty.nowCapacity) >= 3) {
+        if (orderDict.Count - (theProperty.allCapacity - theProperty.nowCapacity) >= 2) {
             if (TutorialManagerBehaviour.timeslow == false) {
                 TutorialManagerBehaviour.TimeSlow();
             }

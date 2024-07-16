@@ -13,26 +13,43 @@ public class TutorialManagerBehaviour : MonoBehaviour {
 
     public static void AddList() {
         addlist = true;
-        AlertBoxBehaviour.ShowAlertAtBottomLeft("Tutorial:Accept", "Click icon on the map", 5);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft2("Tutorial: Accept", "Click icon on the map", 5);
     }
 
     public static void SortList() {
         sortlist = true;
-        AlertBoxBehaviour.ShowAlertAtBottomLeft("Tutorial:Sort", "Click icon to go there, or drag to sort in the list", 5);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Sort", "Click icon to go there or drag to sort in the list", 5);
     }
 
     public static void SpeedUp() {
         speedup = true;
-        AlertBoxBehaviour.ShowAlertAtBottomLeft("Tutorial:Speed Up", "Hold LShift to speed up", 5);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Speed Up", "Hold LShift to speed up", 5);
     }
 
     public static void TimeSlow() {
         timeslow = true;
-        AlertBoxBehaviour.ShowAlertAtBottomLeft("Tutorial:Time Slow", "Hold LCtrl to slow down time, and then choose wisely", 5);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Time Slow", "Hold LCtrl to slow down time and choose", 5);
+    }
+
+    public static void NotAccept() {
+        AlertBoxBehaviour.ShowAlertAtBottomLeft2("Full Bag", "Remember to upgrade your bag size", 5);
     }
 
     public static void Skip() {
-        AlertBoxBehaviour.ShowAlertAtMiddle("Press Space", "Go to the next level", 20);
+        AlertBoxBehaviour.ShowAlertAtMiddle("PRESS SPACE", "Go to the next level", 20);
+    }
+
+    public static void FromNotPrepared() {
+        AlertBoxBehaviour.ShowAlertAtBottomLeft2("Food Not Prepared", "Hit SPACE to urge", 5);
+
+    }
+
+    public static void LateArriveTo() {
+        AlertBoxBehaviour.ShowAlertAtBottomLeft2("Arrive Late", "You are punished", 5);
+    }
+
+    public static void OnTimeArriveTo() {
+        AlertBoxBehaviour.ShowAlertAtBottomLeft2("On Time Arrive", "You got some tips", 5);
     }
 
     // Start is called before the first frame update

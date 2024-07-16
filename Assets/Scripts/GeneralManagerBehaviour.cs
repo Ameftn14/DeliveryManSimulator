@@ -37,8 +37,10 @@ public class GeneralManagerBehaviour : MonoBehaviour {
             displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Customer, theTo.Getpid(), theOrder.OrderID, theOrder.GetPrice()));
             theProperty.nowCapacity -= 1;
             theOrder.playMusic("AcceptVoice");
-        } else
+        } else {
             theOrder.OrderNotAccept();
+            TutorialManagerBehaviour.NotAccept();
+        }
         if (theProperty.allCapacity - theProperty.nowCapacity == 2) {
             if (TutorialManagerBehaviour.sortlist == false) {
                 TutorialManagerBehaviour.SortList();
