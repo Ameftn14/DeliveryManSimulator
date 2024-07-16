@@ -12,7 +12,6 @@ public class OrderDB: MonoBehaviour
             Destroy(gameObject);
         } else {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
     // PairOrder根据OrderID来索引建立字典

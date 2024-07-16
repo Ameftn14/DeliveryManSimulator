@@ -108,6 +108,7 @@ public class SingleOrder : MonoBehaviour {
         if(parentPairOrder == null){
             parentPairOrder = transform.parent.GetComponent<PairOrder>();
         }
+        StartCoroutine(SizeUp());
         parentPairOrder.MouseEnter();
     }
 
@@ -115,6 +116,7 @@ public class SingleOrder : MonoBehaviour {
         if(parentPairOrder == null){
             parentPairOrder = transform.parent.GetComponent<PairOrder>();
         }
+        StartCoroutine(BackToOriginalSize());
         parentPairOrder.MouseExit();
     }
     // pid operation
@@ -205,9 +207,22 @@ public class SingleOrder : MonoBehaviour {
         while(isBig){
             yield return null;
         }
-        Vector3 targetScale = originalScale * 1.3f;
-        if(isFrom){
-            targetScale = originalScale * 1.7f;
+        Vector3 targetScale;
+        if(state == PairOrder.State.NotAccept){
+            if(isFrom){
+                targetScale = originalScale * 1.3f;
+            }
+            else{
+                targetScale = originalScale * 1.7f;
+            }
+        }
+        else{
+            if(isFrom){
+                targetScale = originalScale * 1.7f;
+            }
+            else{
+                targetScale = originalScale * 1.3f;
+            }
         }
 
         while (elapsed < duration)
@@ -328,4 +343,5 @@ public class SingleOrder : MonoBehaviour {
             }
         }
     }
+
 }

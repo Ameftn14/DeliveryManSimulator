@@ -11,7 +11,6 @@ public class RandomEventManager : MonoBehaviour{
             Destroy(gameObject);
         } else {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
     //需要接口：pickup, finish状态变化
@@ -73,13 +72,13 @@ public class RandomEventManager : MonoBehaviour{
         int threshold;
         if (theOrder.GetIsLate()) {
             if (theOrder.level == 1) {
-            threshold = 8;
+            threshold = 6;
             } 
             else if (theOrder.level == 2) {
-                threshold = 15;
+                threshold = 10;
             } 
             else{
-                threshold = 25;
+                threshold = 15;
             }
             if (random < threshold) {
                 LateArriveTo(orderID);
@@ -100,4 +99,5 @@ public class RandomEventManager : MonoBehaviour{
             }
         }
     }
+    
 }

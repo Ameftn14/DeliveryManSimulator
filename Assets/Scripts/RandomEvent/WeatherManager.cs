@@ -10,7 +10,6 @@ public class WeatherManager : MonoBehaviour{
             Destroy(this.gameObject);
         } else {
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
         }
     }
 
