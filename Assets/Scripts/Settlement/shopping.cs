@@ -4,6 +4,7 @@ using System.Data.SqlTypes;
 using UnityEditor;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class Shopping : MonoBehaviour {
     private float addSpeed = 5.0f;
@@ -132,9 +133,10 @@ public class Shopping : MonoBehaviour {
 
         }
         if (shoppingCount == 0) {
-            GameObject Canvas = GameObject.Find("Canvas");
-            GameObject nextDayPanel = Canvas.transform.Find("NextDayPanel").gameObject;
-            nextDayPanel.SetActive(true);
+            // GameObject Canvas = GameObject.Find("Canvas");
+            // GameObject nextDayPanel = Canvas.transform.Find("NextDayPanel").gameObject;
+            // nextDayPanel.SetActive(true);
+            SceneManager.LoadSceneAsync("SampleScene");
         }
         Debug.Log("Now shoppingCount: " + shoppingCount + " Money: " + DeliverymanManager.money);
     }
