@@ -6,13 +6,13 @@ using UnityEngine;
 using System;
 
 public class Shopping : MonoBehaviour {
-    private float addSpeed = 5.0f;
+    private float addSpeed = 3.0f;
     private int addCapacity = 1;
     private float addSpeedUp = 10.0f;
-    private float addTimeSlow = 20.0f;
+    private float addTimeSlow = 15.0f;
     public int shoppingCount = 2;
 
-    public int cost = 50;
+    public int cost = 400;
     // private float speed = DeliverymanManager.speed;
     // private int allCapacity = DeliverymanManager.allCapacity;
     // private int money = DeliverymanManager.money;
@@ -85,6 +85,7 @@ public class Shopping : MonoBehaviour {
         // if (Input.GetKeyDown(KeyCode.Q)) {
         //     Debug.Log("In shopping: speed:" + DeliverymanManager.speed + "allCapacity:" + DeliverymanManager.allCapacity + "speedup:" + DeliverymanManager.speedUp + "timeSlow:" + DeliverymanManager.timeSlow + "money:" + DeliverymanManager.money);
         // }
+        GameObject.Find("balance bar").GetComponent<BalanceDiplayBehaviour>().setBalance(DeliverymanManager.money);
     }
 
     public void doPurchace(UpgradeOption option) {
@@ -133,8 +134,8 @@ public class Shopping : MonoBehaviour {
         }
         if (shoppingCount == 0) {
             GameObject Canvas = GameObject.Find("Canvas");
-            GameObject nextDayPanel = Canvas.transform.Find("NextDayPanel").gameObject;
-            nextDayPanel.SetActive(true);
+            // GameObject nextDayPanel = Canvas.transform.Find("NextDayPanel").gameObject;
+            // nextDayPanel.SetActive(true);
         }
         Debug.Log("Now shoppingCount: " + shoppingCount + " Money: " + DeliverymanManager.money);
     }

@@ -32,8 +32,10 @@ public class RandomEventManager : MonoBehaviour{
         if(!Prepared) {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                OrderDB.Instance.orderDict[NotPreID].NotPreparedTime -= new TimeSpan(0, 1, 0);
-                searchRoad.recoveryTime -= new TimeSpan(0, 1, 0);
+                OrderDB.Instance.orderDict[NotPreID].NotPreparedTime -= new TimeSpan(0, 2, 0);
+                searchRoad.recoveryTime -= new TimeSpan(0, 2, 0);
+                AudioSource audioSource = GameObject.Find("LateVoice").GetComponent<AudioSource>();
+                audioSource.Play();
             }
             if (searchRoad.recoveryTime <= VirtualClockUI.Instance.GetTime()) {
                 FromPrepared(NotPreID);

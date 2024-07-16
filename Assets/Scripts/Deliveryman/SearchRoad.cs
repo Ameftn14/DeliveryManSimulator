@@ -85,9 +85,9 @@ public class SearchRoad : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        AudioSource audio = GameObject.Find("Camera").GetComponent<AudioSource>();
+        AudioSource audio = GameObject.Find("BGM").GetComponent<AudioSource>();
 
-        if(recoveryTime != new TimeSpan(0, 0, 0)) {
+        if (recoveryTime != new TimeSpan(0, 0, 0)) {
             if(VirtualClockUI.Instance.GetTime() >= recoveryTime) {
                 RecoverFromStop();
                 if(Input.GetKey(KeyCode.LeftShift)){
@@ -122,7 +122,7 @@ public class SearchRoad : MonoBehaviour {
                 audioSource.Play();
             }
             if (isMoving && Input.GetKey(KeyCode.LeftShift) && realSpeedUp > 0) {
-                realMoveSpeed = moveSpeed * 2;
+                realMoveSpeed = moveSpeed * 2.5f;
                 realSpeedUp = Mathf.Max(0, realSpeedUp - decreaseSpeedPerSecond * Time.deltaTime);
             } 
             else {
@@ -227,9 +227,9 @@ public class SearchRoad : MonoBehaviour {
             routeManager.playerHidePath();
 
 
-        if (Input.GetKeyDown(KeyCode.W)) {
-            Debug.Log("In SearchRoad: realMoveSpeed:" + realMoveSpeed + "realSpeedUp:" + realSpeedUp + "realTimeSlow:" + realTimeSlow);
-        }
+        // if (Input.GetKeyDown(KeyCode.W)) {
+        //     Debug.Log("In SearchRoad: realMoveSpeed:" + realMoveSpeed + "realSpeedUp:" + realSpeedUp + "realTimeSlow:" + realTimeSlow);
+        // }
     }
 
     // public List<int> searchRoad(int beginStartVid, int beginEndVid, Vector3 deliverymanPosition, List<int> targetwaypoints) {
