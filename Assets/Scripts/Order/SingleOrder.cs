@@ -45,7 +45,6 @@ public class SingleOrder : MonoBehaviour {
             Debug.LogError("MapManager is not assigned!");
             return;
         }
-        Debug.Log("mapManager found");
         state = PairOrder.State.NotAccept;
 
         ringProgress.ddl = Deadline;
@@ -120,7 +119,7 @@ public class SingleOrder : MonoBehaviour {
     }
     public void SetPid(int pid) {
         this.pid = pid;
-        Debug.Log("pid is set to " + pid);
+        //Debug.Log("pid is set to " + pid);
         if (mapManager == null) {
             mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
         }

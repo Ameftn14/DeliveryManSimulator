@@ -6,7 +6,7 @@ public class OrderMenuView : MonoBehaviour {
         Debug.Assert(listModel != null);
     }
     public void appendItem(ItemModel item) {
-        Debug.Log("order menu view: appendItem");
+        //Debug.Log("order menu view: appendItem");
         listModel.addItemAt(item, listModel.getSize());
     }
     public void insertAt(ItemModel item, int index) {

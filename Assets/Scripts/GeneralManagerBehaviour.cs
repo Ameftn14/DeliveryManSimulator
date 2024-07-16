@@ -24,13 +24,13 @@ public class GeneralManagerBehaviour : MonoBehaviour {
 
     public void DBConfirmOrder(int OrderID)
     {
-        Debug.Log("DBConfirmOrder");
+        //Debug.Log("DBConfirmOrder");
         PairOrder theOrder = theOrderDB.orderDict[OrderID];
         if (theProperty.nowCapacity - 1 >= 0) {
             SingleOrder theFrom = theOrder.fromScript;
             SingleOrder theTo = theOrder.toScript;
             TimeSpan dueTime = theOrder.GetDeadline();
-            Debug.Log("dueTime: " + dueTime);
+            //Debug.Log("dueTime: " + dueTime);
             Color color = ColorDictionary.PeekColor(theOrder.ColorIndex);
             displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Restaurant, theFrom.Getpid(), theOrder.OrderID));
             displayManager.appendNewOrder(new OrderInfo(dueTime, color, LocationType.Customer, theTo.Getpid(), theOrder.OrderID));
@@ -76,9 +76,9 @@ public class GeneralManagerBehaviour : MonoBehaviour {
             else
                 theOrder = thePairOrder.toScript;
             // change the order's state
-            if (theOrder.GetIsFrom()){
-                thePairOrder.OrderPickUp();
+            if (theOrder.GetIsFrom()){              
                 RandomEventManager.Instance.WhenPickUp(thePairOrder.OrderID);
+                thePairOrder.OrderPickUp();
             }
             else {
                 if (thePairOrder.state != PairOrder.State.PickUp) {

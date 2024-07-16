@@ -37,7 +37,7 @@ public class ListModel : MonoBehaviour {
         else if (index < 0) {
             index = 0;
         }
-        Debug.Log("Base Model Adding item at " + index);
+        //Debug.Log("Base Model Adding item at " + index);
         preInsertActions?.Invoke(index);
 
         items.Insert(index, itemModel);

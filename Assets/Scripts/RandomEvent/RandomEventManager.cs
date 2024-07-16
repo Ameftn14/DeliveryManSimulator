@@ -1,10 +1,12 @@
 using UnityEngine;
+using System;
 
 public class RandomEventManager : MonoBehaviour{
     public static RandomEventManager Instance { get; set; }
 
     public static OrderDB orderDB = null;
     public static Property property = null;
+    public SearchRoad searchRoad = null;
 
     private void Awake() {
         if (Instance != null && Instance != this) {
@@ -21,6 +23,7 @@ public class RandomEventManager : MonoBehaviour{
     void Start() {
         orderDB = GameObject.Find("OrderDB").GetComponent<OrderDB>();
         property = GameObject.Find("Deliveryman").GetComponent<Property>();
+        searchRoad = GameObject.Find("Deliveryman").GetComponent<SearchRoad>();
     }
 
     void Update() {
@@ -28,21 +31,28 @@ public class RandomEventManager : MonoBehaviour{
 
     private void FromNotPrepared() {
         //停一会
+        searchRoad.FallintoStop(new TimeSpan(0, 10, 0));
+        Debug.Log("Fall into stop");
     }
 
-    private void LateArriveTo() {
+    private void LateArriveTo(int orderID) {
         //扣钱
-        
+        PairOrder theOrder = orderDB.orderDict[orderID];
+        theOrder.SetPrice(theOrder.GetPrice() * 2 / 3);
+        Debug.Log("Late arrive to");
     }
-    private void OnTimeArriveTo() {
+    private void OnTimeArriveTo(int orderID) {
         //加钱
+        PairOrder theOrder = orderDB.orderDict[orderID];
+        theOrder.SetPrice(theOrder.GetPrice() * 4 / 3);
+        Debug.Log("On time arrive to");
     }
 
     public void WhenPickUp(int orderID) {
         //看这个订单的level
         PairOrder theOrder = orderDB.orderDict[orderID];
         //随机生成1-100的数
-        int random = Random.Range(0, 100);
+        int random = UnityEngine.Random.Range(0, 100); 
         int threshold;
         if (theOrder.level == 1) {
             threshold = 15;
@@ -62,7 +72,7 @@ public class RandomEventManager : MonoBehaviour{
 
     public void WhenArrive(int orderID) {
         PairOrder theOrder = orderDB.orderDict[orderID];
-        int random = Random.Range(0, 100);
+        int random = UnityEngine.Random.Range(0, 100);
         int threshold;
         if (theOrder.GetIsLate()) {
             if (theOrder.level == 1) {
@@ -75,7 +85,7 @@ public class RandomEventManager : MonoBehaviour{
                 threshold = 25;
             }
             if (random < threshold) {
-                LateArriveTo();
+                LateArriveTo(orderID);
             }
         } 
         else {
@@ -89,7 +99,7 @@ public class RandomEventManager : MonoBehaviour{
                 threshold = 17;
             }
             if (random < threshold) {
-                OnTimeArriveTo();
+                OnTimeArriveTo(orderID);
             }
         }
     }

@@ -41,7 +41,7 @@ public class CountDownScript : MonoBehaviour {
             points[i] = new Vector3(Mathf.Sin(rad) * 1f, Mathf.Cos(rad) * 1f, 0);
             points[pointCount * 2 - i - 1] = new Vector3(Mathf.Sin(rad) * 0.8f, Mathf.Cos(rad) * 0.8f, 0);
         }
-        Debug.Log("pointCount: " + pointCount);
+        //("pointCount: " + pointCount);
         lineRenderer.SetPositions(points);
     }
 }

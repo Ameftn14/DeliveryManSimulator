@@ -19,6 +19,8 @@ public class SearchRoad : MonoBehaviour {
 
     private int currentPathIndex = 0; // 当前路径索引
     public bool isMoving = false;    //when true, start to move
+    private bool isStop = false; //event
+    private TimeSpan recoveryTime; //event
 
     private bool firstBegin = true;
 
@@ -36,6 +38,7 @@ public class SearchRoad : MonoBehaviour {
     private LineRenderer lineRenderer;
 
     public float realSpeedUp;
+    private float realMoveSpeed;
     public float realTimeSlow;
     public float speedUpPercentage;
     public float timeSlowPercentage;
@@ -56,19 +59,19 @@ public class SearchRoad : MonoBehaviour {
         routeManager = GameObject.Find("RouteManager").GetComponent<RouteManagerBehaviour>();
 
         // 检查是否找到了正确的GameObject
-        if (mapManager == null) {
-            Debug.LogError("MapManager not found!");
-            Debug.Assert(false);
-        } else {
-            Debug.Log("mapManager found");
-        }
+        // if (mapManager == null) {
+        //     Debug.LogError("MapManager not found!");
+        //     Debug.Assert(false);
+        // } else {
+        //     Debug.Log("mapManager found");
+        // }
         // 检查是否找到了正确的GameObject
-        if (property == null) {
-            Debug.LogError("property not found!");
-            Debug.Assert(false);
-        } else {
-            Debug.Log("property found");
-        }
+        // if (property == null) {
+        //     Debug.LogError("property not found!");
+        //     Debug.Assert(false);
+        // } else {
+        //     Debug.Log("property found");
+        // }
 
         graph = mapManager.GetEdges();
         vertices = mapManager.GetVertices();
@@ -77,28 +80,26 @@ public class SearchRoad : MonoBehaviour {
         moveSpeed = property.speed;
         realSpeedUp = property.speedUp;
         realTimeSlow = property.timeSlow;
+        recoveryTime = new TimeSpan(0, 0, 0);
     }
 
     // Update is called once per frame
     void Update() {
-
-        float realMoveSpeed;
         AudioSource audio = GameObject.Find("Camera").GetComponent<AudioSource>();
 
-        if (isMoving && Input.GetKeyDown(KeyCode.LeftShift) && realSpeedUp > 0) {
-            AudioSource audioSource = GameObject.Find("SpeedUpVoice").GetComponent<AudioSource>();
-            audioSource.Play();
+        if(recoveryTime != new TimeSpan(0, 0, 0)) {
+            if(VirtualClockUI.Instance.GetTime() >= recoveryTime) {
+                RecoverFromStop();
+                if(Input.GetKey(KeyCode.LeftShift)){
+                    AudioSource audioSource = GameObject.Find("SpeedUpVoice").GetComponent<AudioSource>();
+                    audioSource.Play();
+                }
+            }
         }
-        if (isMoving && Input.GetKey(KeyCode.LeftShift) && realSpeedUp > 0) {
-            realMoveSpeed = moveSpeed * 2;
-            realSpeedUp = Mathf.Max(0, realSpeedUp - decreaseSpeedPerSecond * Time.deltaTime);
-        } else {
-            realMoveSpeed = moveSpeed;
-        }
+       
         // 控制时间流速
-
         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.M) && Input.GetKey(KeyCode.E)) {
-            Time.timeScale = 50f;
+            Time.timeScale = 70f;
         } else if (Input.GetKey(KeyCode.LeftControl) && realTimeSlow > 0) {
             if (audio.pitch > 0.747f)
                 audio.pitch *= 0.99f;
@@ -112,6 +113,21 @@ public class SearchRoad : MonoBehaviour {
             else
                 audio.pitch = 1;
             Time.timeScale = 1;
+        }
+
+
+        if(!isStop) {
+            if (isMoving && Input.GetKeyDown(KeyCode.LeftShift) && realSpeedUp > 0) {
+                AudioSource audioSource = GameObject.Find("SpeedUpVoice").GetComponent<AudioSource>();
+                audioSource.Play();
+            }
+            if (isMoving && Input.GetKey(KeyCode.LeftShift) && realSpeedUp > 0) {
+                realMoveSpeed = moveSpeed * 2;
+                realSpeedUp = Mathf.Max(0, realSpeedUp - decreaseSpeedPerSecond * Time.deltaTime);
+            } 
+            else {
+                realMoveSpeed = moveSpeed;
+            }
         }
 
         speedUpPercentage = realSpeedUp / DeliverymanManager.addSpeedUp;
@@ -130,7 +146,7 @@ public class SearchRoad : MonoBehaviour {
                 isMoving = false;
                 break;
             case 4:// 新目标：重新设计路径
-                Debug.Log("New start, redesign the path");
+                //Debug.Log("New start, redesign the path");
 
                 //更新当前路径索引
                 currentPathIndex = 0;
@@ -186,7 +202,7 @@ public class SearchRoad : MonoBehaviour {
                         currentPathIndex++;
                     } else {
                         // 到达路径末尾和wayPoint后停止移动
-                        Debug.Log("Reach the final wayPoint");
+                        //Debug.Log("Reach the final wayPoint");
                         //property.increaseFinishedCount();
                         orderFinished = true;
                     }
@@ -395,5 +411,28 @@ public class SearchRoad : MonoBehaviour {
             // 返回路径和路径长度的元组
             return (path, distances[end]);
         }
+    }
+
+    public void SetIsStop(bool isStop) {
+        this.isStop = isStop;
+    }
+
+    public bool GetIsStop() {
+        return isStop;
+    }
+
+    public void FallintoStop(TimeSpan interval) {
+        recoveryTime = VirtualClockUI.Instance.GetTime() + interval;
+        realMoveSpeed = 0;
+        isStop = true;
+    }
+
+    public void RecoverFromStop() {
+        if(VirtualClockUI.Instance.GetTime() < recoveryTime) {
+            return;
+        }
+        realMoveSpeed = moveSpeed;
+        isStop = false;
+        recoveryTime = new(0, 0, 0);
     }
 }
