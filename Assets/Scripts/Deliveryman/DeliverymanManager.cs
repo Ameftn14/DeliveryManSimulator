@@ -13,6 +13,8 @@ public class DeliverymanManager : MonoBehaviour {
     public static int money = 100;
 
     public static int finishedcount = 0;
+    public static int latecount = 0;
+    public static int badcount = 0;
 
     public static float speedUp = 10.0f;
     public static float timeSlow = 15.0f;
@@ -57,6 +59,12 @@ public class DeliverymanManager : MonoBehaviour {
         if (finishedcount != property.finishedcount) {
             finishedcount = property.finishedcount;
         }
+        if (latecount != property.latecount) {
+            latecount = property.latecount;
+        }
+        if (badcount != property.badcount) {
+            badcount = property.badcount;
+        }
         SearchRoad searchRoad = GameObject.Find("Deliveryman").GetComponent<SearchRoad>();
         BalanceDiplayBehaviour balanceDiplayBehaviour = GameObject.Find("balance bar").GetComponent<BalanceDiplayBehaviour>();
         balanceDiplayBehaviour.setBalance(money);
@@ -70,6 +78,8 @@ public class DeliverymanManager : MonoBehaviour {
         allCapacity = 2;
         money = 100;
         finishedcount = 0;
+        latecount = 0;
+        badcount = 0;
         speedUp = 10.0f;
         timeSlow = 15.0f;
         speedAvailable = 2;

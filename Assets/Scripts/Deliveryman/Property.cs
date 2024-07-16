@@ -10,6 +10,8 @@ public class Property : MonoBehaviour {
     public int nowCapacity;
     public int money;
     public int finishedcount;
+    public int latecount;
+    public int badcount;
 
     public float speedUp;
     public float timeSlow;
@@ -21,6 +23,8 @@ public class Property : MonoBehaviour {
         allCapacity = DeliverymanManager.allCapacity;
         money = DeliverymanManager.money;
         finishedcount = DeliverymanManager.finishedcount;
+        latecount = DeliverymanManager.latecount;
+        badcount = DeliverymanManager.badcount;
         speedUp = DeliverymanManager.speedUp;
         timeSlow = DeliverymanManager.timeSlow;
         //DontDestroyOnLoad(gameObject);

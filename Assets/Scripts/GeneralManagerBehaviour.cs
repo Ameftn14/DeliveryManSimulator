@@ -53,11 +53,10 @@ public class GeneralManagerBehaviour : MonoBehaviour {
         AudioSource audioSource = GameObject.Find("LateVoice").GetComponent<AudioSource>();
         audioSource.Play();
         PairOrder theOrder = theOrderDB.orderDict[OrderID];
-        if (theOrder.state == PairOrder.State.Accept)
-            theProperty.money -= theOrder.GetPrice() / 2;
-        else if (theOrder.state == PairOrder.State.PickUp) {
+        theProperty.money -= theOrder.GetPrice() / 2;
+        theProperty.latecount += 1;
+        if (theOrder.state == PairOrder.State.PickUp) {
             // displayManager.removeOrder(OrderID, LocationType.Customer);
-            theProperty.money -= theOrder.GetPrice() / 2;
             // theProperty.nowCapacity += 1;
         }
         if (TutorialManagerBehaviour.speedup == false) {
@@ -68,6 +67,7 @@ public class GeneralManagerBehaviour : MonoBehaviour {
         PairOrder theOrder = theOrderDB.orderDict[OrderID];
         theProperty.nowCapacity += 1;
         theProperty.money -= theOrder.GetPrice();
+        theProperty.badcount += 1;
         if (theOrder.state == PairOrder.State.Accept) {
             SingleOrder theFrom = theOrder.fromScript;
             displayManager.removeOrder(OrderID, LocationType.Restaurant);
@@ -105,6 +105,7 @@ public class GeneralManagerBehaviour : MonoBehaviour {
                 thePairOrder.OrderFinished();
                 theProperty.nowCapacity += 1;
                 theProperty.money += thePairOrder.GetPrice();
+                theProperty.finishedcount += 1;
             }
             // update the display
             displayManager.removeOrder(theSearchRoad.targetOrderID, theSearchRoad.targetIsFrom ? LocationType.Restaurant : LocationType.Customer);

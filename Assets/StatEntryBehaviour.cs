@@ -13,7 +13,7 @@ public class StatEntryBehaviour : MonoBehaviour {
 
     public static void AppendStatEntry(GameObject parent, string name, string value) {
         // load prefab from Resources/Prefabs/UI/StatEntry
-        GameObject prefab = Resources.Load<GameObject>("Prefabs/UI/StatEntry");
+        GameObject prefab = Resources.Load<GameObject>("Prefabs/UI/Stat Entry");
         GameObject instance = Instantiate(prefab, parent.transform);
         StatEntryBehaviour statEntry = instance.GetComponent<StatEntryBehaviour>();
         statEntry.statName.text = name;

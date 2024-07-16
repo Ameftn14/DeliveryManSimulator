@@ -205,7 +205,6 @@ public class SearchRoad : MonoBehaviour {
                         //Debug.Log("Reach the final wayPoint");
                         //property.increaseFinishedCount();
                         orderFinished = true;
-                        DeliverymanManager.finishedcount ++;
                     }
                     routeManager.playerHidePath();
                 } else {

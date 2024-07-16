@@ -24,8 +24,8 @@ public class PairOrder : MonoBehaviour {
     public bool isStop;
     //private TimeSpan PickUpTime;
     public TimeSpan TimeToDeadline;
-    private readonly float LifeTime = 2f;//TODO:以下所有liftime都没有提供做修改的接口，待优化
-    private float timer = 2f;
+    private readonly float LifeTime = 3f;//TODO:以下所有liftime都没有提供做修改的接口，待优化
+    private float timer = 3f;
 
     public enum State {
         NotAccept,//未接单

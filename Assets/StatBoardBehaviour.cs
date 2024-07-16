@@ -4,15 +4,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class StatBoardBehaviour : MonoBehaviour {
-    public StatBoardBehaviour instance = null;
-    public StatBoardBehaviour Instance {
-        get {
-            if (instance == null) {
-                instance = this;
-            }
-            return instance;
-        }
-    }
+    public static StatBoardBehaviour instance = null;
+    public static StatBoardBehaviour Instance => instance;
     void Awake() {
         if (instance == null) {
             instance = this;

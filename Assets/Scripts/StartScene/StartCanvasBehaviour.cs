@@ -27,7 +27,7 @@ public class StartCanvasBehaviour : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space)) {
             SceneManager.LoadSceneAsync("SampleScene");
-        } else if (Input.GetKeyDown(KeyCode.Q)) {
+        } else if (Input.GetKeyDown(KeyCode.Escape)) {
             Application.Quit();
         }
     }
