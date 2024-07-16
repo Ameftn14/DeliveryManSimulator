@@ -8,8 +8,8 @@ using System;
 public class Shopping : MonoBehaviour {
     private float addSpeed = 5.0f;
     private int addCapacity = 1;
-    private float addSpeedUp = 15.0f;
-    private float addTimeSlow = 25.0f;
+    private float addSpeedUp = 10.0f;
+    private float addTimeSlow = 20.0f;
     public int shoppingCount = 2;
 
     public int cost = 50;

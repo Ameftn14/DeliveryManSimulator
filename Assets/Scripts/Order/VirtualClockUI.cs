@@ -172,7 +172,7 @@ public static class OrderRefreshRate {
     private static readonly System.Random random = new();
 
     public static (float TimeInterval, int Quantity) GetOrderRefreshRate(int hour, int minute) {
-        float baseInterval = 5.3f;
+        float baseInterval = 5f;
 
         int quantity; // 基准订单数量为 1
 
@@ -184,16 +184,34 @@ public static class OrderRefreshRate {
 
         // 当前时间
         TimeSpan currentTime = new(hour, minute, 0);
-
+        int probabilityBound = 30;
         // 判断是否在高峰期
         if ((currentTime >= lunchStart && currentTime <= lunchEnd) ||
             (currentTime >= dinnerStart && currentTime <= dinnerEnd)) {
-            baseInterval = 3.5f;
-
+            switch (DeliverymanManager.Instance.round) {
+                case 0:
+                    baseInterval = 3.5f;
+                    probabilityBound = 30;
+                    break;
+                case 1:
+                case 2:
+                    baseInterval = 3.0f;
+                    probabilityBound = 35;
+                    break;
+                case 3:
+                case 4:
+                    baseInterval = 2.5f;
+                    probabilityBound = 40;
+                    break;
+                default:
+                    baseInterval = 2.0f;
+                    probabilityBound = 45;
+                    break;
+            }
             // 根据概率决定 quality 的值
             int probability = random.Next(100);
 
-            if (probability < 35) {
+            if (probability < probabilityBound) {
                 quantity = 2; // 40% 的概率 quality 为 2
             }
             // else if (probability < 30) {
@@ -203,6 +221,22 @@ public static class OrderRefreshRate {
                 quantity = 1; // 60% 的概率 quality 为 1
             }
         } else {
+            switch (DeliverymanManager.Instance.round) {
+                case 0:
+                    baseInterval = 5.0f;
+                    break;
+                case 1:
+                case 2:
+                    baseInterval = 4.5f;
+                    break;
+                case 3:
+                case 4:
+                    baseInterval = 4.0f;
+                    break;
+                default:
+                    baseInterval = 3.5f;
+                    break;
+            }
             // 非高峰期，根据概率决定 quality 的值
             int probability = random.Next(100);
 
