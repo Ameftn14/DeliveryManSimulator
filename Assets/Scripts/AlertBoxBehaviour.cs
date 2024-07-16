@@ -90,4 +90,19 @@ public class AlertBoxBehaviour : MonoBehaviour {
         Debug.Log("bottomRightAlertOffset: " + bottomRightAlertOffset);
         Debug.Log("size: " + alertBox.GetComponent<RectTransform>().sizeDelta);
     }
+
+    public static void ShowAlertAtBottomLeft(string title, string content, float secondsToLive) {
+        GameObject alertBox = Instantiate(Resources.Load("Prefabs/UI/AlertBox")) as GameObject;
+        alertBox.GetComponent<AlertBoxBehaviour>().title.text = title;
+        alertBox.GetComponent<AlertBoxBehaviour>().content.text = content;
+        alertBox.GetComponent<AlertBoxBehaviour>().secondsToLive = secondsToLive;
+        GameObject parent = GameObject.Find("Canvas");
+        alertBox.transform.SetParent(parent.transform, false);
+        // move the box to the bottom left of the screen
+        RectTransform rectTransform = alertBox.GetComponent<RectTransform>();
+        rectTransform.anchorMin = new Vector2(0, 0);
+        rectTransform.anchorMax = new Vector2(0, 0);
+        rectTransform.pivot = new Vector2(0, 0);
+        rectTransform.anchoredPosition = new Vector2(10, 10); // 左下角，向右和向上各有10单位的边距
+    }
 }
