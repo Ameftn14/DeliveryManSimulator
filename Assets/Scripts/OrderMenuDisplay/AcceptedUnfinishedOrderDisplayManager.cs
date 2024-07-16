@@ -79,14 +79,14 @@ public class OrderInfo {
     public readonly int pid;
     public readonly int orderID;
 
-    public readonly int price;
-    public OrderInfo(TimeSpan dueTime, Color color, LocationType locationType, int pid, int orderID, int price) {
+    public readonly int reward;
+    public OrderInfo(TimeSpan dueTime, Color color, LocationType locationType, int pid, int orderID, int reward = 10721) {
         this.dueTime = dueTime;
         this.color = color;
         this.locationType = locationType;
         this.pid = pid;
         this.orderID = orderID;
-        this.price = price;
+        this.reward = reward;
     }
 }
 
