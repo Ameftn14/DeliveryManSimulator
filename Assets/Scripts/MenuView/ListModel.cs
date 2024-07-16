@@ -37,7 +37,7 @@ public class ListModel : MonoBehaviour {
         else if (index < 0) {
             index = 0;
         }
-        Debug.Log("Base Model Adding item at " + index);
+        //Debug.Log("Base Model Adding item at " + index);
         preInsertActions?.Invoke(index);
 
         items.Insert(index, itemModel);
@@ -59,5 +59,10 @@ public class ListModel : MonoBehaviour {
     public ItemModel getItemAt(int index) {
         if (index < 0 || index >= items.Count) return null;
         return items[index];
+    }
+    public void setItemToTop(int index) {
+        for (int i = index; i > 0; i--) {
+            swap(i, i - 1);
+        }
     }
 }

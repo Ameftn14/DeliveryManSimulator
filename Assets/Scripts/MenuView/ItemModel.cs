@@ -36,7 +36,7 @@ public class ItemModel : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHa
         return itemModel;
     }
     void onDeleteAction(int deletedIndex) {
-        Debug.Log("post delete: " + index);
+        //Debug.Log("post delete: " + index);
         if (index < deletedIndex)
             return;
         if (index == deletedIndex) {

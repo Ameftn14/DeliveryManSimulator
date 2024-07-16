@@ -45,7 +45,6 @@ public class SingleOrder : MonoBehaviour {
             Debug.LogError("MapManager is not assigned!");
             return;
         }
-        Debug.Log("mapManager found");
         state = PairOrder.State.NotAccept;
 
         ringProgress.ddl = Deadline;
@@ -97,6 +96,10 @@ public class SingleOrder : MonoBehaviour {
             SetAcceptTime(virtualClockUI.GetTime());
             brotherSingleOrder.SetAcceptTime(virtualClockUI.GetTime());
             generalManager.DBConfirmOrder(OrderID);
+        } else if (state == PairOrder.State.Accept && isFrom) {
+            generalManager.SetFirstOrder(OrderID, isFrom);
+        } else if (state == PairOrder.State.PickUp && !isFrom) {
+            generalManager.SetFirstOrder(OrderID, isFrom);
         }
         //StartCoroutine(SizeUpAndDown());
     }
@@ -120,7 +123,7 @@ public class SingleOrder : MonoBehaviour {
     }
     public void SetPid(int pid) {
         this.pid = pid;
-        Debug.Log("pid is set to " + pid);
+        //Debug.Log("pid is set to " + pid);
         if (mapManager == null) {
             mapManager = GameObject.Find("MapManager").GetComponent<MapManagerBehaviour>();
         }
@@ -147,6 +150,7 @@ public class SingleOrder : MonoBehaviour {
     public void SetAcceptTime(TimeSpan time) {
         acceptTime = time;
         ringProgress.acceptTime = time;
+        parentPairOrder.AcceptTime = time;
     }
 
     // position operation

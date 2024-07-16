@@ -172,7 +172,7 @@ public static class OrderRefreshRate {
     private static readonly System.Random random = new();
 
     public static (float TimeInterval, int Quantity) GetOrderRefreshRate(int hour, int minute) {
-        float baseInterval = 5f;
+        float baseInterval = 5.3f;
 
         int quantity; // 基准订单数量为 1
 
@@ -193,7 +193,7 @@ public static class OrderRefreshRate {
             // 根据概率决定 quality 的值
             int probability = random.Next(100);
 
-            if (probability < 40) {
+            if (probability < 35) {
                 quantity = 2; // 40% 的概率 quality 为 2
             }
             // else if (probability < 30) {
@@ -206,7 +206,7 @@ public static class OrderRefreshRate {
             // 非高峰期，根据概率决定 quality 的值
             int probability = random.Next(100);
 
-            if (probability < 25) {
+            if (probability < 20) {
                 quantity = 2; // 15% 的概率 quality 为 2
             }
             // else if (probability < 15) {

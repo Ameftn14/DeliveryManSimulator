@@ -55,8 +55,16 @@ public class AcceptedUnfinishedOrderDisplayManager : MonoBehaviour {
             }
         }
     }
-
-
+    public void SetFirstOrder(int orderID, bool isFrom) {
+        int size = menuView.getSize();
+        for (int i = 0; i < size; i++) {
+            OrderItemBehaviour itemModel = (OrderItemBehaviour)menuView.getItemAt(i);
+            if (itemModel.getOrderInfo().orderID == orderID && itemModel.getOrderInfo().locationType == (isFrom ? LocationType.Restaurant : LocationType.Customer)) {
+                menuView.setItemAsFirst(i);
+                return;
+            }
+        }
+    }
 }
 
 public enum LocationType {
@@ -70,12 +78,15 @@ public class OrderInfo {
     public readonly LocationType locationType;
     public readonly int pid;
     public readonly int orderID;
-    public OrderInfo(TimeSpan dueTime, Color color, LocationType locationType, int pid, int orderID) {
+
+    public readonly int reward;
+    public OrderInfo(TimeSpan dueTime, Color color, LocationType locationType, int pid, int orderID, int reward = 10721) {
         this.dueTime = dueTime;
         this.color = color;
         this.locationType = locationType;
         this.pid = pid;
         this.orderID = orderID;
+        this.reward = reward;
     }
 }
 

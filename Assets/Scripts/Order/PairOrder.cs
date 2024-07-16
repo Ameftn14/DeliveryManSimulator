@@ -18,8 +18,8 @@ public class PairOrder : MonoBehaviour {
     private float distance;
     public bool isLate;
     public TimeSpan Deadline;
-    //public Timespan AcceptTime;
-    //private Timespan PickUpTime;
+    public TimeSpan AcceptTime;
+    //private TimeSpan PickUpTime;
     public TimeSpan TimeToDeadline;
     private float LifeTime = 5f;//TODO:以下所有liftime都没有提供做修改的接口，待优化
     private float timer = 5f;
@@ -41,6 +41,7 @@ public class PairOrder : MonoBehaviour {
 
         state = State.NotAccept;
         TimeToDeadline = new TimeSpan(1, UnityEngine.Random.Range(40, 61), 0);
+        AcceptTime = new(0, 0, 0);
 
         //TODO:这个逻辑待优化
         Deadline = virtualClock.GetTime().Add(TimeToDeadline);

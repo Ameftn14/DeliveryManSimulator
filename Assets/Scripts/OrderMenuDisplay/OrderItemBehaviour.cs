@@ -9,6 +9,7 @@ public class OrderItemBehaviour : ItemModel, IPointerEnterHandler, IPointerExitH
     private OrderInfo orderInfo;
     public GameObject imageObject;
     public TMP_Text dueTimeText;
+    public TMP_Text rewardText;
 
     public Color defaultColor = new Color(0, 0, 0, 128);
     public MenuItemTimeLeftBarController timeLeftBarController;
@@ -29,10 +30,14 @@ public class OrderItemBehaviour : ItemModel, IPointerEnterHandler, IPointerExitH
         // string dueTimeTextString = orderInfo.dueTime.ToString();
         string dueTimeTextString = d.ToString("HH:mm"); ;
         dueTimeText.text = dueTimeTextString;
+        // convert int to string
+        int reward = orderInfo.reward;
+        rewardText.text = "$" + reward.ToString();
     }
     void Start() {
         Debug.Assert(dueTimeText != null);
         Debug.Assert(imageObject != null);
+        Debug.Assert(rewardText != null);
         timeLeftBarController = GetComponentInChildren<MenuItemTimeLeftBarController>();
         Debug.Assert(timeLeftBarController != null);
         timeLeftBarController.setDueTime(orderInfo.dueTime);

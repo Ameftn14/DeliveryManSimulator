@@ -150,7 +150,7 @@ public class OrderMenuListBehaviour : ListModel {
     public new void removeAt(int index) {
         if (getSize() < 0 || index >= getSize()) return;
         // fix this
-        Debug.Log("Removing " + items[index].name);
+        //Debug.Log("Removing " + items[index].name);
         if (hoveringItem != null && hoveringItem.getIndex() == index) {
             hoveringItem = null;
         }
@@ -162,7 +162,7 @@ public class OrderMenuListBehaviour : ListModel {
     }
 
     public new void addItemAt(ItemModel itemModel, int index = 0) {
-        Debug.Log("Menu List Model: adding item at " + index);
+       // Debug.Log("Menu List Model: adding item at " + index);
         base.addItemAt(itemModel, index);
     }
 
