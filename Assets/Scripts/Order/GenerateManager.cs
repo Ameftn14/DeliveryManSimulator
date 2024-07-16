@@ -57,10 +57,10 @@ public class GeneratorManager : MonoBehaviour
             if( virtualClock.GetTime() < (cutoffTime - new TimeSpan(3,0,0)))//TODO:这里要配合DDL的时间，暂时这么写了
             {
                 GeneratePairs(); // 生成预制件
-            }           
-            (float _interval, int _quality) = virtualClock.GetOrderRefreshRate();
+            }
+            (float _interval, int _quantity) = virtualClock.GetOrderRefreshRate();
             interval = _interval;
-            quantity = _quality;
+            quantity = _quantity;
             timer = interval;
         }
 

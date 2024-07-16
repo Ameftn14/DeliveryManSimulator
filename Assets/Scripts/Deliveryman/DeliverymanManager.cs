@@ -6,7 +6,7 @@ using UnityEngine;
 public class DeliverymanManager : MonoBehaviour {
     public static DeliverymanManager Instance { get; private set; }
 
-    public static float speed = 15.0f;
+    public static float speed = 12.0f;
 
     public static int allCapacity = 3;
 
@@ -66,7 +66,7 @@ public class DeliverymanManager : MonoBehaviour {
     }
 
     public void Reset() {
-        speed = 15.0f;
+        speed = 12.0f;
         allCapacity = 2;
         money = 100;
         finishedcount = 0;

@@ -13,7 +13,7 @@ public class Shopping : MonoBehaviour {
     private float addTimeSlow = 15.0f;
     public int shoppingCount = 2;
 
-    public int cost = 400;
+    public int cost = 200;
     // private float speed = DeliverymanManager.speed;
     // private int allCapacity = DeliverymanManager.allCapacity;
     // private int money = DeliverymanManager.money;
