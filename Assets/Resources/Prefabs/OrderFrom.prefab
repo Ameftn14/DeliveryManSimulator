@@ -142,6 +142,7 @@ MonoBehaviour:
   brotherSingleOrder: {fileID: 0}
   visible: 0
   OrderID: 0
+  ColorIndex: 0
   level: 0
   state: 0
   LifeTime: 5
@@ -293,3 +294,4 @@ MonoBehaviour:
   state: 0
   isFrom: 0
   shouldDestroy: 0
+  isStop: 0
