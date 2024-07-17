@@ -339,6 +339,14 @@ public class SingleOrder : MonoBehaviour {
                 TheStar[2].transform.localPosition = new Vector3(3.4f, -1.2f, -1);
                 TheStar[2].transform.localScale = new Vector3(6f, 6f, 1f);
             }
+            else if(level == 4){
+                TheStar[0] = Instantiate(Resources.Load("PreFabs/!")) as GameObject;
+                TheStar[0].transform.parent = transform;
+                TheStar[0].transform.localPosition = new Vector3(-6.2f, 4.3f, -1);
+                //倾斜30度
+                TheStar[0].transform.localRotation = Quaternion.Euler(0, 0, 15);
+                TheStar[0].transform.localScale = new Vector3(5f, 5f, 1f);
+            }
         }
     }
 

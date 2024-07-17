@@ -54,7 +54,7 @@ public class RandomEventManager : MonoBehaviour{
         searchRoad.FallintoStop(new TimeSpan(0, NPminutes, 0), orderID);
         OrderDB.Instance.orderDict[orderID].NotPreparedTime = NPrecoveryTime;
         OrderDB.Instance.orderDict[orderID].SetIsStop(true);
-        Debug.Log("Fall into stop");
+        //Debug.Log("Fall into stop");
     }
 
     public void FromPrepared(int orderID) {
@@ -69,14 +69,14 @@ public class RandomEventManager : MonoBehaviour{
         TutorialManagerBehaviour.LateArriveTo();
         PairOrder theOrder = OrderDB.Instance.orderDict[orderID];
         theOrder.SetPrice(theOrder.GetPrice() * 2 / 3);
-        Debug.Log("Late arrive to");
+        //Debug.Log("Late arrive to");
     }
     private void OnTimeArriveTo(int orderID) {
         //加钱
         TutorialManagerBehaviour.OnTimeArriveTo();
         PairOrder theOrder = OrderDB.Instance.orderDict[orderID];
         theOrder.SetPrice(theOrder.GetPrice() * 4 / 3);
-        Debug.Log("On time arrive to");
+        //Debug.Log("On time arrive to");
     }
 
     public void WhenPickUp(int orderID) {
@@ -132,27 +132,32 @@ public class RandomEventManager : MonoBehaviour{
                 if(level == 1) return 0;
                 else if(level == 2) return 0;
                 else if(level == 3) return 0;
+                else if(level == 4) return 0;
                 break;
             case 1:
                 if(level == 1) return 0;
-                if(level == 2) return 5;
-                if(level == 3) return 10;
+                else if(level == 2) return 5;
+                else if(level == 3) return 10;
+                else if(level == 4) return 2;
                 break;
             case 2:
                 if(level == 1) return 5;
-                if(level == 2) return 8;
-                if(level == 3) return 14;
+                else if(level == 2) return 8;
+                else if(level == 3) return 14;
+                else if(level == 4) return 4;
                 break;
             case 3:
                 if(level == 1) return 7;
-                if(level == 2) return 12;
-                if(level == 3) return 18;
+                else if(level == 2) return 12;
+                else if(level == 3) return 18;
+                else if(level == 4) return 6;
                 break;
             case 4:
             default:
                 if(level == 1) return 10;
-                if(level == 2) return 15;
-                if(level == 3) return 20;
+                else if(level == 2) return 15;
+                else if(level == 3) return 20;
+                else if(level == 4) return 8;
                 break;
         }
         return 0;

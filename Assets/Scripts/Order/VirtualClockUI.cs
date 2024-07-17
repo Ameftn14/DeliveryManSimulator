@@ -223,10 +223,10 @@ public static class OrderRefreshRate {
         } else {
             switch (DeliverymanManager.Instance.round) {
                 case 0:
-                    baseInterval = 4.5f;
+                    baseInterval = 4.8f;
                     break;
                 case 1:
-                    baseInterval = 4.2f;
+                    baseInterval = 4.4f;
                     break;
                 case 2:
                     baseInterval = 4.0f;

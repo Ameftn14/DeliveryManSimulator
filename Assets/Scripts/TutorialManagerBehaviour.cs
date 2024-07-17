@@ -11,6 +11,7 @@ public class TutorialManagerBehaviour : MonoBehaviour {
     public static bool speedup = false;
     public static bool timeslow = false;
     public static bool skip = false;
+    public static bool assign = false;
 
     public static void AddList() {
         addlist = true;
@@ -34,6 +35,11 @@ public class TutorialManagerBehaviour : MonoBehaviour {
 
     public static void NotAccept() {
         AlertBoxBehaviour.ShowAlertAtBottomLeft("Full Bag", "Remember to upgrade your bag size", 5);
+    }
+
+    public static void AssignedOrder() {
+        assign = true;
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Assigned Order", "Not accept orders with \"!\" will result in a penalty", 5);
     }
 
     public static void Skip() {

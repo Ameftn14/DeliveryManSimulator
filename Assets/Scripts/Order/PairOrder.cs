@@ -23,8 +23,8 @@ public class PairOrder : MonoBehaviour {
     public bool isStop;
     //private TimeSpan PickUpTime;
     public TimeSpan TimeToDeadline;
-    private float LifeTime = 3f;//TODO:以下所有liftime都没有提供做修改的接口，待优化
-    private float timer = 3f;
+    private float LifeTime;
+    private float timer;
 
     public enum State {
         NotAccept,//未接单
@@ -42,13 +42,12 @@ public class PairOrder : MonoBehaviour {
         virtualClock = GameObject.Find("Time").GetComponent<VirtualClockUI>();
 
         state = State.NotAccept;
-        TimeToDeadline = new TimeSpan(1, UnityEngine.Random.Range(40, 61), 0);
+        TimeToDeadline = new TimeSpan(1, UnityEngine.Random.Range(45, 61), 0);
         AcceptTime = new(0, 0, 0);
         NotPreparedTime = new(0, 0, 0);
         isStop = false;
         SetLiftime();
 
-        //TODO:这个逻辑待优化
         Deadline = virtualClock.GetTime().Add(TimeToDeadline);
 
         WayPointBehaviour from_wp = null;
@@ -115,6 +114,10 @@ public class PairOrder : MonoBehaviour {
         //获取距离
         distance = Vector2.Distance(fromScript.GetPosition(), toScript.GetPosition());
 
+        if(level == 4 && !TutorialManagerBehaviour.assign){
+            TutorialManagerBehaviour.AssignedOrder();
+        }
+
         timer = LifeTime;
         state = State.NotAccept;
         isLate = false;
@@ -137,7 +140,12 @@ public class PairOrder : MonoBehaviour {
         //状态传达
         if (state == State.NotAccept) {
             timer -= Time.deltaTime;
-            if (timer <= 0f) {//超时未接单
+            if (timer <= 0f) {//超时未接单   
+                if(level == 4){
+                    //扣钱
+                    Property property = GameObject.Find("Deliveryman").GetComponent<Property>();
+                    property.money -= price;
+                }
                 OrderFinished();
                 DistroyEverything();
             }
@@ -284,40 +292,51 @@ public class PairOrder : MonoBehaviour {
     public void SetLevel() {
         int probability = UnityEngine.Random.Range(0, 100);
         int day = DeliverymanManager.Instance.round;
-        int threshold1, threshold2;
+        int threshold1, threshold2, threshold3;
         switch(day)
         {
             case 0:
                 threshold1 = 70;
-                threshold2 = 100;
+                threshold2 = 99;
+                threshold3 = 100;
+                // threshold1 = 1;
+                // threshold2 = 2;
+                // threshold3 = 80;
                 break;
             case 1:
                 threshold1 = 65;
                 threshold2 = 95;
+                threshold3 = 99;
                 break;
             case 2:
                 threshold1 = 60;
                 threshold2 = 90;
+                threshold3 = 97;
                 break;
             case 3:
                 threshold1 = 53;
                 threshold2 = 85;
+                threshold3 = 96;
                 break;
             case 4:
                 threshold1 = 50;
                 threshold2 = 82;
+                threshold3 = 95;
                 break;
             default:
                 threshold1 = 55;
                 threshold2 = 85;
+                threshold3 = 100;
                 break;
         }
         if (probability < threshold1) {
             level = 1;
         } else if (probability < threshold2) {
             level = 2;
-        } else {
+        } else if(probability < threshold3){
             level = 3;
+        }else{
+            level = 4;
         }
         fromScript.level = level;
         toScript.level = level;
@@ -338,9 +357,10 @@ public class PairOrder : MonoBehaviour {
     public void SetPrice() {
         WeatherManager.Weather weather = WeatherManager.Instance.GetWeather();
         int priceOnlevel = level switch {
-            1 => UnityEngine.Random.Range(30, 45),
-            2 => UnityEngine.Random.Range(45, 70),
-            3 => UnityEngine.Random.Range(70, 100),
+            1 => UnityEngine.Random.Range(30, 50),
+            2 => UnityEngine.Random.Range(50, 75),
+            3 => UnityEngine.Random.Range(75, 100),
+            4 => UnityEngine.Random.Range(50, 90),
             _ => 30,
         };
         if(weather == WeatherManager.Weather.Rainy){

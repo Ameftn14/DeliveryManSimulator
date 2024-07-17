@@ -191,7 +191,7 @@ public class SearchRoad : MonoBehaviour {
                 }
 
                 if(WeatherManager.Instance.GetWeather() == WeatherManager.Weather.Rainy ) {
-                    realMoveSpeed = moveSpeed * 0.85f;
+                    realMoveSpeed = moveSpeed * 0.8f;
                 }
                 if(WeatherManager.Instance.GetWeather() == WeatherManager.Weather.Foggy ) {
                     realMoveSpeed = moveSpeed * 0.9f;
