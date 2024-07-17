@@ -190,7 +190,7 @@ public static class OrderRefreshRate {
             (currentTime >= dinnerStart && currentTime <= dinnerEnd)) {
             switch (day) {
                 case 0:
-                    baseInterval = 3.5f;
+                    baseInterval = 3.7f;
                     probabilityBound = 30;
                     break;
                 case 1:
@@ -223,16 +223,16 @@ public static class OrderRefreshRate {
         } else {
             switch (DeliverymanManager.Instance.round) {
                 case 0:
-                    baseInterval = 4.8f;
+                    baseInterval = 5f;
                     break;
                 case 1:
-                    baseInterval = 4.4f;
+                    baseInterval = 4.6f;
                     break;
                 case 2:
-                    baseInterval = 4.0f;
+                    baseInterval = 4.2f;
                     break;
                 case 3:
-                    baseInterval = 3.8f;
+                    baseInterval = 3.9f;
                     break;
                 case 4:
                 default:
