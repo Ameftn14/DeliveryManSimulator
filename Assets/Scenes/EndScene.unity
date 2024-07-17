@@ -726,7 +726,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Check Out Your Score
+  m_text: Check Out Your Scores
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -841,9 +841,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -0.000022888, y: -425.21}
+  m_AnchoredPosition: {x: -0.59539795, y: -318}
   m_SizeDelta: {x: 1227.8093, y: 0}
-  m_Pivot: {x: 0.49999997, y: 0.50000006}
+  m_Pivot: {x: 0.49999997, y: 1}
 --- !u!114 &1937258413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -895,12 +895,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 96
-    m_Right: 96
-    m_Top: 207
-    m_Bottom: 220
+    m_Left: 50
+    m_Right: 50
+    m_Top: 140
+    m_Bottom: 140
   m_ChildAlignment: 0
-  m_Spacing: 273.5
+  m_Spacing: 180
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -946,7 +946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.27450982}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &138913698271274952
