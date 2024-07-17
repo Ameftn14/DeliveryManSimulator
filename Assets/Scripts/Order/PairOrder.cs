@@ -20,11 +20,10 @@ public class PairOrder : MonoBehaviour {
     public bool isLate;
     public TimeSpan Deadline;
     public TimeSpan AcceptTime;
-    public TimeSpan EventTime;
     public bool isStop;
     //private TimeSpan PickUpTime;
     public TimeSpan TimeToDeadline;
-    private readonly float LifeTime = 3f;//TODO:以下所有liftime都没有提供做修改的接口，待优化
+    private float LifeTime = 3f;//TODO:以下所有liftime都没有提供做修改的接口，待优化
     private float timer = 3f;
 
     public enum State {
@@ -47,6 +46,7 @@ public class PairOrder : MonoBehaviour {
         AcceptTime = new(0, 0, 0);
         NotPreparedTime = new(0, 0, 0);
         isStop = false;
+        SetLiftime();
 
         //TODO:这个逻辑待优化
         Deadline = virtualClock.GetTime().Add(TimeToDeadline);
@@ -283,9 +283,38 @@ public class PairOrder : MonoBehaviour {
 
     public void SetLevel() {
         int probability = UnityEngine.Random.Range(0, 100);
-        if (probability < 55) {
+        int day = DeliverymanManager.Instance.round;
+        int threshold1, threshold2;
+        switch(day)
+        {
+            case 0:
+                threshold1 = 70;
+                threshold2 = 100;
+                break;
+            case 1:
+                threshold1 = 65;
+                threshold2 = 95;
+                break;
+            case 2:
+                threshold1 = 60;
+                threshold2 = 90;
+                break;
+            case 3:
+                threshold1 = 53;
+                threshold2 = 85;
+                break;
+            case 4:
+                threshold1 = 50;
+                threshold2 = 82;
+                break;
+            default:
+                threshold1 = 55;
+                threshold2 = 85;
+                break;
+        }
+        if (probability < threshold1) {
             level = 1;
-        } else if (probability < 85) {
+        } else if (probability < threshold2) {
             level = 2;
         } else {
             level = 3;
@@ -307,14 +336,17 @@ public class PairOrder : MonoBehaviour {
     }
 
     public void SetPrice() {
+        WeatherManager.Weather weather = WeatherManager.Instance.GetWeather();
         int priceOnlevel = level switch {
             1 => UnityEngine.Random.Range(30, 45),
             2 => UnityEngine.Random.Range(45, 70),
             3 => UnityEngine.Random.Range(70, 100),
             _ => 30,
         };
-
-        price = priceOnlevel + (int)(distance * 0.1);
+        if(weather == WeatherManager.Weather.Rainy){
+            priceOnlevel += 20;
+        }
+        price = priceOnlevel + (int)(distance * 0.2);
     }
 
     public void HighLight(OrderInfo orderinfo) {
@@ -343,11 +375,6 @@ public class PairOrder : MonoBehaviour {
         fromScript.ringProgress.recoveryTime = NotPreparedTime;        
     }
 
-    public void SetEventTime(TimeSpan time) {
-        EventTime = time;
-        fromScript.ringProgress.eventTime = time;
-    }
-
     public void SetIsStop(bool isStop){
         this.isStop = isStop;
         fromScript.ringProgress.isStop = isStop;
@@ -356,6 +383,15 @@ public class PairOrder : MonoBehaviour {
         }
     } 
 
+    public void SetLiftime(){
+        WeatherManager.Weather weather = WeatherManager.Instance.GetWeather();
+        LifeTime = weather switch {
+            WeatherManager.Weather.Cloudy => 2.2f,
+            WeatherManager.Weather.Foggy => 4.2f,
+            _ => 3f,
+        };
+    }
+
     public void MouseEnter() {
         //TODO:接口
     }
@@ -363,4 +399,5 @@ public class PairOrder : MonoBehaviour {
     public void MouseExit() {
         //TODO:接口
     }
+
 }

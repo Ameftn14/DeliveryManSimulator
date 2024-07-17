@@ -49,10 +49,10 @@ public class RandomEventManager : MonoBehaviour{
         Prepared = false;
         NotPreID = orderID;
         NPeventTime = VirtualClockUI.Instance.GetTime();
-        NPrecoveryTime = new TimeSpan(0, 20, 0) + VirtualClockUI.Instance.GetTime();
-        searchRoad.FallintoStop(new TimeSpan(0, 20, 0), orderID);
+        int NPminutes = 20 + 5 * DeliverymanManager.Instance.round;
+        NPrecoveryTime = new TimeSpan(0, NPminutes, 0) + VirtualClockUI.Instance.GetTime();
+        searchRoad.FallintoStop(new TimeSpan(0, NPminutes, 0), orderID);
         OrderDB.Instance.orderDict[orderID].NotPreparedTime = NPrecoveryTime;
-        OrderDB.Instance.orderDict[orderID].SetEventTime(VirtualClockUI.Instance.GetTime());
         OrderDB.Instance.orderDict[orderID].SetIsStop(true);
         Debug.Log("Fall into stop");
     }
@@ -84,17 +84,7 @@ public class RandomEventManager : MonoBehaviour{
         PairOrder theOrder = OrderDB.Instance.orderDict[orderID];
         //随机生成1-100的数
         int random = UnityEngine.Random.Range(0, 100); 
-        int threshold;
-        if (theOrder.level == 1) {
-            threshold = 10;
-        } 
-        else if (theOrder.level == 2) {
-            threshold = 8;
-        } 
-        else{
-            threshold = 4;
-        }
-
+        int threshold = GetNPThreshold(theOrder.level, DeliverymanManager.Instance.round);
         if (random < threshold) {
             FromNotPrepared(orderID);
         }
@@ -110,10 +100,10 @@ public class RandomEventManager : MonoBehaviour{
             threshold = 6;
             } 
             else if (theOrder.level == 2) {
-                threshold = 10;
+                threshold = 15;
             } 
             else{
-                threshold = 15;
+                threshold = 25;
             }
             if (random < threshold) {
                 LateArriveTo(orderID);
@@ -124,15 +114,81 @@ public class RandomEventManager : MonoBehaviour{
             threshold = 7;
             } 
             else if (theOrder.level == 2) {
-                threshold = 13;
+                threshold = 14;
             } 
             else{
-                threshold = 17;
+                threshold = 20;
             }
             if (random < threshold) {
                 OnTimeArriveTo(orderID);
             }
         }
     }
+
+    private int GetNPThreshold(int level, int round){
+        switch(round)
+        {
+            case 0:
+                if(level == 1) return 0;
+                else if(level == 2) return 0;
+                else if(level == 3) return 0;
+                break;
+            case 1:
+                if(level == 1) return 0;
+                if(level == 2) return 5;
+                if(level == 3) return 10;
+                break;
+            case 2:
+                if(level == 1) return 5;
+                if(level == 2) return 8;
+                if(level == 3) return 14;
+                break;
+            case 3:
+                if(level == 1) return 7;
+                if(level == 2) return 12;
+                if(level == 3) return 18;
+                break;
+            case 4:
+            default:
+                if(level == 1) return 10;
+                if(level == 2) return 15;
+                if(level == 3) return 20;
+                break;
+        }
+        return 0;
+    }
+
+    // private int GetLateThreshold(int level, int round){
+    //     switch(round)
+    //     {
+    //         case 0:
+    //             if(level == 1) return 0;
+    //             else if(level == 2) return 0;
+    //             else if(level == 3) return 0;
+    //             break;
+    //         case 1:
+    //             if(level == 1) return 10;
+    //             if(level == 2) return 5;
+    //             if(level == 3) return 0;
+    //             break;
+    //         case 2:
+    //             if(level == 1) return 15;
+    //             if(level == 2) return 8;
+    //             if(level == 3) return 5;
+    //             break;
+    //         case 3:
+    //             if(level == 1) return 18;
+    //             if(level == 2) return 12;
+    //             if(level == 3) return 7;
+    //             break;
+    //         case 4:
+    //         default:
+    //             if(level == 1) return 22;
+    //             if(level == 2) return 15;
+    //             if(level == 3) return 10;
+    //             break;
+    //     }
+    //     return 0;
+    // }
     
 }

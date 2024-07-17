@@ -172,9 +172,8 @@ public static class OrderRefreshRate {
     private static readonly System.Random random = new();
 
     public static (float TimeInterval, int Quantity) GetOrderRefreshRate(int hour, int minute) {
-        float baseInterval = 5f;
-
-        int quantity; // 基准订单数量为 1
+        float baseInterval;
+         int quantity;
 
         TimeSpan lunchStart = new(11, 30, 0);
         TimeSpan lunchEnd = new(14, 00, 0);
@@ -184,27 +183,31 @@ public static class OrderRefreshRate {
 
         // 当前时间
         TimeSpan currentTime = new(hour, minute, 0);
-        int probabilityBound = 30;
+        int probabilityBound;
+        int day = DeliverymanManager.Instance.round;
         // 判断是否在高峰期
         if ((currentTime >= lunchStart && currentTime <= lunchEnd) ||
             (currentTime >= dinnerStart && currentTime <= dinnerEnd)) {
-            switch (DeliverymanManager.Instance.round) {
+            switch (day) {
                 case 0:
                     baseInterval = 3.5f;
                     probabilityBound = 30;
                     break;
                 case 1:
-                    baseInterval = 3.0f;
+                    baseInterval = 3.2f;
                     probabilityBound = 35;
                     break;
                 case 2:
+                    baseInterval = 3.0f;
+                    probabilityBound = 38;
+                    break;
                 case 3:
-                    baseInterval = 2.5f;
+                    baseInterval = 2.8f;
                     probabilityBound = 40;
                     break;
                 case 4:
                 default:
-                    baseInterval = 2.0f;
+                    baseInterval = 2.5f;
                     probabilityBound = 45;
                     break;
             }
@@ -214,9 +217,6 @@ public static class OrderRefreshRate {
             if (probability < probabilityBound) {
                 quantity = 2; // 40% 的概率 quality 为 2
             }
-            // else if (probability < 30) {
-            //     quantity = 3; // 15% 的概率 quality 为 3
-            // } 
             else {
                 quantity = 1; // 60% 的概率 quality 为 1
             }
@@ -226,28 +226,27 @@ public static class OrderRefreshRate {
                     baseInterval = 4.5f;
                     break;
                 case 1:
-                    baseInterval = 4.0f;
+                    baseInterval = 4.2f;
                     break;
                 case 2:
+                    baseInterval = 4.0f;
+                    break;
                 case 3:
-                    baseInterval = 3.5f;
+                    baseInterval = 3.8f;
                     break;
                 case 4:
                 default:
-                    baseInterval = 3.0f;
+                    baseInterval = 3.6f;
                     break;
             }
             // 非高峰期，根据概率决定 quality 的值
             int probability = random.Next(100);
 
-            if (probability < 20) {
-                quantity = 2; // 15% 的概率 quality 为 2
+            if (probability < (17+day*2)) {
+                quantity = 2; 
             }
-            // else if (probability < 15) {
-            //     quantity = 3; // 5% 的概率 quality 为 3
-            // } 
             else {
-                quantity = 1; // 80% 的概率 quality 为 1
+                quantity = 1;
             }
         }
 
