@@ -13,7 +13,7 @@ public class Shopping : MonoBehaviour {
     private float addTimeSlow = 10.0f;
     public int shoppingCount = 2;
 
-    public int cost = 200;
+    public int cost = 100;
     // private float speed = DeliverymanManager.speed;
     // private int allCapacity = DeliverymanManager.allCapacity;
     // private int money = DeliverymanManager.money;
@@ -73,7 +73,7 @@ public class Shopping : MonoBehaviour {
         }
         options.Add(new UpgradeOption(UpgradeType.TempararyTimeSlow, tempTimeSlowIsAvailable));
 
-
+        TutorialManagerBehaviour.BuyInfo();
         //initOptions(options);
     }
 

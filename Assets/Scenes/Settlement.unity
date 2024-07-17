@@ -2091,7 +2091,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shoppingCount: 2
-  cost: 50
+  cost: 100
 --- !u!114 &1191791446
 MonoBehaviour:
   m_ObjectHideFlags: 0

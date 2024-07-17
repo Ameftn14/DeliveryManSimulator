@@ -54,6 +54,11 @@ public class TutorialManagerBehaviour : MonoBehaviour {
         AlertBoxBehaviour.ShowAlertAtBottomLeft2("On Time Arrive", "You got some tips", 5);
     }
 
+    public static void BuyInfo() {
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Buy Upgrades", "Each cost 100$", 5);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft2("Press Space", "to skip buying", 5);
+    }
+
     // Start is called before the first frame update
     void Start() {
     }
