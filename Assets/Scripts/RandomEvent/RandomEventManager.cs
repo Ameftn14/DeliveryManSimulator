@@ -135,27 +135,27 @@ public class RandomEventManager : MonoBehaviour{
                 else if(level == 4) return 0;
                 break;
             case 1:
-                if(level == 1) return 0;
-                else if(level == 2) return 5;
+                if(level == 1) return 5;
+                else if(level == 2) return 7;
                 else if(level == 3) return 10;
                 else if(level == 4) return 2;
                 break;
             case 2:
-                if(level == 1) return 5;
-                else if(level == 2) return 8;
-                else if(level == 3) return 14;
+                if(level == 1) return 7;
+                else if(level == 2) return 10;
+                else if(level == 3) return 16;
                 else if(level == 4) return 4;
                 break;
             case 3:
-                if(level == 1) return 7;
-                else if(level == 2) return 12;
+                if(level == 1) return 9;
+                else if(level == 2) return 13;
                 else if(level == 3) return 18;
                 else if(level == 4) return 6;
                 break;
             case 4:
             default:
-                if(level == 1) return 10;
-                else if(level == 2) return 15;
+                if(level == 1) return 12;
+                else if(level == 2) return 16;
                 else if(level == 3) return 20;
                 else if(level == 4) return 8;
                 break;
