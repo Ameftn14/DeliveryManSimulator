@@ -191,10 +191,10 @@ public class SearchRoad : MonoBehaviour {
                 }
 
                 if(WeatherManager.Instance.GetWeather() == WeatherManager.Weather.Rainy ) {
-                    realMoveSpeed = moveSpeed * 0.8f;
+                    realMoveSpeed *= 0.8f;
                 }
                 if(WeatherManager.Instance.GetWeather() == WeatherManager.Weather.Foggy ) {
-                    realMoveSpeed = moveSpeed * 0.9f;
+                    realMoveSpeed *= 0.9f;
                 }
                 // 向目标位置移动
                 gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, targetPos, realMoveSpeed * Time.deltaTime);
