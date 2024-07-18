@@ -961,7 +961,7 @@ GameObject:
   - component: {fileID: 387953153}
   - component: {fileID: 387953154}
   m_Layer: 0
-  m_Name: T6 (2)
+  m_Name: T8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1241,6 +1241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3343dedeecbfa5c4caae3605f9e8cbdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
 --- !u!1 &686832263
 GameObject:
   m_ObjectHideFlags: 0
