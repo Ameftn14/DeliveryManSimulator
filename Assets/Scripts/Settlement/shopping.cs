@@ -7,7 +7,7 @@ using System;
 using UnityEngine.SceneManagement;
 
 public class Shopping : MonoBehaviour {
-    private float addSpeed = 3.0f;
+    private float addSpeed = 4.0f;
     private int addCapacity = 1;
     private float addSpeedUp = 20.0f;
     private float addTimeSlow = 15.0f;

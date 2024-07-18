@@ -123,7 +123,7 @@ public class SearchRoad : MonoBehaviour {
                 audioSource.Play();
             }
             if (isMoving && Input.GetKey(KeyCode.LeftShift) && realSpeedUp > 0) {
-                realMoveSpeed = moveSpeed * 2.5f;
+                realMoveSpeed = moveSpeed * 2.4f;
                 realSpeedUp = realSpeedUp - decreaseSpeedPerSecond * Time.deltaTime;
             } 
             else {
@@ -132,10 +132,10 @@ public class SearchRoad : MonoBehaviour {
         }
 
         if (realSpeedUp < property.speedUp) {
-            realSpeedUp += Time.deltaTime * DeliverymanManager.addSpeedUp / 50;
+            realSpeedUp += Time.deltaTime * DeliverymanManager.addSpeedUp / 60;
         }
         if (realTimeSlow < property.timeSlow) {
-            realTimeSlow += Time.deltaTime * DeliverymanManager.addTimeSlow / 50;
+            realTimeSlow += Time.deltaTime * DeliverymanManager.addTimeSlow / 120;
         }
 
         speedUpPercentage = realSpeedUp / DeliverymanManager.addSpeedUp;
@@ -200,10 +200,10 @@ public class SearchRoad : MonoBehaviour {
                 }
 
                 if(WeatherManager.Instance.GetWeather() == WeatherManager.Weather.Rainy ) {
-                    realMoveSpeed *= 0.8f;
+                    realMoveSpeed *= 0.7f;
                 }
                 if(WeatherManager.Instance.GetWeather() == WeatherManager.Weather.Foggy ) {
-                    realMoveSpeed *= 0.9f;
+                    realMoveSpeed *= 0.85f;
                 }
                 // 向目标位置移动
                 gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, targetPos, realMoveSpeed * Time.deltaTime);
