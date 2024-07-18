@@ -44,7 +44,8 @@ public class StartCanvasBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (state != 0) {
+        if (state != 0)
+        {
             if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
                 GameObject.Find("Canvas").transform.Find("T" + state).gameObject.SetActive(false);
                 state++;

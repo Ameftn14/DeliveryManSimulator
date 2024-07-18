@@ -25,7 +25,12 @@ public class GamingCanvasBehaviour : MonoBehaviour {
     void Update() {
         TimeSpan timespan = virtualClockUI.GetTime();
         // 检测空格键是否被按下
-        if (orderDB.IsClear() && timespan.Hours >= 19 && !isChanging) {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            SceneManager.LoadSceneAsync("EndScene");
+        }
+        else if (orderDB.IsClear() && timespan.Hours >= 19 && !isChanging)
+        {
             //Destroy(instance);
             // 加载指定的场景
             if (TutorialManagerBehaviour.skip == false)
