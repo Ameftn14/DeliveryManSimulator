@@ -500,7 +500,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u5317\u4EAC\u4EA4\u901A\u5927\u5B66"
+      value: BJTU
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -849,7 +849,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u4E2D\u56FD\u57CE\u5E02\u89C4\u5212\u8BBE\u8BA1\u7814\u7A76\u9662"
+      value: CAUPD
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1049,7 +1049,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u5317\u4EAC\u5927\u5B66"
+      value: YuanShen University
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1258,7 +1258,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: WayPoint
+      value: Yoshinoya
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1887,7 +1887,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: WayPoint
+      value: PGP Residence
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2091,7 +2091,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: WayPoint
+      value: Liyue Cuisine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2157,7 +2157,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u5317\u4EAC\u5DE5\u5546\u5927\u5B66"
+      value: BTBU
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2223,7 +2223,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u65B0\u8857\u5FA1\u666F"
+      value: New Street Residence
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3333,7 +3333,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u4E2D\u56FD\u4EBA\u6C11\u5927\u5B66"
+      value: RUC
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4367,7 +4367,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: WayPoint
+      value: McDonalds
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4508,7 +4508,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u9EA6\u5F53\u52B3\uFF08\u822A\u5929\u6865\u5E97\uFF09"
+      value: McDonalds
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4779,7 +4779,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u4E1C\u5347\u82B1\u56ED"
+      value: MyGO Street
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5609,7 +5609,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: WayPoint
+      value: BUPT
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5671,7 +5671,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u5317\u4EAC\u7406\u5DE5\u5927\u5B66"
+      value: BIT
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5737,7 +5737,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u957F\u5D0E\u7D20\u98DF\u9910\u5385"
+      value: Soyo Restaurant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6013,7 +6013,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u71D5\u5F52\u56ED"
+      value: Swallow Yard
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6843,7 +6843,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u4E2D\u79D1\u9662\u4E2D\u5173\u6751\u5C0F\u533A"
+      value: Zhongguancun Residence
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7122,7 +7122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u63D0\u74E6\u7279\u7F8E\u98DF"
+      value: Tivat Flavor
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7335,7 +7335,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "Catchy's Fish\uFF08\u56DB\u53F7\u7EBF\u5E97\uFF09"
+      value: Catchy's Fish (Line 4)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8048,6 +8048,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: 0,5
       objectReference: {fileID: 0}
+    - target: {fileID: 3952298221347682129, guid: 185ca79c4bc6a7942a439c5dcd93ca39, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.13999939
+      objectReference: {fileID: 0}
+    - target: {fileID: 3952298221347682129, guid: 185ca79c4bc6a7942a439c5dcd93ca39, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.22000122
+      objectReference: {fileID: 0}
     - target: {fileID: 3991735887447958855, guid: 185ca79c4bc6a7942a439c5dcd93ca39, type: 3}
       propertyPath: m_LocalPosition.x
       value: 33.064552
@@ -8087,6 +8095,14 @@ PrefabInstance:
     - target: {fileID: 3991735887447958855, guid: 185ca79c4bc6a7942a439c5dcd93ca39, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5807505137390052265, guid: 185ca79c4bc6a7942a439c5dcd93ca39, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 5807505137390052265, guid: 185ca79c4bc6a7942a439c5dcd93ca39, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.22
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8157,7 +8173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u4E2D\u592E\u6C11\u65CF\u5927\u5B66"
+      value: MUC
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8710,7 +8726,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u5317\u4EAC\u5927\u5B66\uFF08\u533B\u5B66\u9662\uFF09"
+      value: PKU (medical college)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9606,7 +9622,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u5170\u5DDE\u62C9\u9762"
+      value: Lanzhou beef lamian
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9952,7 +9968,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u5317\u4EAC\u79D1\u6280\u5927\u5B66"
+      value: USTB
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10232,7 +10248,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u6C99\u53BF\u5927\u5403"
+      value: Shaxian Snacks
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10365,7 +10381,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u9996\u90FD\u5E08\u8303\u5927\u5B66"
+      value: CNU
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10502,7 +10518,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u80AF\u5FB7\u57FA\uFF08\u897F\u76F4\u95E8\u5E97\uFF09"
+      value: KFC
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11901,7 +11917,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u5317\u4EAC\u822A\u7A7A\u822A\u5929\u5927\u5B66"
+      value: BUAA
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12659,7 +12675,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: WayPoint
+      value: Pizza Hut
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12721,7 +12737,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u6D77\u5357\u9E21\u996D"
+      value: Hainan Chicken Rice
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12854,7 +12870,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6260604542214611753, guid: 39c8fe156db00104b9fef95ddd118842, type: 3}
       propertyPath: m_Name
-      value: "\u6C99\u53BF\u8001\u5403"
+      value: Supersnack
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
