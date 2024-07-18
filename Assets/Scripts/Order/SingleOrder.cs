@@ -200,7 +200,7 @@ public class SingleOrder : MonoBehaviour {
     }
 
     public IEnumerator SizeUp() {
-        float duration = 0.1f; // 增大和消失的时间
+        float duration = 0.08f; // 增大和消失的时间
         float elapsed = 0f;
         while(isBig){
             yield return null;
@@ -208,18 +208,18 @@ public class SingleOrder : MonoBehaviour {
         Vector3 targetScale;
         if(state == PairOrder.State.NotAccept){
             if(isFrom){
-                targetScale = originalScale * 1.3f;
+                targetScale = originalScale * 1.5f;
             }
             else{
-                targetScale = originalScale * 1.7f;
+                targetScale = originalScale * 1.9f;
             }
         }
         else{
             if(isFrom){
-                targetScale = originalScale * 1.7f;
+                targetScale = originalScale * 1.9f;
             }
             else{
-                targetScale = originalScale * 1.3f;
+                targetScale = originalScale * 1.5f;
             }
         }
 
@@ -282,7 +282,7 @@ public class SingleOrder : MonoBehaviour {
             yield return null;
         }
         Vector3 currentScale = transform.localScale;
-        float duration = 0.1f; // 增大和消失的时间
+        float duration = 0.08f; // 增大和消失的时间
         float elapsed = 0f;
 
         while (elapsed < duration)
