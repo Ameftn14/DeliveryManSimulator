@@ -14,6 +14,7 @@ public class UsernameSettingViewBehaviour : MonoBehaviour {
         Debug.Assert(username != null);
     }
     void Update() {
+        currentUsername = DeliverymanManager.Instance.currentUsername;
         username.placeholder.GetComponent<TextMeshProUGUI>().text = currentUsername ?? "Username";
     }
     public bool hasUsername() {
@@ -47,6 +48,7 @@ public class UsernameSettingViewBehaviour : MonoBehaviour {
         }, (error) => {
             Debug.Log("Login Failed");
             Debug.Log(error.GenerateErrorReport());
+            AlertBoxBehaviour.ShowAlertAtBottomLeft("Error", error.GenerateErrorReport(), 3);
         });
     }
     void login(string userid) {
@@ -61,6 +63,7 @@ public class UsernameSettingViewBehaviour : MonoBehaviour {
         }, (error) => {
             Debug.Log("Login Failed");
             Debug.Log(error.GenerateErrorReport());
+            AlertBoxBehaviour.ShowAlertAtBottomLeft("Error", error.GenerateErrorReport(), 3);
         });
     }
     void setUsername(string username) {
@@ -75,6 +78,7 @@ public class UsernameSettingViewBehaviour : MonoBehaviour {
         }, (error) => {
             Debug.Log("UpdateUserTitleDisplayName Failed");
             Debug.Log(error.GenerateErrorReport());
+            AlertBoxBehaviour.ShowAlertAtBottomLeft("Error", error.GenerateErrorReport(), 3);
         });
     }
 }
