@@ -32,8 +32,8 @@ public class RouteManagerBehaviour : MonoBehaviour {
     }
 
     public void listSetRouteEnd(int waypoint) {
-        targetwaypoint = waypoint;
-        targetFrom = TargetFrom.list;
+        // targetwaypoint = waypoint;
+        // targetFrom = TargetFrom.list;
     }
 
 
@@ -55,9 +55,9 @@ public class RouteManagerBehaviour : MonoBehaviour {
     }
 
     public void listHidePath() {
-        if (targetFrom == TargetFrom.list) {
-            hidePath();
-        }
+        // if (targetFrom == TargetFrom.list) {
+        //     hidePath();
+        // }
     }
 
     public void playerHidePath() {
@@ -67,13 +67,13 @@ public class RouteManagerBehaviour : MonoBehaviour {
     }
 
     void checkMouseList(OrderInfo orderinfo) {
-        if (orderinfo == null) {
-            if (targetFrom == TargetFrom.list) {
-                listHidePath();
-            }
-            return;
-        }
-        listSetRouteEnd(orderinfo.pid);
+        // if (orderinfo == null) {
+        //     if (targetFrom == TargetFrom.list) {
+        //         listHidePath();
+        //     }
+        //     return;
+        // }
+        // listSetRouteEnd(orderinfo.pid);
     }
 
 
@@ -81,7 +81,7 @@ public class RouteManagerBehaviour : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         if (lineRenderer == null) {
-            lineRenderer = gameObject.GetComponent<LineRenderer>();
+            lineRenderer = GameObject.Find("CurrentRoad").GetComponent<LineRenderer>();
             Debug.Assert(lineRenderer != null);
             lineRenderer.startColor = Color.yellow;
             lineRenderer.endColor = Color.white;
@@ -92,7 +92,7 @@ public class RouteManagerBehaviour : MonoBehaviour {
             searchRoad = GameObject.Find("Deliveryman").GetComponent<SearchRoad>();
             Debug.Assert(searchRoad != null);
         }
-        OrderMenuListBehaviour.Instance.OnMouseHoverOrderChanged += checkMouseList;
+        // OrderMenuListBehaviour.Instance.OnMouseHoverOrderChanged += checkMouseList;
     }
 
     // Update is called once per frame
