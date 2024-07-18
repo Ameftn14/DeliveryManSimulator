@@ -82,12 +82,10 @@ public class SearchRoad : MonoBehaviour {
         realSpeedUp = property.speedUp;
         realTimeSlow = property.timeSlow;
         recoveryTime = new TimeSpan(0, 0, 0);
-        timer = 0.0f;
     }
 
     // Update is called once per frame
     void Update() {
-        timer += Time.deltaTime;
         AudioSource audio = GameObject.Find("BGM").GetComponent<AudioSource>();
 
         if (recoveryTime != new TimeSpan(0, 0, 0)) {
@@ -103,13 +101,13 @@ public class SearchRoad : MonoBehaviour {
         // 控制时间流速
         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.M) && Input.GetKey(KeyCode.E)) {
             Time.timeScale = 70f;
-        } else if (Input.GetKey(KeyCode.LeftControl) && realTimeSlow > 0) {
+        } else if (Input.GetKey(KeyCode.LeftControl) && realTimeSlow > 2 * decreaseSpeedPerSecond * Time.deltaTime) {
             if (audio.pitch > 0.747f)
                 audio.pitch *= 0.99f;
             else
                 audio.pitch = 0.5f;
             Time.timeScale = 0.2f;
-            realTimeSlow = Mathf.Max(0, realTimeSlow - 2 * decreaseSpeedPerSecond * Time.deltaTime);
+            realTimeSlow = realTimeSlow - 2 * decreaseSpeedPerSecond * Time.deltaTime;
         } else {
             if (audio.pitch < 1)
                 audio.pitch *= 1.01f;
@@ -120,26 +118,24 @@ public class SearchRoad : MonoBehaviour {
 
 
         if(!isStop) {
-            if (isMoving && Input.GetKeyDown(KeyCode.LeftShift) && realSpeedUp > 0) {
+            if (isMoving && Input.GetKeyDown(KeyCode.LeftShift) && realSpeedUp > decreaseSpeedPerSecond * Time.deltaTime) {
                 AudioSource audioSource = GameObject.Find("SpeedUpVoice").GetComponent<AudioSource>();
                 audioSource.Play();
             }
             if (isMoving && Input.GetKey(KeyCode.LeftShift) && realSpeedUp > 0) {
                 realMoveSpeed = moveSpeed * 2.5f;
-                realSpeedUp = Mathf.Max(0, realSpeedUp - decreaseSpeedPerSecond * Time.deltaTime);
+                realSpeedUp = realSpeedUp - decreaseSpeedPerSecond * Time.deltaTime;
             } 
             else {
                 realMoveSpeed = moveSpeed;
             }
         }
-        if(realSpeedUp < DeliverymanManager.speedUp && timer >= 5.0f && !Input.GetKey(KeyCode.LeftShift)) {
-            realSpeedUp = Mathf.Min(DeliverymanManager.speedUp, realSpeedUp + 0.1f*DeliverymanManager.addSpeedUp);
+
+        if (realSpeedUp < property.speedUp) {
+            realSpeedUp += Time.deltaTime * DeliverymanManager.addSpeedUp / 50;
         }
-        if(realTimeSlow < DeliverymanManager.timeSlow && timer >= 5.0f && !Input.GetKey(KeyCode.LeftShift)) {
-            realTimeSlow = Mathf.Min(DeliverymanManager.timeSlow, realTimeSlow + 0.1f*DeliverymanManager.addTimeSlow);
-        }
-        if(timer >= 5.0f) {
-            timer = 0.0f;
+        if (realTimeSlow < property.timeSlow) {
+            realTimeSlow += Time.deltaTime * DeliverymanManager.addTimeSlow / 50;
         }
 
         speedUpPercentage = realSpeedUp / DeliverymanManager.addSpeedUp;
