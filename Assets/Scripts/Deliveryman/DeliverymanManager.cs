@@ -23,6 +23,7 @@ public class DeliverymanManager : MonoBehaviour {
     public static int capacityAvailable = 2;
     public static int speedUpAvailable = 2;
     public static int timeSlowAvailable = 2;
+    public string currentUsername;
 
     public static float addSpeedUp = 15.0f;
     public static float addTimeSlow = 10.0f;

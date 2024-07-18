@@ -3,12 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class UsernameSettingViewBehaviour : MonoBehaviour {
     public TMP_InputField username;
+    public string currentUsername;
+    public UnityEvent<string> onUsernameSet;
+
     void Start() {
         Debug.Assert(username != null);
-        username.placeholder.GetComponent<TextMeshProUGUI>().text = "Username";
+    }
+    void Update() {
+        username.placeholder.GetComponent<TextMeshProUGUI>().text = currentUsername ?? "Username";
+    }
+    public bool hasUsername() {
+        return currentUsername != null;
     }
 
     public void onSubmitButtonHit() {
@@ -19,10 +28,10 @@ public class UsernameSettingViewBehaviour : MonoBehaviour {
         }
         loginSetName(usernameStr);
     }
-    public static UsernameSettingViewBehaviour spawnUsernameSettingView() {
+    public static UsernameSettingViewBehaviour spawnUsernameSettingView(GameObject parent, string currentUsername) {
         GameObject usernameSettingView = Instantiate(Resources.Load("Prefabs/UI/UsernameSettingView")) as GameObject;
-        GameObject parent = GameObject.Find("Canvas");
         usernameSettingView.transform.SetParent(parent.transform, false);
+        usernameSettingView.GetComponent<UsernameSettingViewBehaviour>().currentUsername = currentUsername;
         return usernameSettingView.GetComponent<UsernameSettingViewBehaviour>();
     }
     void loginSetName(string userid) {
@@ -61,6 +70,8 @@ public class UsernameSettingViewBehaviour : MonoBehaviour {
         PlayFab.PlayFabClientAPI.UpdateUserTitleDisplayName(request2,
         (result) => {
             Debug.Log("UpdateUserTitleDisplayName Success");
+            currentUsername = username;
+            onUsernameSet.Invoke(username);
         }, (error) => {
             Debug.Log("UpdateUserTitleDisplayName Failed");
             Debug.Log(error.GenerateErrorReport());
