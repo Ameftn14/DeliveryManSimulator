@@ -317,7 +317,7 @@ public class PairOrder : MonoBehaviour {
         {
             case 0:
                 threshold1 = 70;
-                threshold2 = 99;
+                threshold2 = 97;
                 threshold3 = 100;
                 threshold4 = 100;
                 // threshold1 = 1;
@@ -327,27 +327,27 @@ public class PairOrder : MonoBehaviour {
                 break;
             case 1:
                 threshold1 = 65;
-                threshold2 = 95;
-                threshold3 = 99;
+                threshold2 = 92;//27
+                threshold3 = 98;//6
                 threshold4 = 100;
                 break;
             case 2:
                 threshold1 = 55;
-                threshold2 = 85;
-                threshold3 = 95;
-                threshold4 = 97;
+                threshold2 = 81;//26
+                threshold3 = 93;//12
+                threshold4 = 96;
                 break;
             case 3:
                 threshold1 = 50;
-                threshold2 = 80;
-                threshold3 = 93;
-                threshold4 = 96;
+                threshold2 = 75;//25
+                threshold3 = 88;//13
+                threshold4 = 93;
                 break;
             case 4:
                 threshold1 = 45;
-                threshold2 = 75;
-                threshold3 = 90;
-                threshold4 = 95;
+                threshold2 = 68;//23
+                threshold3 = 85;//17
+                threshold4 = 92;
                 break;
             default:
                 threshold1 = 55;
@@ -442,10 +442,13 @@ public class PairOrder : MonoBehaviour {
             _ => 3f,
         };
         if(level == 4){
-            LifeTime += 1f;
+            LifeTime += 2f;
         }
         if(level == 5){
             LifeTime -= 1.7f;
+            if(weather == WeatherManager.Weather.Cloudy){
+                LifeTime = 0.8f;
+            }
         }
 
         fromScript.LifeTime = LifeTime;
