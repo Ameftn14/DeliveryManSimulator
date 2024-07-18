@@ -101,18 +101,18 @@ public class SearchRoad : MonoBehaviour {
         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.M) && Input.GetKey(KeyCode.E)) {
             Time.timeScale = 70f;
         } else if (Input.GetKey(KeyCode.LeftControl) && realTimeSlow > 2 * decreaseSpeedPerSecond * Time.deltaTime) {
-            if (audio.pitch > 0.747f)
-                audio.pitch *= 0.99f;
+            if (audio.pitch > 0.5f)
+                audio.pitch *= 0.98f;
             else
                 audio.pitch = 0.5f;
             Time.timeScale = 0.2f;
             realTimeSlow = realTimeSlow - 2 * decreaseSpeedPerSecond * Time.deltaTime;
         } else {
             if (audio.pitch < 1)
-                audio.pitch *= 1.01f;
+                audio.pitch *= 1.02f;
             else
                 audio.pitch = 1;
-            Time.timeScale = 1;
+            Time.timeScale = 1.0f;
         }
 
 

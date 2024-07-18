@@ -5638,7 +5638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeText: {fileID: 4589009471197331950}
-  startHour: 9
+  startHour: 10
   startMinute: 0
   VMinInSeconds: 0.2
 --- !u!114 &4491989847327961980 stripped
