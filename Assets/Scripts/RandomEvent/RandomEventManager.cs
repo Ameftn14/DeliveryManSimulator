@@ -49,7 +49,7 @@ public class RandomEventManager : MonoBehaviour{
         Prepared = false;
         NotPreID = orderID;
         NPeventTime = VirtualClockUI.Instance.GetTime();
-        int NPminutes = 20 + 5 * DeliverymanManager.Instance.round;
+        int NPminutes = 17 + 3 * DeliverymanManager.Instance.round;
         NPrecoveryTime = new TimeSpan(0, NPminutes, 0) + VirtualClockUI.Instance.GetTime();
         searchRoad.FallintoStop(new TimeSpan(0, NPminutes, 0), orderID);
         OrderDB.Instance.orderDict[orderID].NotPreparedTime = NPrecoveryTime;
