@@ -53,7 +53,7 @@ public class PairOrder : MonoBehaviour {
         WayPointBehaviour to_wp = null;
         bool isSameEdge = false;
         float mindistance = 15f;
-        float maxdistance = 65f;
+        float maxdistance = 70f;
         float tempDistance = 0f; 
         //随机获取两个pid
         do {
@@ -341,13 +341,13 @@ public class PairOrder : MonoBehaviour {
                 threshold1 = 50;
                 threshold2 = 75;//25
                 threshold3 = 88;//13
-                threshold4 = 93;
+                threshold4 = 92;
                 break;
             case 4:
                 threshold1 = 45;
                 threshold2 = 68;//23
-                threshold3 = 85;//17
-                threshold4 = 90;
+                threshold3 = 83;//15
+                threshold4 = 89;
                 break;
             default:
                 threshold1 = 55;
@@ -390,7 +390,7 @@ public class PairOrder : MonoBehaviour {
             2 => UnityEngine.Random.Range(45, 75),
             3 => UnityEngine.Random.Range(65, 95),
             4 => UnityEngine.Random.Range(55, 80),
-            5 => UnityEngine.Random.Range(130, 165),
+            5 => UnityEngine.Random.Range(130, 170),
             _ => 30,
         };
         if(weather == WeatherManager.Weather.Rainy){
@@ -438,7 +438,7 @@ public class PairOrder : MonoBehaviour {
         WeatherManager.Weather weather = WeatherManager.Instance.GetWeather();
         LifeTime = weather switch {
             WeatherManager.Weather.Cloudy => 2.3f,
-            WeatherManager.Weather.Foggy => 4.2f,
+            WeatherManager.Weather.Foggy => 4f,
             _ => 3f,
         };
         if(level == 4){
@@ -447,7 +447,7 @@ public class PairOrder : MonoBehaviour {
         if(level == 5){
             LifeTime -= 1.85f;
             if(weather == WeatherManager.Weather.Cloudy){
-                LifeTime = 0.75f;
+                LifeTime = 0.9f;
             }
         }
 

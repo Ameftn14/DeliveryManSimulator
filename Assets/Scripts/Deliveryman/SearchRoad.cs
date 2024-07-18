@@ -135,7 +135,7 @@ public class SearchRoad : MonoBehaviour {
             realSpeedUp += Time.deltaTime * DeliverymanManager.addSpeedUp / 60;
         }
         if (realTimeSlow < property.timeSlow) {
-            realTimeSlow += Time.deltaTime * DeliverymanManager.addTimeSlow / 120;
+            realTimeSlow += Time.deltaTime * DeliverymanManager.addTimeSlow / 100;
         }
 
         speedUpPercentage = realSpeedUp / DeliverymanManager.addSpeedUp;
