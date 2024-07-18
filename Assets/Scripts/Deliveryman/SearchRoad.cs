@@ -229,7 +229,6 @@ public class SearchRoad : MonoBehaviour {
                 break;
             case 6:// 等待目标设定
             case 7:// 达到目标：停止移动
-                isMoving = false;
                 break;
             default:
                 Debug.Log("Error");
