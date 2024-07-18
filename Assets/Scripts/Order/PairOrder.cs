@@ -347,7 +347,7 @@ public class PairOrder : MonoBehaviour {
                 threshold1 = 45;
                 threshold2 = 68;//23
                 threshold3 = 85;//17
-                threshold4 = 92;
+                threshold4 = 90;
                 break;
             default:
                 threshold1 = 55;
@@ -390,7 +390,7 @@ public class PairOrder : MonoBehaviour {
             2 => UnityEngine.Random.Range(45, 75),
             3 => UnityEngine.Random.Range(60, 100),
             4 => UnityEngine.Random.Range(50, 80),
-            5 => UnityEngine.Random.Range(100, 150),
+            5 => UnityEngine.Random.Range(120, 150),
             _ => 30,
         };
         if(weather == WeatherManager.Weather.Rainy){
@@ -445,9 +445,9 @@ public class PairOrder : MonoBehaviour {
             LifeTime += 2f;
         }
         if(level == 5){
-            LifeTime -= 1.7f;
+            LifeTime -= 1.85f;
             if(weather == WeatherManager.Weather.Cloudy){
-                LifeTime = 0.8f;
+                LifeTime = 0.75f;
             }
         }
 
