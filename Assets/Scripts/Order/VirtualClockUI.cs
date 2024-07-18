@@ -149,7 +149,7 @@ public class VirtualClockUI : MonoBehaviour {
     }
     public TimeSpan GetDayEnd() {
         // TODO 获取一天强制计算时间
-        return new TimeSpan(22, 0, 0);
+        return new TimeSpan(22, 30, 0);
     }
     public TimeSpan GetLunchStart() {
         return new TimeSpan(11, 30, 0);

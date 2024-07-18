@@ -54,7 +54,7 @@ public class GeneratorManager : MonoBehaviour
         timer -= Time.deltaTime;
         if (timer <= 0f)
         {
-            if( virtualClock.GetTime() < (cutoffTime - new TimeSpan(3,0,0)))//TODO:这里要配合DDL的时间，暂时这么写了
+            if( virtualClock.GetTime() < (cutoffTime - new TimeSpan(3,0,0)))
             {
                 GeneratePairs(); // 生成预制件
             }
