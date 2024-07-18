@@ -394,9 +394,9 @@ public class PairOrder : MonoBehaviour {
             _ => 30,
         };
         if(weather == WeatherManager.Weather.Rainy){
-            priceOnlevel += 20;
+            priceOnlevel += 17;
         }
-        price = priceOnlevel + (int)(distance * 0.2);
+        price = priceOnlevel + (int)(distance * 0.25);
     }
 
     public void HighLight(OrderInfo orderinfo) {
