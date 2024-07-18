@@ -9,8 +9,8 @@ using UnityEngine.SceneManagement;
 public class Shopping : MonoBehaviour {
     private float addSpeed = 3.0f;
     private int addCapacity = 1;
-    private float addSpeedUp = 15.0f;
-    private float addTimeSlow = 10.0f;
+    private float addSpeedUp = 20.0f;
+    private float addTimeSlow = 15.0f;
     public int shoppingCount = 2;
 
     public int cost = 100;
@@ -38,7 +38,7 @@ public class Shopping : MonoBehaviour {
         // TempararySpeedBoost,
         // TempararyTimeSlow
         bool tempSpeedIsAvailable;
-        if (DeliverymanManager.speedAvailable > 0 && DeliverymanManager.money > cost) {
+        if (DeliverymanManager.speedAvailable > 0 && DeliverymanManager.money >= cost) {
             tempSpeedIsAvailable = true;
         } else {
             tempSpeedIsAvailable = false;
@@ -48,7 +48,7 @@ public class Shopping : MonoBehaviour {
 
 
         bool tempCapacityIsAvailable;
-        if (DeliverymanManager.capacityAvailable > 0 && DeliverymanManager.money > cost) {
+        if (DeliverymanManager.capacityAvailable > 0 && DeliverymanManager.money >= cost) {
             tempCapacityIsAvailable = true;
         } else {
             tempCapacityIsAvailable = false;
@@ -58,7 +58,7 @@ public class Shopping : MonoBehaviour {
 
 
         bool tempSpeedUpIsAvailable;
-        if (DeliverymanManager.speedUpAvailable > 0 && DeliverymanManager.money > cost) {
+        if (DeliverymanManager.speedUpAvailable > 0 && DeliverymanManager.money >= cost) {
             tempSpeedUpIsAvailable = true;
         } else {
             tempSpeedUpIsAvailable = false;
@@ -66,7 +66,7 @@ public class Shopping : MonoBehaviour {
         options.Add(new UpgradeOption(UpgradeType.TempararySpeedBoost, tempSpeedUpIsAvailable));
 
         bool tempTimeSlowIsAvailable;
-        if (DeliverymanManager.timeSlowAvailable > 0 && DeliverymanManager.money > cost) {
+        if (DeliverymanManager.timeSlowAvailable > 0 && DeliverymanManager.money >= cost) {
             tempTimeSlowIsAvailable = true;
         } else {
             tempTimeSlowIsAvailable = false;
