@@ -21,33 +21,33 @@ public class TutorialManagerBehaviour : MonoBehaviour {
 
     public static void SortList() {
         sortlist = true;
-        AlertBoxBehaviour.ShowAlertAtBottomLeft2("Sort", "Click icon to go there or drag to sort in the list", 5);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Sort", "Click icon to go there or drag to sort in the list", 5);
     }
 
     public static void SpeedUp() {
         speedup = true;
-        AlertBoxBehaviour.ShowAlertAtBottomLeft3("Speed Up", "Hold LShift to speed up", 5);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Speed Up", "Hold LShift to speed up", 5);
     }
 
     public static void TimeSlow() {
         timeslow = true;
-        AlertBoxBehaviour.ShowAlertAtBottomLeft3("Time Slow", "Hold LCtrl to slow down time and choose", 5);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Time Slow", "Hold LCtrl to slow down time and choose", 5);
     }
 
     public static void Sunny() {
-        AlertBoxBehaviour.ShowAlertAtBottomLeft3("Weather: Sunny", "No special changes", 5);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Weather: Sunny", "No special changes", 5);
     }
 
     public static void Rainy() {
-        AlertBoxBehaviour.ShowAlertAtBottomLeft3("Weather: Rainy", "Slower speed with High profit per order", 5);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Weather: Rainy", "Slower speed with High profit per order", 5);
     }
 
     public static void Foggy() {
-        AlertBoxBehaviour.ShowAlertAtBottomLeft3("Weather: Foggy", "Speed reduced. Order-accepting time extended", 5);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Weather: Foggy", "Speed reduced. Order-accepting time extended", 5);
     }
 
     public static void Cloudy() {
-        AlertBoxBehaviour.ShowAlertAtBottomLeft3("Weather: Cloudy", "Order-taking time shortened", 5);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Weather: Cloudy", "Order-taking time shortened", 5);
     }
 
     public static void NotAccept() {
@@ -70,21 +70,21 @@ public class TutorialManagerBehaviour : MonoBehaviour {
     }
 
     public static void FromNotPrepared() {
-        AlertBoxBehaviour.ShowAlertAtBottomLeft2("Food Not Prepared", "Hit SPACE to urge", 5);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Food Not Prepared", "Hit SPACE to urge", 5);
 
     }
 
     public static void LateArriveTo() {
-        AlertBoxBehaviour.ShowAlertAtBottomLeft2("Arrive Late", "You are punished", 5);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Arrive Late", "You are punished", 5);
     }
 
     public static void OnTimeArriveTo() {
-        AlertBoxBehaviour.ShowAlertAtBottomLeft2("On Time Arrive", "You got some tips", 5);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("On Time Arrive", "You got some tips", 5);
     }
 
     public static void BuyInfo() {
         AlertBoxBehaviour.ShowAlertAtBottomLeft("Buy Upgrades", "Each cost 100$", 10);
-        AlertBoxBehaviour.ShowAlertAtBottomLeft2("Press Space", "to skip buying", 10);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Press Space", "to skip buying", 10);
     }
 
     // Start is called before the first frame update

@@ -43,7 +43,6 @@ public class SearchRoad : MonoBehaviour {
     public float speedUpPercentage;
     public float timeSlowPercentage;
     private float decreaseSpeedPerSecond = 5.0f; // 每秒减少速度
-    private float timer = 0.0f;
 
     // Start is called before the first frame update
     void Start() {
