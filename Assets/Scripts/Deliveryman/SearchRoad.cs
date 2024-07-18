@@ -199,7 +199,7 @@ public class SearchRoad : MonoBehaviour {
                 }
 
                 if(WeatherManager.Instance.GetWeather() == WeatherManager.Weather.Rainy ) {
-                    realMoveSpeed *= 0.7f;
+                    realMoveSpeed *= 0.8f;
                 }
                 if(WeatherManager.Instance.GetWeather() == WeatherManager.Weather.Foggy ) {
                     realMoveSpeed *= 0.85f;
