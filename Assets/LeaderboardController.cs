@@ -8,17 +8,12 @@ public class LeaderboardController : MonoBehaviour {
     public GameObject blurPanel;
     public GameObject leaderboardPanel;
     public GameObject setusernamePanel;
-    void Start() {
+    void Awake() {
         Debug.Assert(blurPanel != null);
         Debug.Assert(leaderboardPanel != null);
         Debug.Assert(setusernamePanel != null);
-        model = DeliverymanManager.Instance;
-        if (model.currentUsername == null) {
-            showUsernameSetting();
-        } else {
-            showLeaderboard();
-            getNewLeaderboard();
-        }
+        model = DeliverymanManager.Instance; // TODO uncomment this
+        // model = new DeliverymanManager(); // TODO remove this
     }
     DeliverymanManager model;
 
@@ -47,14 +42,17 @@ public class LeaderboardController : MonoBehaviour {
         Debug.Log("refreshing leaderboard display");
         List<LeaderboardEntry> entries = new List<LeaderboardEntry>();
         foreach (PlayerLeaderboardEntry entry in result.Leaderboard) {
-            entries.Add(new LeaderboardEntry(entry.DisplayName, entry.StatValue.ToString(), entry.Position + 1));
+            string name = entry.DisplayName ?? "not set";
+            string score = entry.StatValue.ToString();
+            int rank = entry.Position + 1;
+            entries.Add(new LeaderboardEntry(name, score, rank));
         }
         LeaderboardBehaviour leaderboardBehaviour = leaderboardPanel.GetComponent<LeaderboardBehaviour>();
         leaderboardBehaviour.setLeaderboard(entries);
     }
 
     void getNewLeaderboard() {
-        if (model.currentUsername == null) {
+        if (!model.loggedIn) {
             showUsernameSetting();
             return;
         }
@@ -62,26 +60,28 @@ public class LeaderboardController : MonoBehaviour {
         var request = new GetLeaderboardRequest {
             StartPosition = 0,
             StatisticName = "Test", //TODO change this to the correct statistic name
-            MaxResultsCount = 10 // TODO what should this be?
+            MaxResultsCount = 100 // TODO what should this be?
         };
         PlayFab.PlayFabClientAPI.GetLeaderboard(request, refreshLeaderboard, (error) => {
             Debug.Log("Leaderboard Failed");
             Debug.Log(error.GenerateErrorReport());
+            AlertBoxBehaviour.ShowAlertAtBottomLeft("Error", error.GenerateErrorReport(), 3);
         });
     }
     /* -------------------------------------------------------------------------- */
     /*                         respond to username setting                        */
     /* -------------------------------------------------------------------------- */
     public void onUsernameChangeButtonHit() {
-        model.currentUsername = null;
+        model.loggedIn = false;
         showUsernameSetting();
     }
     public void onUsernameSet(string username) {
+        model.loggedIn = true;
         model.currentUsername = username;
         showLeaderboard();
         getNewLeaderboard();
     }
-    private int score = 0;
+    [SerializeField] private int score = 0;
     public void uploadScore() {
         var request = new UpdatePlayerStatisticsRequest {
             Statistics = new List<StatisticUpdate> {
@@ -91,13 +91,22 @@ public class LeaderboardController : MonoBehaviour {
                 }
             }
         };
+        PlayFab.PlayFabClientAPI.UpdatePlayerStatistics(request, (result) => {
+            Debug.Log("UpdatePlayerStatistics Success");
+            getNewLeaderboard();
+        }, (error) => {
+            Debug.Log("UpdatePlayerStatistics Failed");
+            Debug.Log(error.GenerateErrorReport());
+            AlertBoxBehaviour.ShowAlertAtBottomLeft("Error", error.GenerateErrorReport(), 3);
+        });
     }
     /* -------------------------------------------------------------------------- */
     /*      理论上说外界只需要在适当时候创建这个类，然后调用这个方法就好                */
     /* -------------------------------------------------------------------------- */
     public void submitNewScore(int score) {
         this.score = score;
-        if (model.currentUsername == null) {
+        Debug.Assert(model?.currentUsername != null);
+        if (!model.loggedIn) {
             showUsernameSetting();
             return;
         }

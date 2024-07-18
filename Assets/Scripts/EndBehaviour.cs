@@ -7,6 +7,8 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class EndBehaviour : MonoBehaviour {
     // Start is called before the first frame update
+    public GameObject statBoard;
+    public GameObject leaderboard;
     void Start() {
         string score;
         if (DeliverymanManager.money < 2000) {
@@ -61,15 +63,26 @@ public class EndBehaviour : MonoBehaviour {
         StatBoardBehaviour.Instance.AppendStatEntry("Late Order: ", DeliverymanManager.latecount.ToString());
         StatBoardBehaviour.Instance.AppendStatEntry("Bad Order: ", DeliverymanManager.badcount.ToString());
         StatBoardBehaviour.Instance.AppendStatEntry("Rank: ", score);
+        onShowStatBoardButtonHit();
     }
 
     // Update is called once per frame
     void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Application.Quit();
-        } else if (Input.GetKeyDown(KeyCode.R)) {
-            DeliverymanManager.Instance.Reset();
-            SceneManager.LoadSceneAsync("SampleScene");
         }
+    }
+    public void startANewGame() {
+        DeliverymanManager.Instance.Reset();
+        SceneManager.LoadSceneAsync("SampleScene");
+    }
+    public void onShowLeaderboardButtonHit() {
+        leaderboard.SetActive(true);
+        statBoard.SetActive(false);
+        leaderboard.GetComponent<LeaderboardController>().submitNewScore(DeliverymanManager.money);
+    }
+    public void onShowStatBoardButtonHit() {
+        leaderboard.SetActive(false);
+        statBoard.SetActive(true);
     }
 }

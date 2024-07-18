@@ -23,7 +23,8 @@ public class DeliverymanManager : MonoBehaviour {
     public static int capacityAvailable = 2;
     public static int speedUpAvailable = 2;
     public static int timeSlowAvailable = 2;
-    public string currentUsername;
+    public string currentUsername = null;
+    public bool loggedIn = false;
 
     public static float addSpeedUp = 20.0f;
     public static float addTimeSlow = 15.0f;
@@ -41,6 +42,7 @@ public class DeliverymanManager : MonoBehaviour {
     }
 
     void Start() {
+        currentUsername = null;
     }
 
     // Update is called once per frame
