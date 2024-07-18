@@ -34,6 +34,22 @@ public class TutorialManagerBehaviour : MonoBehaviour {
         AlertBoxBehaviour.ShowAlertAtBottomLeft3("Time Slow", "Hold LCtrl to slow down time and choose", 5);
     }
 
+    public static void Sunny() {
+        AlertBoxBehaviour.ShowAlertAtBottomLeft3("Weather: Sunny", "No special changes", 5);
+    }
+
+    public static void Rainy() {
+        AlertBoxBehaviour.ShowAlertAtBottomLeft3("Weather: Rainy", "Slower speed with High profit per order", 5);
+    }
+
+    public static void Foggy() {
+        AlertBoxBehaviour.ShowAlertAtBottomLeft3("Weather: Foggy", "Speed reduced. Order-accepting time extended", 5);
+    }
+
+    public static void Cloudy() {
+        AlertBoxBehaviour.ShowAlertAtBottomLeft3("Weather: Cloudy", "Order-taking time shortened", 5);
+    }
+
     public static void NotAccept() {
         AlertBoxBehaviour.ShowAlertAtBottomLeft("Full Bag", "Remember to upgrade your bag size", 5);
     }

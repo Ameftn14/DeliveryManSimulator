@@ -50,15 +50,19 @@ public class WeatherManager : MonoBehaviour{
             int random = UnityEngine.Random.Range(0, 100);
             if(random < 28){
                 weather = Weather.Cloudy;
+                TutorialManagerBehaviour.Cloudy();
             }
             else if(random < 56){
                 weather = Weather.Rainy;
+                TutorialManagerBehaviour.Rainy();
             }
             else if(random < 84){
                 weather = Weather.Foggy;
+                TutorialManagerBehaviour.Foggy();
             }
             else{
                 weather = Weather.Sunny;
+                TutorialManagerBehaviour.Sunny();
             }
         }
     }
