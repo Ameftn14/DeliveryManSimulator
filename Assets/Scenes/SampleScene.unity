@@ -1239,6 +1239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orderDB: {fileID: 0}
   virtualClockUI: {fileID: 0}
+  isChanging: 0
 --- !u!1 &728410796
 GameObject:
   m_ObjectHideFlags: 0
@@ -2333,6 +2334,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 874316aac950e314991fdb150e573c25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weather: 0
+  canvas: {fileID: 587932360}
 --- !u!1 &1326529057
 GameObject:
   m_ObjectHideFlags: 0
@@ -2915,6 +2918,8 @@ MonoBehaviour:
   nowCapacity: 0
   money: 100
   finishedcount: 0
+  latecount: 0
+  badcount: 0
   speedUp: 0
   timeSlow: 0
 --- !u!114 &1646932718

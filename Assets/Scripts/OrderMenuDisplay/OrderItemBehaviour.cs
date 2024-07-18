@@ -33,6 +33,9 @@ public class OrderItemBehaviour : ItemModel, IPointerEnterHandler, IPointerExitH
         // convert int to string
         int reward = orderInfo.reward;
         rewardText.text = "$" + reward.ToString();
+        if(OrderDB.Instance.GetOrder(orderInfo.orderID).level == 4) {
+            rewardText.text = "$" + reward.ToString() + " !";
+        }
     }
     void Start() {
         Debug.Assert(dueTimeText != null);

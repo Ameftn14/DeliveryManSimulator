@@ -27,7 +27,7 @@ public class SingleOrder : MonoBehaviour {
     // private float price;
     // private float distance;
     private bool isFrom;//true for from, false for to
-    public float LifeTime = 5f;
+    public float LifeTime ;
 
     public void Start() {
         ringProgress = transform.Find("Ring").GetComponent<RingProgress>();
@@ -200,7 +200,7 @@ public class SingleOrder : MonoBehaviour {
     }
 
     public IEnumerator SizeUp() {
-        float duration = 0.1f; // 增大和消失的时间
+        float duration = 0.08f; // 增大和消失的时间
         float elapsed = 0f;
         while(isBig){
             yield return null;
@@ -208,18 +208,18 @@ public class SingleOrder : MonoBehaviour {
         Vector3 targetScale;
         if(state == PairOrder.State.NotAccept){
             if(isFrom){
-                targetScale = originalScale * 1.3f;
+                targetScale = originalScale * 1.5f;
             }
             else{
-                targetScale = originalScale * 1.7f;
+                targetScale = originalScale * 1.9f;
             }
         }
         else{
             if(isFrom){
-                targetScale = originalScale * 1.7f;
+                targetScale = originalScale * 1.9f;
             }
             else{
-                targetScale = originalScale * 1.3f;
+                targetScale = originalScale * 1.5f;
             }
         }
 
@@ -282,7 +282,7 @@ public class SingleOrder : MonoBehaviour {
             yield return null;
         }
         Vector3 currentScale = transform.localScale;
-        float duration = 0.1f; // 增大和消失的时间
+        float duration = 0.08f; // 增大和消失的时间
         float elapsed = 0f;
 
         while (elapsed < duration)
@@ -346,6 +346,14 @@ public class SingleOrder : MonoBehaviour {
                 //倾斜30度
                 TheStar[0].transform.localRotation = Quaternion.Euler(0, 0, 15);
                 TheStar[0].transform.localScale = new Vector3(5f, 5f, 1f);
+            }
+            else if(level ==5){
+                TheStar[0] = Instantiate(Resources.Load("PreFabs/fire")) as GameObject;
+                TheStar[0].transform.parent = transform;
+                TheStar[0].transform.localPosition = new Vector3(-6.2f, 4.3f, -1);
+                //倾斜30度
+                //TheStar[0].transform.localRotation = Quaternion.Euler(0, 0, 15);
+                TheStar[0].transform.localScale = new Vector3(7f, 7f, 1f);
             }
         }
     }

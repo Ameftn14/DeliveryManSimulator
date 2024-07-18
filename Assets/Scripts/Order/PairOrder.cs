@@ -42,19 +42,18 @@ public class PairOrder : MonoBehaviour {
         virtualClock = GameObject.Find("Time").GetComponent<VirtualClockUI>();
 
         state = State.NotAccept;
-        TimeToDeadline = new TimeSpan(1, UnityEngine.Random.Range(45, 61), 0);
+        //TimeToDeadline = new TimeSpan(1, UnityEngine.Random.Range(45, 61), 0);
         AcceptTime = new(0, 0, 0);
         NotPreparedTime = new(0, 0, 0);
         isStop = false;
-        SetLiftime();
 
-        Deadline = virtualClock.GetTime().Add(TimeToDeadline);
+        //Deadline = virtualClock.GetTime().Add(TimeToDeadline);
 
         WayPointBehaviour from_wp = null;
         WayPointBehaviour to_wp = null;
         bool isSameEdge = false;
         float mindistance = 15f;
-        float maxdistance = 60f;
+        float maxdistance = 65f;
         float tempDistance = 0f; 
         //随机获取两个pid
         do {
@@ -86,9 +85,7 @@ public class PairOrder : MonoBehaviour {
         fromScript.SetIsFrom(true);
         fromScript.SetPid(from_pid);
         fromScript.SetOrderID(OrderID);
-        fromScript.LifeTime = LifeTime;
         fromScript.parentPairOrder = this;
-        fromScript.Deadline = Deadline;
         fromScript.SetTimeToDeadline(TimeToDeadline);
 
         Transform childto = transform.Find("OrderTo");
@@ -98,9 +95,7 @@ public class PairOrder : MonoBehaviour {
         toScript.SetIsFrom(false);
         toScript.SetPid(to_pid);
         toScript.SetOrderID(OrderID);
-        toScript.LifeTime = LifeTime;
         toScript.parentPairOrder = this;
-        toScript.Deadline = Deadline;
         toScript.SetTimeToDeadline(TimeToDeadline);
 
         toScript.brotherSingleOrder = fromScript;
@@ -110,12 +105,18 @@ public class PairOrder : MonoBehaviour {
         //设置价格
         SetPrice();
         //设置颜色
-        SetColorIndex();
+        SetColorIndex();  
+        SetLiftime();
+
+        SetDeadline();
         //获取距离
         distance = Vector2.Distance(fromScript.GetPosition(), toScript.GetPosition());
 
         if(level == 4 && !TutorialManagerBehaviour.assign){
             TutorialManagerBehaviour.AssignedOrder();
+        }
+        else if(level == 5 && !TutorialManagerBehaviour.hot){
+            TutorialManagerBehaviour.HotOrder();
         }
 
         timer = LifeTime;
@@ -133,6 +134,11 @@ public class PairOrder : MonoBehaviour {
             if (!isLate) {
                 Debug.LogError("Order " + OrderID + " exceeds the time but not marked as late!");
             } else {
+                if(level == 4){
+                    //扣钱
+                    Property property = GameObject.Find("Deliveryman").GetComponent<Property>();
+                    property.money -= price;
+                }
                 generalManager.DistroyOrder(OrderID);
                 OrderFinished();
             }
@@ -207,8 +213,22 @@ public class PairOrder : MonoBehaviour {
         this.distance = distance;
     }
 
-    public void SetDeadline(TimeSpan deadline) {
-        this.Deadline = deadline;
+    public void SetDeadline() {
+        TimeToDeadline = level switch {
+            1 => new TimeSpan(2, 0, 0),
+            2 => new TimeSpan(1, UnityEngine.Random.Range(45,60), 0),
+            3 => new TimeSpan(1, UnityEngine.Random.Range(30,45), 0),
+            4 => new TimeSpan(1, 45, 0),
+            5 => new TimeSpan(1, UnityEngine.Random.Range(40,55), 0),
+            _ => new TimeSpan(2, 0, 0),
+        };
+        Deadline = virtualClock.GetTime().Add(TimeToDeadline);
+
+        fromScript.SetTimeToDeadline(TimeToDeadline);
+        toScript.SetTimeToDeadline(TimeToDeadline);
+
+        fromScript.Deadline = Deadline;
+        toScript.Deadline = Deadline;
     }
 
     // public TimeSpan GetAcceptTime()
@@ -292,41 +312,48 @@ public class PairOrder : MonoBehaviour {
     public void SetLevel() {
         int probability = UnityEngine.Random.Range(0, 100);
         int day = DeliverymanManager.Instance.round;
-        int threshold1, threshold2, threshold3;
+        int threshold1, threshold2, threshold3, threshold4;
         switch(day)
         {
             case 0:
                 threshold1 = 70;
                 threshold2 = 99;
                 threshold3 = 100;
+                threshold4 = 100;
                 // threshold1 = 1;
                 // threshold2 = 2;
-                // threshold3 = 80;
+                // threshold3 = 3;
+                // threshold4 = 50;
                 break;
             case 1:
                 threshold1 = 65;
                 threshold2 = 95;
                 threshold3 = 99;
+                threshold4 = 100;
                 break;
             case 2:
-                threshold1 = 60;
-                threshold2 = 90;
-                threshold3 = 97;
+                threshold1 = 55;
+                threshold2 = 85;
+                threshold3 = 95;
+                threshold4 = 97;
                 break;
             case 3:
-                threshold1 = 53;
-                threshold2 = 85;
-                threshold3 = 96;
+                threshold1 = 50;
+                threshold2 = 80;
+                threshold3 = 93;
+                threshold4 = 96;
                 break;
             case 4:
-                threshold1 = 50;
-                threshold2 = 82;
-                threshold3 = 95;
+                threshold1 = 45;
+                threshold2 = 75;
+                threshold3 = 90;
+                threshold4 = 95;
                 break;
             default:
                 threshold1 = 55;
                 threshold2 = 85;
                 threshold3 = 100;
+                threshold4 = 100;
                 break;
         }
         if (probability < threshold1) {
@@ -335,8 +362,10 @@ public class PairOrder : MonoBehaviour {
             level = 2;
         } else if(probability < threshold3){
             level = 3;
-        }else{
+        }else if(probability < threshold4){
             level = 4;
+        }else{
+            level = 5;
         }
         fromScript.level = level;
         toScript.level = level;
@@ -360,13 +389,14 @@ public class PairOrder : MonoBehaviour {
             1 => UnityEngine.Random.Range(30, 50),
             2 => UnityEngine.Random.Range(50, 75),
             3 => UnityEngine.Random.Range(75, 100),
-            4 => UnityEngine.Random.Range(50, 90),
+            4 => UnityEngine.Random.Range(85, 120),
+            5 => UnityEngine.Random.Range(150, 180),
             _ => 30,
         };
         if(weather == WeatherManager.Weather.Rainy){
             priceOnlevel += 20;
         }
-        price = priceOnlevel + (int)(distance * 0.2);
+        price = priceOnlevel + (int)(distance * 0.3);
     }
 
     public void HighLight(OrderInfo orderinfo) {
@@ -403,13 +433,23 @@ public class PairOrder : MonoBehaviour {
         }
     } 
 
+
     public void SetLiftime(){
         WeatherManager.Weather weather = WeatherManager.Instance.GetWeather();
         LifeTime = weather switch {
-            WeatherManager.Weather.Cloudy => 2.2f,
+            WeatherManager.Weather.Cloudy => 2.3f,
             WeatherManager.Weather.Foggy => 4.2f,
             _ => 3f,
         };
+        if(level == 4){
+            LifeTime += 1f;
+        }
+        if(level == 5){
+            LifeTime -= 1.7f;
+        }
+
+        fromScript.LifeTime = LifeTime;
+        toScript.LifeTime = LifeTime;
     }
 
     public void MouseEnter() {

@@ -42,7 +42,7 @@ public class GeneratorManager : MonoBehaviour
         quantity = _quantity;
 
         // 初始化计时器
-        timer = 2f;
+        timer = 3f;
         NextOrderID = 0;
         WPcount = mapManager.GetWayPoints().Count;
         cutoffTime = new TimeSpan(22, 0, 0);

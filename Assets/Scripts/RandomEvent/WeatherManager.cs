@@ -19,10 +19,23 @@ public class WeatherManager : MonoBehaviour{
     }
 
     public Weather weather;
+    public Canvas canvas;
 
     void Start() {
         InitWeather();     
         Debug.Log("Weather: " + weather);
+        if(weather == Weather.Sunny){
+            GameObject w = Instantiate(Resources.Load("PreFabs/SunnyPre"),canvas.transform) as GameObject;
+        }
+        else if(weather == Weather.Cloudy){
+            GameObject w = Instantiate(Resources.Load("PreFabs/CloudyPre"),canvas.transform) as GameObject;
+        }
+        else if(weather == Weather.Rainy){
+            GameObject w = Instantiate(Resources.Load("PreFabs/RainyPre"),canvas.transform) as GameObject;
+        }
+        else if(weather == Weather.Foggy){
+            GameObject w = Instantiate(Resources.Load("PreFabs/FoggyPre"),canvas.transform) as GameObject;
+        }
     }
 
     void Update() {
