@@ -389,7 +389,7 @@ public class PairOrder : MonoBehaviour {
             1 => UnityEngine.Random.Range(30, 50),
             2 => UnityEngine.Random.Range(50, 75),
             3 => UnityEngine.Random.Range(75, 100),
-            4 => UnityEngine.Random.Range(75, 100),
+            4 => UnityEngine.Random.Range(50, 80),
             5 => UnityEngine.Random.Range(150, 180),
             _ => 30,
         };
