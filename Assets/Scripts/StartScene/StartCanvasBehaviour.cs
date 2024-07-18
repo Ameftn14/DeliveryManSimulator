@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class StartCanvasBehaviour : MonoBehaviour
 {
-    private int state = 0;
+    public int state = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,13 +37,29 @@ public class StartCanvasBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (state == 1 && (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))) {
-            GameObject.Find("Canvas").transform.Find("T1").gameObject.SetActive(false);
-            GameObject.Find("Canvas").transform.Find("T2").gameObject.SetActive(true);
-            state = 2;
-        } else if (state == 2 && (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))) {
-            GameObject.Find("Canvas").transform.Find("T2").gameObject.SetActive(false);
-            state = 0;
+        if (state != 0) {
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
+                GameObject.Find("Canvas").transform.Find("T" + state).gameObject.SetActive(false);
+                state++;
+                Transform nextHelp = GameObject.Find("Canvas").transform.Find("T" + state);
+                if (nextHelp != null) {
+                    nextHelp.gameObject.SetActive(true);
+                } else {
+                    state = 0;
+                }
+            } else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
+                GameObject.Find("Canvas").transform.Find("T" + state).gameObject.SetActive(false);
+                state--;
+                Transform nextHelp = GameObject.Find("Canvas").transform.Find("T" + state);
+                if (nextHelp != null) {
+                    nextHelp.gameObject.SetActive(true);
+                } else {
+                    state = 0;
+                }
+            } else if (Input.GetKeyDown(KeyCode.Escape)) {
+                GameObject.Find("Canvas").transform.Find("T" + state).gameObject.SetActive(false);
+                state = 0;
+            }
         }
     }
 }
