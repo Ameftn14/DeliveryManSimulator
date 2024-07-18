@@ -34,6 +34,13 @@ public class StartCanvasBehaviour : MonoBehaviour
         state = 1;
     }
 
+    public void ClickRank()
+    {
+        if (state != 0)
+            return;
+        SceneManager.LoadSceneAsync("Leaderboard Scene");
+    }
+
     // Update is called once per frame
     void Update()
     {

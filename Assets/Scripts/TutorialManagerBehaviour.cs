@@ -66,7 +66,7 @@ public class TutorialManagerBehaviour : MonoBehaviour {
 
     public static void Skip() {
         skip = true;
-        AlertBoxBehaviour.ShowAlertAtMiddle("PRESS SPACE", "Go to the next level", 30);
+        AlertBoxBehaviour.ShowAlertAtMiddle("PRESS SPACE", "Go to the next level", 60);
     }
 
     public static void FromNotPrepared() {
@@ -83,8 +83,7 @@ public class TutorialManagerBehaviour : MonoBehaviour {
     }
 
     public static void BuyInfo() {
-        AlertBoxBehaviour.ShowAlertAtBottomLeft("Buy Upgrades", "Each cost 100$", 10);
-        AlertBoxBehaviour.ShowAlertAtBottomLeft("Press Space", "to skip buying", 10);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Buy Upgrades", "Press Space to skip", 10);
     }
 
     // Start is called before the first frame update
