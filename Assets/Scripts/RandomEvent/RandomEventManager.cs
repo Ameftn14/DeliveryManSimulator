@@ -100,10 +100,16 @@ public class RandomEventManager : MonoBehaviour{
             threshold = 6;
             } 
             else if (theOrder.level == 2) {
-                threshold = 15;
-            } 
-            else{
                 threshold = 25;
+            } 
+            else if (theOrder.level == 3) {
+                threshold = 40;
+            }
+            else if(theOrder.level == 4){
+                threshold = 70;
+            }
+            else{
+                threshold = 50;
             }
             if (random < threshold) {
                 LateArriveTo(orderID);
@@ -111,13 +117,19 @@ public class RandomEventManager : MonoBehaviour{
         } 
         else {
             if (theOrder.level == 1) {
-            threshold = 7;
+            threshold = 20;
             } 
             else if (theOrder.level == 2) {
-                threshold = 14;
-            } 
+                threshold = 15;
+            }
+            else if (theOrder.level == 3) {
+                threshold = 7;
+            }
+            else if(theOrder.level == 4){
+                threshold = 2;
+            }
             else{
-                threshold = 20;
+                threshold = 1;
             }
             if (random < threshold) {
                 OnTimeArriveTo(orderID);
@@ -132,35 +144,29 @@ public class RandomEventManager : MonoBehaviour{
                 if(level == 1) return 0;
                 else if(level == 2) return 0;
                 else if(level == 3) return 0;
-                else if(level == 4) return 0;
-                break;
+                else return 0;
             case 1:
                 if(level == 1) return 5;
                 else if(level == 2) return 7;
-                else if(level == 3) return 10;
-                else if(level == 4) return 2;
-                break;
+                else if(level == 3) return 13;
+                else  return 2;
             case 2:
-                if(level == 1) return 7;
-                else if(level == 2) return 10;
-                else if(level == 3) return 16;
-                else if(level == 4) return 4;
-                break;
+                if(level == 1) return 8;
+                else if(level == 2) return 12;
+                else if(level == 3) return 17;
+                else  return 4;
             case 3:
-                if(level == 1) return 9;
-                else if(level == 2) return 13;
-                else if(level == 3) return 18;
-                else if(level == 4) return 6;
-                break;
+                if(level == 1) return 10;
+                else if(level == 2) return 14;
+                else if(level == 3) return 20;
+                else  return 5;
             case 4:
             default:
                 if(level == 1) return 12;
-                else if(level == 2) return 16;
-                else if(level == 3) return 20;
-                else if(level == 4) return 8;
-                break;
+                else if(level == 2) return 15;
+                else if(level == 3) return 22;
+                else  return 6;
         }
-        return 0;
     }
 
     // private int GetLateThreshold(int level, int round){

@@ -12,6 +12,7 @@ public class TutorialManagerBehaviour : MonoBehaviour {
     public static bool timeslow = false;
     public static bool skip = false;
     public static bool assign = false;
+    public static bool hot = false;
 
     public static void AddList() {
         addlist = true;
@@ -42,9 +43,14 @@ public class TutorialManagerBehaviour : MonoBehaviour {
         AlertBoxBehaviour.ShowAlertAtBottomLeft("Assigned Order", "Not accept orders with \"!\" will result in a penalty", 5);
     }
 
+    public static void HotOrder(){
+        hot = true;
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Hot Order", "Short time to accept, but high profit", 5);
+    }
+
     public static void Skip() {
         skip = true;
-        AlertBoxBehaviour.ShowAlertAtMiddle("PRESS SPACE", "Go to the next level", 20);
+        AlertBoxBehaviour.ShowAlertAtMiddle("PRESS SPACE", "Go to the next level", 30);
     }
 
     public static void FromNotPrepared() {
@@ -61,8 +67,8 @@ public class TutorialManagerBehaviour : MonoBehaviour {
     }
 
     public static void BuyInfo() {
-        AlertBoxBehaviour.ShowAlertAtBottomLeft("Buy Upgrades", "Each cost 100$", 5);
-        AlertBoxBehaviour.ShowAlertAtBottomLeft2("Press Space", "to skip buying", 5);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft("Buy Upgrades", "Each cost 100$", 10);
+        AlertBoxBehaviour.ShowAlertAtBottomLeft2("Press Space", "to skip buying", 10);
     }
 
     // Start is called before the first frame update
