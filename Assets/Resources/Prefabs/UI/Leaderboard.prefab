@@ -111,8 +111,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0.000030518, y: 0}
+  m_AnchoredPosition: {x: 0, y: -6.0150757}
+  m_SizeDelta: {x: 0, y: -10.706}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &8485619903984335902
 CanvasRenderer:
@@ -286,6 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e972c69be84654bbbce765c2f106da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  contentPanel: {fileID: 8822298732326019073}
 --- !u!1 &5727508967194661805
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,8 +359,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -7.294739, y: -32.594604}
-  m_SizeDelta: {x: 7.3805, y: -65.4955}
+  m_AnchoredPosition: {x: -12.273987, y: -129.29999}
+  m_SizeDelta: {x: 9.16, y: -248.243}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &3675924596226251541
 CanvasRenderer:
@@ -420,10 +421,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
-    m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0.13725491}
-    m_PressedColor: {r: 0, g: 0, b: 0, a: 0.13725491}
-    m_SelectedColor: {r: 0, g: 0, b: 0, a: 0.13725491}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.5019608}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.5019608}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 0.5019608}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 0.5019608}
     m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -484,7 +485,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -0.000030518, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1511451282980176281
 MonoBehaviour:
@@ -499,12 +500,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 24
-    m_Right: 24
-    m_Top: 24
-    m_Bottom: 24
+    m_Left: 136
+    m_Right: 136
+    m_Top: 120
+    m_Bottom: 120
   m_ChildAlignment: 0
-  m_Spacing: 16
+  m_Spacing: 75.4
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
