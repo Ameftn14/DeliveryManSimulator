@@ -386,11 +386,11 @@ public class PairOrder : MonoBehaviour {
     public void SetPrice() {
         WeatherManager.Weather weather = WeatherManager.Instance.GetWeather();
         int priceOnlevel = level switch {
-            1 => UnityEngine.Random.Range(25, 55),
-            2 => UnityEngine.Random.Range(45, 75),
-            3 => UnityEngine.Random.Range(65, 95),
-            4 => UnityEngine.Random.Range(55, 80),
-            5 => UnityEngine.Random.Range(130, 170),
+            1 => UnityEngine.Random.Range(25, 45),
+            2 => UnityEngine.Random.Range(35, 65),
+            3 => UnityEngine.Random.Range(55, 85),
+            4 => UnityEngine.Random.Range(40, 70),
+            5 => UnityEngine.Random.Range(115, 150),
             _ => 30,
         };
         if(weather == WeatherManager.Weather.Rainy){
