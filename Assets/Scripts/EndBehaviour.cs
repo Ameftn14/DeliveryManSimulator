@@ -67,11 +67,15 @@ public class EndBehaviour : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.Q)) {
-            DeliverymanManager.Instance.Reset();
-            SceneManager.LoadSceneAsync("Start");
-        }
+    // void Update() {
+    //     if (Input.GetKeyDown(KeyCode.Q)) {
+    //         DeliverymanManager.Instance.Reset();
+    //         SceneManager.LoadSceneAsync("Start");
+    //     }
+    // }
+    public void backToHomeScreen() {
+        DeliverymanManager.Instance.Reset();
+        SceneManager.LoadSceneAsync("Start");
     }
     public void startANewGame() {
         DeliverymanManager.Instance.Reset();
