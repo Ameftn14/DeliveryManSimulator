@@ -43,6 +43,7 @@ public class SearchRoad : MonoBehaviour {
     public float speedUpPercentage;
     public float timeSlowPercentage;
     private float decreaseSpeedPerSecond = 5.0f; // 每秒减少速度
+    private float timer = 0.0f;
 
     // Start is called before the first frame update
     void Start() {
@@ -81,10 +82,12 @@ public class SearchRoad : MonoBehaviour {
         realSpeedUp = property.speedUp;
         realTimeSlow = property.timeSlow;
         recoveryTime = new TimeSpan(0, 0, 0);
+        timer = 0.0f;
     }
 
     // Update is called once per frame
     void Update() {
+        timer += Time.deltaTime;
         AudioSource audio = GameObject.Find("BGM").GetComponent<AudioSource>();
 
         if (recoveryTime != new TimeSpan(0, 0, 0)) {
@@ -129,9 +132,19 @@ public class SearchRoad : MonoBehaviour {
                 realMoveSpeed = moveSpeed;
             }
         }
+        if(realSpeedUp < DeliverymanManager.speedUp && timer >= 5.0f && !Input.GetKey(KeyCode.LeftShift)) {
+            realSpeedUp = Mathf.Min(DeliverymanManager.speedUp, realSpeedUp + 0.1f*DeliverymanManager.addSpeedUp);
+        }
+        if(realTimeSlow < DeliverymanManager.timeSlow && timer >= 5.0f && !Input.GetKey(KeyCode.LeftShift)) {
+            realTimeSlow = Mathf.Min(DeliverymanManager.timeSlow, realTimeSlow + 0.1f*DeliverymanManager.addTimeSlow);
+        }
+        if(timer >= 5.0f) {
+            timer = 0.0f;
+        }
 
         speedUpPercentage = realSpeedUp / DeliverymanManager.addSpeedUp;
         timeSlowPercentage = realTimeSlow / DeliverymanManager.addTimeSlow;
+
 
         int switcher = 0;
         if (wayPoints.ContainsKey(targetwaypoint)) switcher += 4;
