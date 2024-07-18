@@ -8,7 +8,7 @@ public class DeliverymanManager : MonoBehaviour {
 
     public static float speed = 12.0f;
 
-    public static int allCapacity = 2;
+    public static int allCapacity = 3;
 
     public static int money = 100;
 
@@ -75,7 +75,7 @@ public class DeliverymanManager : MonoBehaviour {
 
     public void Reset() {
         speed = 12.0f;
-        allCapacity = 2;
+        allCapacity = 3;
         money = 100;
         finishedcount = 0;
         latecount = 0;
