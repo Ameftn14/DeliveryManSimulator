@@ -77,12 +77,12 @@ public class AlertBoxBehaviour : MonoBehaviour {
     void increaseOffset() {
         Vector2 selfSize = GetComponent<RectTransform>().rect.size;
         if (positionType == AlertBoxPosition.BottomRight) {
-            bottomRightAlertOffset.y += selfSize.y;
+            bottomRightAlertOffset.y += selfSize.y + 10;
             x = (int)bottomRightAlertOffset.x;
             y = (int)bottomRightAlertOffset.y;
             Debug.Log("offset height increase by " + selfSize.y);
         } else if (positionType == AlertBoxPosition.BottomLeft) {
-            bottomLeftAvailabelOffset.y += selfSize.y;
+            bottomLeftAvailabelOffset.y += selfSize.y + 10;
             x = (int)bottomLeftAvailabelOffset.x;
             y = (int)bottomLeftAvailabelOffset.y;
             Debug.Log("offset height increase by " + selfSize.y);
