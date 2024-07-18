@@ -317,7 +317,7 @@ public class PairOrder : MonoBehaviour {
         {
             case 0:
                 threshold1 = 70;
-                threshold2 = 97;
+                threshold2 = 99;
                 threshold3 = 100;
                 threshold4 = 100;
                 // threshold1 = 1;
@@ -389,7 +389,7 @@ public class PairOrder : MonoBehaviour {
             1 => UnityEngine.Random.Range(30, 50),
             2 => UnityEngine.Random.Range(50, 75),
             3 => UnityEngine.Random.Range(75, 100),
-            4 => UnityEngine.Random.Range(85, 120),
+            4 => UnityEngine.Random.Range(75, 100),
             5 => UnityEngine.Random.Range(150, 180),
             _ => 30,
         };

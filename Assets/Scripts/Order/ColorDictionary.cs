@@ -12,9 +12,9 @@ public class ColorDictionary {
         {5, new ColorValue(1f, 0f, 1f)},             // 品红
         {6, new ColorValue(0.5f, 0.7f, 0.039f)},       // 橙黄色
         {7, new ColorValue(1f, 0.5f, 0.5f)},         // 粉红
-        {8, new ColorValue(0f, 0.5f, 0.5f)},         // 金色
-        {9, new ColorValue(0.5f, 0f, 0f)},          // 栗色
-        {10, new ColorValue(0.5f, 0.5f, 0f)}         // 橄榄色
+        {8, new ColorValue(0f, 0.7f, 0.7f)},         // 金色
+        {9, new ColorValue(0.68f, 0.56f, 0.17f)},          // 栗色
+        {10, new ColorValue(0.57f, 0.99f, 0.95f)}         // 橄榄色
     };
 
     public static int GetColorIndex(int index) {
