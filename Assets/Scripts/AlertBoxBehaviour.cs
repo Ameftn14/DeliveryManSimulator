@@ -35,11 +35,6 @@ public class AlertBoxBehaviour : MonoBehaviour {
             alpha -= Time.smoothDeltaTime / fadeOutTime;
             canvasGroup.alpha = alpha;
             if (alpha <= 0) {
-                if (positionType == AlertBoxPosition.BottomRight) {
-                    decreaseOffset();
-                } else if (positionType == AlertBoxPosition.BottomLeft) {
-                    releaseOffset();
-                }
                 Destroy(gameObject);
             }
         } else {
@@ -47,6 +42,13 @@ public class AlertBoxBehaviour : MonoBehaviour {
             if (secondsToLive <= 0) {
                 isFadingOut = true;
             }
+        }
+    }
+    void OnDestroy() {
+        if (positionType == AlertBoxPosition.BottomRight) {
+            decreaseOffset();
+        } else if (positionType == AlertBoxPosition.BottomLeft) {
+            releaseOffset();
         }
     }
 
