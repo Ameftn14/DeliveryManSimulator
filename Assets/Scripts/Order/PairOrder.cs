@@ -445,7 +445,7 @@ public class PairOrder : MonoBehaviour {
             LifeTime += 2f;
         }
         if(level == 5){
-            LifeTime -= 1.85f;
+            LifeTime -= 1.8f;
             if(weather == WeatherManager.Weather.Cloudy){
                 LifeTime = 0.9f;
             }
